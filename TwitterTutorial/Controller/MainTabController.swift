@@ -22,18 +22,34 @@ class MainTabController: UITabBarController {
     //MARK: - Helpers Methods
     
     private func configureViewControllers() {
-        let feed = FeedController()
-        feed.tabBarItem.image = UIImage(named: "home_unselected")
-        let explore = ExploreController()
-        explore.tabBarItem.image = UIImage(named: "search_unselected")
-        let notifications = NotificationsController()
-        notifications.tabBarItem.image = UIImage(named: "search_unselected")
-        let conversations = ConversationsController()
-        conversations.tabBarItem.image = UIImage(named: "search_unselected")
         
-        viewControllers = [feed, explore, notifications, conversations]
+        let feed = FeedController()
+        let feedNavigationController = templateNavigationController(image: UIImage(named: "home_unselected"),
+                                                                    rootViewController: feed)
+        
+        let explore = ExploreController()
+        let exploreNavigationController = templateNavigationController(image: UIImage(named: "search_unselected"),
+                                                                       rootViewController: explore)
+        
+        let notifications = NotificationsController()
+        let notificationsNavigationController = templateNavigationController(image: UIImage(named: "search_unselected"),
+                                                                             rootViewController: notifications)
+        
+        let conversations = ConversationsController()
+        let conversationsNavigationController = templateNavigationController(image: UIImage(named: "search_unselected"),
+                                                                             rootViewController: conversations)
+        
+        viewControllers = [feedNavigationController,
+                           exploreNavigationController,
+                           notificationsNavigationController,
+                           conversationsNavigationController]
         
     }
-  
+    
+    func templateNavigationController(image: UIImage?, rootViewController: UIViewController) -> UINavigationController {
+        let navigationController = UINavigationController(rootViewController: rootViewController)
+        navigationController.tabBarItem.image = image
+        return navigationController
+    }
 
 }

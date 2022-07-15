@@ -14,9 +14,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func configureNavigatinBar() {
         if #available(iOS 15, *) {
             let appearance = UINavigationBarAppearance()
-            appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = .clear
-            appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+//            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = .white
+//            appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
             
@@ -26,9 +26,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             UITabBar.appearance().scrollEdgeAppearance = tabAppearance
         } else {
             UINavigationBar.appearance().barStyle = .default
-            UINavigationBar.appearance().tintColor = .white
+            UINavigationBar.appearance().tintColor = .black
             UITabBar.appearance().barStyle = .default
-            UITabBar.appearance().tintColor = .white
+            UITabBar.appearance().tintColor = .black
         }
     }
 

@@ -16,6 +16,7 @@
 		18842AD52881FC3B0090FB2B /* ExploreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18842AD42881FC3B0090FB2B /* ExploreController.swift */; };
 		18842AD72881FC640090FB2B /* NotificationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18842AD62881FC640090FB2B /* NotificationsController.swift */; };
 		18842AD92881FC930090FB2B /* ConversationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18842AD82881FC930090FB2B /* ConversationsController.swift */; };
+		18B4E44A2883564C00512912 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B4E4492883564C00512912 /* Extentions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		18842AD42881FC3B0090FB2B /* ExploreController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreController.swift; sourceTree = "<group>"; };
 		18842AD62881FC640090FB2B /* NotificationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsController.swift; sourceTree = "<group>"; };
 		18842AD82881FC930090FB2B /* ConversationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsController.swift; sourceTree = "<group>"; };
+		18B4E4492883564C00512912 /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 		18842ACA2881F73E0090FB2B /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				18B4E4492883564C00512912 /* Extentions.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -198,6 +201,7 @@
 				18842AD92881FC930090FB2B /* ConversationsController.swift in Sources */,
 				18842AB72881F6CB0090FB2B /* AppDelegate.swift in Sources */,
 				18842AD52881FC3B0090FB2B /* ExploreController.swift in Sources */,
+				18B4E44A2883564C00512912 /* Extentions.swift in Sources */,
 				18842AB92881F6CB0090FB2B /* SceneDelegate.swift in Sources */,
 				18842AD12881F8310090FB2B /* MainTabController.swift in Sources */,
 				18842AD32881FBCF0090FB2B /* FeedController.swift in Sources */,

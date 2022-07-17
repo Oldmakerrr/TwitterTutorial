@@ -19,6 +19,11 @@ class LoginController: UIViewController {
         return imageView
     }()
     
+    private let emailContainerView = InputContainerView(image: UIImage(named: "ic_mail_outline_white_2x-1"), placeholder: "Email")
+    
+    private let passwordContainerView = InputContainerView(image: UIImage(named: "ic_lock_outline_white_2x"), placeholder: "Password")
+    
+    
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -38,5 +43,12 @@ class LoginController: UIViewController {
         logoImageView.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor)
         logoImageView.setDimensions(width: 150, height: 150)
         
+        let stackView = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView])
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        
+        view.addSubview(stackView)
+        stackView.anchor(top: logoImageView.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor,
+                         paddingLeading: 16, paddingTrailing: 16)
     }
 }

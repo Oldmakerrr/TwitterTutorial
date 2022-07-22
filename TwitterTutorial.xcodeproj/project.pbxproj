@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		184A2C0C288AFD0C008918A8 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A2C0B288AFD0C008918A8 /* Utilities.swift */; };
 		1873E2A02884943B00BB7350 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1873E29F2884943B00BB7350 /* LoginController.swift */; };
 		1873E2A2288494BB00BB7350 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1873E2A1288494BB00BB7350 /* RegistrationController.swift */; };
 		18842AB72881F6CB0090FB2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18842AB62881F6CB0090FB2B /* AppDelegate.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		184A2C0B288AFD0C008918A8 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		1873E29F2884943B00BB7350 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		1873E2A1288494BB00BB7350 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		18842AB32881F6CB0090FB2B /* TwitterTutorial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterTutorial.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				18B4E4492883564C00512912 /* Extentions.swift */,
+				184A2C0B288AFD0C008918A8 /* Utilities.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 				18842AD52881FC3B0090FB2B /* ExploreController.swift in Sources */,
 				1873E2A02884943B00BB7350 /* LoginController.swift in Sources */,
 				18DCB5552884ADCA00B1B497 /* InputContainerView.swift in Sources */,
+				184A2C0C288AFD0C008918A8 /* Utilities.swift in Sources */,
 				18B4E44A2883564C00512912 /* Extentions.swift in Sources */,
 				18842AB92881F6CB0090FB2B /* SceneDelegate.swift in Sources */,
 				18842AD12881F8310090FB2B /* MainTabController.swift in Sources */,

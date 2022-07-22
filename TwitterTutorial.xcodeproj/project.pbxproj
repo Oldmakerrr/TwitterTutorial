@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		184A2C0C288AFD0C008918A8 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A2C0B288AFD0C008918A8 /* Utilities.swift */; };
+		184A2C0E288B066A008918A8 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A2C0D288B066A008918A8 /* LoginButton.swift */; };
 		1873E2A02884943B00BB7350 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1873E29F2884943B00BB7350 /* LoginController.swift */; };
 		1873E2A2288494BB00BB7350 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1873E2A1288494BB00BB7350 /* RegistrationController.swift */; };
 		18842AB72881F6CB0090FB2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18842AB62881F6CB0090FB2B /* AppDelegate.swift */; };
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		184A2C0B288AFD0C008918A8 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		184A2C0D288B066A008918A8 /* LoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
 		1873E29F2884943B00BB7350 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		1873E2A1288494BB00BB7350 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		18842AB32881F6CB0090FB2B /* TwitterTutorial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterTutorial.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -136,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				18DCB5542884ADCA00B1B497 /* InputContainerView.swift */,
+				184A2C0D288B066A008918A8 /* LoginButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -229,6 +232,7 @@
 				18842AD12881F8310090FB2B /* MainTabController.swift in Sources */,
 				1873E2A2288494BB00BB7350 /* RegistrationController.swift in Sources */,
 				18842AD32881FBCF0090FB2B /* FeedController.swift in Sources */,
+				184A2C0E288B066A008918A8 /* LoginButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

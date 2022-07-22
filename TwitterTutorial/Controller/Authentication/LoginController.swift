@@ -23,15 +23,9 @@ class LoginController: UIViewController {
     
     private let passwordContainerView = InputContainerView(image: UIImage(named: "ic_lock_outline_white_2x"), placeholder: "Password")
     
-    private let logginButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Log in", for: .normal)
-        button.setTitleColor(.twitterBlue, for: .normal)
-        button.backgroundColor = .white
-        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        button.layer.cornerRadius = 5
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        button.addTarget(self, action: #selector(handleLoggin), for: .touchUpInside)
+    private let loginButton: LoginButton = {
+        let button = LoginButton(title: "Log in")
+        button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         return button
     }()
     
@@ -50,12 +44,12 @@ class LoginController: UIViewController {
     
     //MARK: - Selectors
     
-    @objc private func handleLoggin() {
-        
+    @objc private func handleLogin() {
     }
     
     @objc private func handleShowSignUp() {
-        
+        let controller = RegistrationController()
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     //MARK: - Helper Methods
@@ -68,7 +62,7 @@ class LoginController: UIViewController {
         logoImageView.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor)
         logoImageView.setDimensions(width: 150, height: 150)
         
-        let stackView = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView, logginButton])
+        let stackView = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView, loginButton])
         stackView.axis = .vertical
         stackView.spacing = 20
         stackView.distribution = .fillEqually

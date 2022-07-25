@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class MainTabController: UITabBarController {
     
@@ -23,8 +24,32 @@ class MainTabController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureViewControllers()
-        configureUI()
+        view.backgroundColor = .twitterBlue
+//        logUserOut()
+        authenticateUser()
+    }
+    
+    //MARK: - API
+    
+    func authenticateUser() {
+        if Auth.auth().currentUser == nil {
+            DispatchQueue.main.async {
+                let navigationController = UINavigationController(rootViewController: LoginController())
+                navigationController.modalPresentationStyle = .fullScreen
+                self.present(navigationController, animated: true)
+            }
+        } else {
+            configureViewControllers()
+            configureUI()
+        }
+    }
+    
+    func logUserOut() {
+        do {
+            try Auth.auth().signOut()
+        } catch let error {
+            print("DEBUG: Failed to sigh out with error: \(error.localizedDescription)")
+        }
     }
     
     //MARK: - Selectors

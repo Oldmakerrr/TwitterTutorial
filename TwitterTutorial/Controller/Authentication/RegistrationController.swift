@@ -62,40 +62,17 @@ class RegistrationController: UIViewController {
             print("DEBUG: Please select a profile image..")
             return
         }
-        registrationButton.isEnabled = false
-        uploadProfileImage(profileImage: profileImage) { profileImageUrl in
-            Auth.auth().createUser(withEmail: email, password: password) { result, error in
-                if let error = error {
-                    print("DEBUG: Error is: \(error.localizedDescription)")
-                    self.registrationButton.isEnabled = true
-                    return
-                }
-                guard let uid = result?.user.uid else { return }
-                
-                let values = ["email": email,
-                              "username": username,
-                              "fullname": fullname,
-                              "profileImageUrl": profileImageUrl]
-                
-                REF_USERS.child(uid).updateChildValues(values) { error, reference in
-                    print("DEBUG: Successfully updated user information..")
-                    self.registrationButton.isEnabled = true
-                }
-            }
+        let credentials = AuthCredentials(email: email,
+                                          password: password,
+                                          fullname: fullname,
+                                          username: username,
+                                          profileImage: profileImage)
+        AuthService.shared.registerUser(credentials: credentials) { error, reference in
+            
         }
     }
     
-    private func uploadProfileImage(profileImage: UIImage, completion: @escaping (String) -> ()) {
-        guard let imageData = profileImage.jpegData(compressionQuality: 0.3) else { return }
-        let filename = UUID().uuidString
-        let storageRef = STARAGE_PROFILE_IMAGES.child(filename)
-        storageRef.putData(imageData) { meta, error in
-            storageRef.downloadURL { url, error in
-                guard let profileUrl = url?.absoluteString else { return }
-                completion(profileUrl)
-            }
-        }
-    }
+    
     
     //MARK: - Helper Methods
     

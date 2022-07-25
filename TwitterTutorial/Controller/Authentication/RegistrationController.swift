@@ -72,7 +72,7 @@ class RegistrationController: UIViewController {
         plusPhotoButton.setDimensions(width: 128, height: 128)
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
-        
+
         let stackView = UIStackView(arrangedSubviews: [emailContainerView,
                                                        passwordContainerView,
                                                        fullnameContainerView,

@@ -23,17 +23,9 @@ class LoginController: UIViewController {
     
     private let passwordContainerView = InputContainerView(image: UIImage(named: "ic_lock_outline_white_2x"), placeholder: "Password")
     
-    private let loginButton: LoginButton = {
-        let button = LoginButton(title: "Log in")
-        button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
-        return button
-    }()
+    private let loginButton = AuthButton(title: "Log In")
     
-    private let dontHaveAccountButton: UIButton = {
-        let button = Utilities().attributedButton("Don't have an account?", " Sign Up")
-        button.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
-        return button
-    }()
+    private let dontHaveAccountButton = Utilities().attributedButton("Don't have an account?", " Sign Up")
     
     //MARK: - Lifecycle
     
@@ -75,5 +67,10 @@ class LoginController: UIViewController {
                                      bottom: view.safeAreaLayoutGuide.bottomAnchor,
                                      trailing: view.trailingAnchor,
                                      paddingLeading: 40, paddingTrailing: 40)
+    }
+    
+    private func addTargets() {
+        loginButton.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
+        dontHaveAccountButton.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
     }
 }

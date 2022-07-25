@@ -20,7 +20,6 @@ class RegistrationController: UIViewController {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "plus_photo"), for: .normal)
         button.tintColor = .white
-        button.addTarget(self, action: #selector(handleAddProfilePhoto), for: .touchUpInside)
         return button
     }()
     
@@ -32,22 +31,15 @@ class RegistrationController: UIViewController {
     
     private let usernameContainerView = InputContainerView(image: UIImage(named: "Iic_person_outline_white_2x"), placeholder: "Username")
     
-    private let alreadyHaveAccount: UIButton = {
-        let button = Utilities().attributedButton("Already have an account?", " Log In")
-        button.addTarget(self, action: #selector(handleShowLogin), for: .touchUpInside)
-        return button
-    }()
+    private let alreadyHaveAccount = Utilities().attributedButton("Already have an account?", " Log In")
     
-    private let registrationButton: LoginButton = {
-        let button = LoginButton(title: "Sign Up")
-        button.addTarget(self, action: #selector(handleRegistration), for: .touchUpInside)
-        return button
-    }()
+    private let registrationButton = AuthButton(title: "Sign Up")
     
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addTargets()
         configureUI()
     }
     
@@ -114,6 +106,12 @@ class RegistrationController: UIViewController {
                                      bottom: view.safeAreaLayoutGuide.bottomAnchor,
                                      trailing: view.trailingAnchor,
                                      paddingLeading: 40, paddingTrailing: 40)
+    }
+    
+    private func addTargets() {
+        registrationButton.addTarget(self, action: #selector(handleRegistration), for: .touchUpInside)
+        alreadyHaveAccount.addTarget(self, action: #selector(handleShowLogin), for: .touchUpInside)
+        plusPhotoButton.addTarget(self, action: #selector(handleAddProfilePhoto), for: .touchUpInside)
     }
 }
 

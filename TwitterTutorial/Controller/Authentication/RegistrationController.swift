@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseDatabase
 
 class RegistrationController: UIViewController {
     
     //MARK: - Properties
     
     private let imagePicker = UIImagePickerController()
+    private var profileImage: UIImage?
     
     private let plusPhotoButton: UIButton = {
         let button = UIButton(type: .system)
@@ -59,7 +62,28 @@ class RegistrationController: UIViewController {
     }
     
     @objc private func handleRegistration() {
+        guard let email = emailContainerView.textField.text,
+                let password = passwordContainerView.textField.text,
+                let fullname = fullnameContainerView.textField.text,
+                let username = usernameContainerView.textField.text else { return }
+        guard let profileImage = profileImage else {
+            print("DEBUG: Please select a profile image..")
+            return
+        }
         
+        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+            if let error = error {
+                print("DEBUG: Error is: \(error.localizedDescription)")
+                return
+            }
+            guard let uid = result?.user.uid else { return }
+            
+            let values = ["email": email, "username": username, "fullname": fullname]
+            let reference = Database.database().reference().child("users").child(uid)
+            reference.updateChildValues(values) { error, reference in
+                print("DEBUG: Successfully updated user information..")
+            }
+        }
     }
     
     //MARK: - Helper Methods
@@ -99,6 +123,7 @@ extension RegistrationController: UIImagePickerControllerDelegate, UINavigationC
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let profileImage = info[.editedImage] as? UIImage else { return }
+        self.profileImage = profileImage
         plusPhotoButton.applyRoundCornerRadius()
         plusPhotoButton.layer.masksToBounds = true
         plusPhotoButton.imageView?.contentMode = .scaleAspectFill

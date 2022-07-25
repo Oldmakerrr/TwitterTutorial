@@ -72,9 +72,8 @@ class RegistrationController: UIViewController {
                 print("DEBUG: Error sigh up: \(error.localizedDescription)")
             } else {
                 self.dismiss(animated: true)
-                let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-                if let homeController = keyWindow?.rootViewController as? MainTabController {
-                    homeController.authenticateUser()
+                if let mainTabController = UIApplication.shared.keyWindow?.rootViewController as? MainTabController {
+                    mainTabController.authenticateUser()
                 }
             }
         }

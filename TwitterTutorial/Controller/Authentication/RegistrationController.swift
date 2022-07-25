@@ -55,25 +55,44 @@ class RegistrationController: UIViewController {
     
     @objc private func handleRegistration() {
         guard let email = emailContainerView.textField.text,
-                let password = passwordContainerView.textField.text,
-                let fullname = fullnameContainerView.textField.text,
-                let username = usernameContainerView.textField.text else { return }
+              let password = passwordContainerView.textField.text,
+              let fullname = fullnameContainerView.textField.text,
+              let username = usernameContainerView.textField.text else { return }
         guard let profileImage = profileImage else {
             print("DEBUG: Please select a profile image..")
             return
         }
-        
-        Auth.auth().createUser(withEmail: email, password: password) { result, error in
-            if let error = error {
-                print("DEBUG: Error is: \(error.localizedDescription)")
-                return
+        registrationButton.isEnabled = false
+        uploadProfileImage(profileImage: profileImage) { profileImageUrl in
+            Auth.auth().createUser(withEmail: email, password: password) { result, error in
+                if let error = error {
+                    print("DEBUG: Error is: \(error.localizedDescription)")
+                    self.registrationButton.isEnabled = true
+                    return
+                }
+                guard let uid = result?.user.uid else { return }
+                
+                let values = ["email": email,
+                              "username": username,
+                              "fullname": fullname,
+                              "profileImageUrl": profileImageUrl]
+                
+                REF_USERS.child(uid).updateChildValues(values) { error, reference in
+                    print("DEBUG: Successfully updated user information..")
+                    self.registrationButton.isEnabled = true
+                }
             }
-            guard let uid = result?.user.uid else { return }
-            
-            let values = ["email": email, "username": username, "fullname": fullname]
-            let reference = Database.database().reference().child("users").child(uid)
-            reference.updateChildValues(values) { error, reference in
-                print("DEBUG: Successfully updated user information..")
+        }
+    }
+    
+    private func uploadProfileImage(profileImage: UIImage, completion: @escaping (String) -> ()) {
+        guard let imageData = profileImage.jpegData(compressionQuality: 0.3) else { return }
+        let filename = UUID().uuidString
+        let storageRef = STARAGE_PROFILE_IMAGES.child(filename)
+        storageRef.putData(imageData) { meta, error in
+            storageRef.downloadURL { url, error in
+                guard let profileUrl = url?.absoluteString else { return }
+                completion(profileUrl)
             }
         }
     }
@@ -88,7 +107,7 @@ class RegistrationController: UIViewController {
         plusPhotoButton.setDimensions(width: 128, height: 128)
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
-
+        
         let stackView = UIStackView(arrangedSubviews: [emailContainerView,
                                                        passwordContainerView,
                                                        fullnameContainerView,
@@ -103,9 +122,9 @@ class RegistrationController: UIViewController {
         
         view.addSubview(alreadyHaveAccount)
         alreadyHaveAccount.anchor(leading: view.leadingAnchor,
-                                     bottom: view.safeAreaLayoutGuide.bottomAnchor,
-                                     trailing: view.trailingAnchor,
-                                     paddingLeading: 40, paddingTrailing: 40)
+                                  bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                                  trailing: view.trailingAnchor,
+                                  paddingLeading: 40, paddingTrailing: 40)
     }
     
     private func addTargets() {
@@ -131,5 +150,5 @@ extension RegistrationController: UIImagePickerControllerDelegate, UINavigationC
         plusPhotoButton.setImage(profileImage.withRenderingMode(.alwaysOriginal), for: .normal)
         dismiss(animated: true)
     }
-
+    
 }

@@ -31,6 +31,7 @@ class LoginController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addTargets()
         configureUI()
     }
     

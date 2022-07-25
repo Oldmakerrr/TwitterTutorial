@@ -68,7 +68,15 @@ class RegistrationController: UIViewController {
                                           username: username,
                                           profileImage: profileImage)
         AuthService.shared.registerUser(credentials: credentials) { error, reference in
-            
+            if let error = error {
+                print("DEBUG: Error sigh up: \(error.localizedDescription)")
+            } else {
+                self.dismiss(animated: true)
+                let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+                if let homeController = keyWindow?.rootViewController as? MainTabController {
+                    homeController.authenticateUser()
+                }
+            }
         }
     }
     

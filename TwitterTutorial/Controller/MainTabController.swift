@@ -39,8 +39,8 @@ class MainTabController: UITabBarController {
                 self.present(navigationController, animated: true)
             }
         } else {
-            configureViewControllers()
             configureUI()
+            configureViewControllers()
         }
     }
     

@@ -43,6 +43,12 @@ class LoginController: UIViewController {
         AuthService.shared.logUserIn(withEmail: email, password: password) { result, error in
             if let error = error {
                 print("DEBUG: Error logging in \(error.localizedDescription)")
+            } else {
+                self.dismiss(animated: true)
+                let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+                if let homeController = keyWindow?.rootViewController as? MainTabController {
+                    homeController.authenticateUser()
+                }
             }
         }
     }

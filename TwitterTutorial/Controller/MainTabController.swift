@@ -12,7 +12,7 @@ class MainTabController: UITabBarController {
     
     //MARK: - Properties
     
-    let actionButton: UIButton = {
+    private let actionButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .white
         button.backgroundColor = .twitterBlue
@@ -41,10 +41,15 @@ class MainTabController: UITabBarController {
         } else {
             configureUI()
             configureViewControllers()
+            fetchUser()
         }
     }
     
-    func logUserOut() {
+    private func fetchUser() {
+        UserService.shared.fetchUser()
+    }
+    
+    private func logUserOut() {
         do {
             try Auth.auth().signOut()
         } catch let error {
@@ -94,7 +99,7 @@ class MainTabController: UITabBarController {
         
     }
     
-    func templateNavigationController(image: UIImage?, rootViewController: UIViewController) -> UINavigationController {
+    private func templateNavigationController(image: UIImage?, rootViewController: UIViewController) -> UINavigationController {
         let navigationController = UINavigationController(rootViewController: rootViewController)
         navigationController.tabBarItem.image = image
         return navigationController

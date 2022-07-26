@@ -6,10 +6,18 @@
 //
 
 import UIKit
+import SDWebImage
 
 class FeedController: UIViewController {
     
     //MARK: - Properties
+    
+    var user: User? {
+        didSet {
+            configureProfileImage()
+            print("DEBUG: User successfully fethc \(user?.username)")
+        }
+    }
     
     //MARK: - Lifecycle
     
@@ -22,7 +30,6 @@ class FeedController: UIViewController {
     
     private func configureUI() {
         view.backgroundColor = .white
-        
         configureNavigationBar()
     }
     
@@ -30,6 +37,17 @@ class FeedController: UIViewController {
         let imageView = UIImageView(image: UIImage(named: "twitter_logo_blue"))
         imageView.contentMode = .scaleAspectFit
         navigationItem.titleView = imageView
+    }
+    
+    private func configureProfileImage() {
+        guard let user = user else { return }
+        let profileImageView = UIImageView()
+        profileImageView.setDimensions(width: 32, height: 32)
+        profileImageView.layer.cornerRadius = 32 / 2
+        profileImageView.layer.masksToBounds = true
+        profileImageView.contentMode = .scaleAspectFill
+        profileImageView.sd_setImage(with: user.profileImageUrl)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileImageView)
     }
     
 }

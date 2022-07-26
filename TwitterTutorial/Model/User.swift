@@ -18,7 +18,7 @@ struct User {
     let fullname: String
     let email: String
     let username: String
-    let profileImageUrl: String
+    let profileImageUrl: URL
     let uid: String
     
     init(uid: String, dictionary: [String: AnyObject]) throws {
@@ -38,7 +38,8 @@ struct User {
         } else {
             throw UserError.usernameNotExists
         }
-        if let profileImageUrl = dictionary["profileImageUrl"] as? String {
+        if let profileImage = dictionary["profileImageUrl"] as? String,
+            let profileImageUrl = URL(string: profileImage)  {
             self.profileImageUrl = profileImageUrl
         } else {
             throw UserError.profileImageUrlNotExists

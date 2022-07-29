@@ -22,4 +22,20 @@ struct TweetService {
                       "caption": caption]
         REF_TWEETS.childByAutoId().updateChildValues(values, withCompletionBlock: completion)
     }
+    
+    func fetchTweets(completion: @escaping([Tweet]) -> Void) {
+        var tweets = [Tweet]()
+        REF_TWEETS.observe(.childAdded) { snapshot in
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            let tweetId = snapshot.key
+            do {
+                let tweet = try Tweet(tweetId: tweetId, dictionary: dictionary)
+                tweets.append(tweet)
+                completion(tweets)
+            } catch let error as NSError {
+                print("DEBUG: Failed create Tweet with error: \(error.localizedDescription)")
+            }
+            
+        }
+    }
 }

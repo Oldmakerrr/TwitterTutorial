@@ -7,13 +7,6 @@
 
 import Foundation
 
-enum UserError: Error {
-    case fullnameNotExists
-    case emailNotExists
-    case usernameNotExists
-    case profileImageUrlNotExists
-}
-
 struct User {
     let fullname: String
     let email: String
@@ -26,23 +19,23 @@ struct User {
         if let fullname = dictionary["fullname"] as? String {
             self.fullname = fullname
         } else {
-            throw UserError.fullnameNotExists
+            throw NSError(domain: "Failed to parse Fullname", code: 101)
         }
         if let email = dictionary["email"] as? String {
             self.email = email
         } else {
-            throw UserError.emailNotExists
+            throw NSError(domain: "Failed to parse Email", code: 102)
         }
         if let username = dictionary["username"] as? String {
             self.username = username
         } else {
-            throw UserError.usernameNotExists
+            throw NSError(domain: "Failed to parse Username", code: 103)
         }
         if let profileImage = dictionary["profileImageUrl"] as? String,
             let profileImageUrl = URL(string: profileImage)  {
             self.profileImageUrl = profileImageUrl
         } else {
-            throw UserError.profileImageUrlNotExists
+            throw NSError(domain: "Failed to parse Profile Image URL", code: 104)
         }
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		181059CA2894192D001C366B /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181059C92894192D001C366B /* Tweet.swift */; };
 		184A2C0C288AFD0C008918A8 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A2C0B288AFD0C008918A8 /* Utilities.swift */; };
 		184A2C0E288B066A008918A8 /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A2C0D288B066A008918A8 /* AuthButton.swift */; };
 		1855AAD6288FF833005E2967 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1855AAD5288FF833005E2967 /* UserService.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		181059C92894192D001C366B /* Tweet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		184A2C0B288AFD0C008918A8 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		184A2C0D288B066A008918A8 /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 		1855AAD5288FF833005E2967 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				1855AAD728901A7D005E2967 /* User.swift */,
+				181059C92894192D001C366B /* Tweet.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 				18842AD72881FC640090FB2B /* NotificationsController.swift in Sources */,
 				18842AD92881FC930090FB2B /* ConversationsController.swift in Sources */,
 				1884B13B288F38550013BF4A /* AuthService.swift in Sources */,
+				181059CA2894192D001C366B /* Tweet.swift in Sources */,
 				18842AB72881F6CB0090FB2B /* AppDelegate.swift in Sources */,
 				18842AD52881FC3B0090FB2B /* ExploreController.swift in Sources */,
 				1873E2A02884943B00BB7350 /* LoginController.swift in Sources */,

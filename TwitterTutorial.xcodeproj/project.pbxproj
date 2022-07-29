@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		181059CA2894192D001C366B /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181059C92894192D001C366B /* Tweet.swift */; };
 		181059CC28943B22001C366B /* TweetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181059CB28943B22001C366B /* TweetCell.swift */; };
+		181059CE28943D50001C366B /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181059CD28943D50001C366B /* ProfileImageView.swift */; };
+		181059D0289454CE001C366B /* TweetCellButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181059CF289454CE001C366B /* TweetCellButton.swift */; };
 		184A2C0C288AFD0C008918A8 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A2C0B288AFD0C008918A8 /* Utilities.swift */; };
 		184A2C0E288B066A008918A8 /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184A2C0D288B066A008918A8 /* AuthButton.swift */; };
 		1855AAD6288FF833005E2967 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1855AAD5288FF833005E2967 /* UserService.swift */; };
@@ -38,6 +40,8 @@
 /* Begin PBXFileReference section */
 		181059C92894192D001C366B /* Tweet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		181059CB28943B22001C366B /* TweetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetCell.swift; sourceTree = "<group>"; };
+		181059CD28943D50001C366B /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
+		181059CF289454CE001C366B /* TweetCellButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetCellButton.swift; sourceTree = "<group>"; };
 		184A2C0B288AFD0C008918A8 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		184A2C0D288B066A008918A8 /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 		1855AAD5288FF833005E2967 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
@@ -173,7 +177,9 @@
 				18DCB5542884ADCA00B1B497 /* InputContainerView.swift */,
 				184A2C0D288B066A008918A8 /* AuthButton.swift */,
 				1861F5BA289317B300FF9840 /* CaptionTextView.swift */,
+				181059CD28943D50001C366B /* ProfileImageView.swift */,
 				181059CB28943B22001C366B /* TweetCell.swift */,
+				181059CF289454CE001C366B /* TweetCellButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -332,9 +338,11 @@
 				184A2C0C288AFD0C008918A8 /* Utilities.swift in Sources */,
 				18B4E44A2883564C00512912 /* Extentions.swift in Sources */,
 				1861F5BB289317B300FF9840 /* CaptionTextView.swift in Sources */,
+				181059D0289454CE001C366B /* TweetCellButton.swift in Sources */,
 				18842AB92881F6CB0090FB2B /* SceneDelegate.swift in Sources */,
 				18842AD12881F8310090FB2B /* MainTabController.swift in Sources */,
 				181059CC28943B22001C366B /* TweetCell.swift in Sources */,
+				181059CE28943D50001C366B /* ProfileImageView.swift in Sources */,
 				1873E2A2288494BB00BB7350 /* RegistrationController.swift in Sources */,
 				1855AAD6288FF833005E2967 /* UserService.swift in Sources */,
 				1884B139288E7EA00013BF4A /* Constants.swift in Sources */,

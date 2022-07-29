@@ -8,6 +8,7 @@
 import UIKit
 
 extension UIView {
+    
     func anchor(top: NSLayoutYAxisAnchor? = nil,
                 leading: NSLayoutXAxisAnchor? = nil,
                 bottom: NSLayoutYAxisAnchor? = nil,
@@ -90,6 +91,14 @@ extension UIView {
     func applyRoundCornerRadius() {
         layoutIfNeeded()
         layer.cornerRadius = frame.size.width / 2
+    }
+    
+    func addSeparateView(toView view: UIView) {
+        let underlineView = UIView()
+        underlineView.backgroundColor = .systemGroupedBackground
+        view.addSubview(underlineView)
+        underlineView.anchor( leading: view.leadingAnchor, bottom: view.bottomAnchor,
+                              trailing: view.trailingAnchor, height: 1)
     }
 }
 

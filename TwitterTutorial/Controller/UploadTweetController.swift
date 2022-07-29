@@ -27,14 +27,7 @@ class UploadTweetController: UIViewController {
         return button
     }()
     
-    private let profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
-        imageView.setDimensions(width: 48, height: 48)
-        imageView.layer.cornerRadius = 48 / 2
-        return imageView
-    }()
+    private let profileImageView = ProfileImageView()
     
 //MARK: - Lifecycle
     
@@ -78,17 +71,12 @@ class UploadTweetController: UIViewController {
         view.backgroundColor = .white
         configureNavigationBar()
         configureStackView()
-        configureProfileImageView()
+        profileImageView.sd_setImage(with: user.profileImageUrl, completed: nil)
     }
     
     private func configureNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: actionButton)
-    }
-    
-    private func configureProfileImageView() {
-        profileImageView.contentMode = .scaleAspectFill
-        profileImageView.sd_setImage(with: user.profileImageUrl, completed: nil)
     }
     
     private func configureStackView() {

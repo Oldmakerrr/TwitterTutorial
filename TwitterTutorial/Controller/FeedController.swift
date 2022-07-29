@@ -8,9 +8,11 @@
 import UIKit
 import SDWebImage
 
-class FeedController: UIViewController {
+class FeedController: UICollectionViewController {
     
     //MARK: - Properties
+    
+    private let reuseIdentifier = "TweetCell"
     
     var user: User? {
         didSet {
@@ -38,6 +40,7 @@ class FeedController: UIViewController {
     
     private func configureUI() {
         view.backgroundColor = .white
+        collectionView.register(TweetCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         configureNavigationBar()
     }
     
@@ -59,4 +62,29 @@ class FeedController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileImageView)
     }
     
+}
+
+//MARK: - UICollectionViewDataSource
+
+extension FeedController {
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TweetCell
+        
+        return cell
+    }
+}
+
+//MARK: - UICollectionViewDelegateFlowLayout
+
+extension FeedController: UICollectionViewDelegateFlowLayout {
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: 200)
+    }
 }

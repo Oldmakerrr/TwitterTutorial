@@ -56,7 +56,14 @@ class UploadTweetController: UIViewController {
 //MARK: - Selectors
     
     @objc private func uploadTweet() {
-        
+        guard let caption = caprionTextView.text else { return }
+        TweetService.shared.uploadTweet(caption: caption) { error, reference in
+            if let error = error {
+                print("DEBUG: Failed to upload tweet wuth error: \(error.localizedDescription)")
+                return
+            }
+            self.dismiss(animated: true)
+        }
     }
     
     @objc private func handleCancel() {

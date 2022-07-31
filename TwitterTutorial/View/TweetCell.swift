@@ -22,7 +22,6 @@ class TweetCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.numberOfLines = 0
-        label.text = "Some caption"
         return label
     }()
     
@@ -53,10 +52,10 @@ class TweetCell: UICollectionViewCell {
     
     func configure() {
         guard let tweet = tweet else { return }
-        let user = tweet.user
+        let viewModel = TweetViewModel(tweet: tweet)
         captionLabel.text = tweet.caption
-        infoLabel.text = user.username
-        profileImageView.sd_setImage(with: user.profileImageUrl)
+        infoLabel.attributedText = viewModel.userInfoText
+        profileImageView.sd_setImage(with: viewModel.profileImageUrl)
     }
     
     private func configureUI() {
@@ -66,7 +65,6 @@ class TweetCell: UICollectionViewCell {
                                 paddingTop: 8, paddingLeading: 8)
         configureLabelStackView()
         confugureButtonStackView()
-        infoLabel.text = "Eddie Brock @venom"
         infoLabel.font = UIFont.systemFont(ofSize: 14)
         addSeparateView(toView: self)
     }

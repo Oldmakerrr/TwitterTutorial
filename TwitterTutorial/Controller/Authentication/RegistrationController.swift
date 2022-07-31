@@ -57,7 +57,7 @@ class RegistrationController: UIViewController {
         guard let email = emailContainerView.textField.text,
               let password = passwordContainerView.textField.text,
               let fullname = fullnameContainerView.textField.text,
-              let username = usernameContainerView.textField.text else { return }
+              let username = usernameContainerView.textField.text?.lowercased() else { return }
         guard let profileImage = profileImage else {
             print("DEBUG: Please select a profile image..")
             return

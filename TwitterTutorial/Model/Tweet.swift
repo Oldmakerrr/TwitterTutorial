@@ -14,8 +14,10 @@ struct Tweet {
     let likes: Int
     let timestamp: Date
     let retweetsCount: Int
+    let user: User
     
-    init(tweetId: String, dictionary: [String: Any]) throws {
+    init(user: User, tweetId: String, dictionary: [String: Any]) throws {
+        self.user = user
         self.tweetId = tweetId
         if let caption = dictionary["caption"] as? String {
             self.caption = caption
@@ -42,6 +44,7 @@ struct Tweet {
         } else {
             throw NSError(domain: "Failed to parse Retweets Count", code: 205)
         }
+        
     }
     
 }

@@ -26,16 +26,18 @@ struct TweetService {
     func fetchTweets(completion: @escaping([Tweet]) -> Void) {
         var tweets = [Tweet]()
         REF_TWEETS.observe(.childAdded) { snapshot in
-            guard let dictionary = snapshot.value as? [String: Any] else { return }
-            let tweetId = snapshot.key
-            do {
-                let tweet = try Tweet(tweetId: tweetId, dictionary: dictionary)
-                tweets.append(tweet)
-                completion(tweets)
-            } catch let error as NSError {
-                print("DEBUG: Failed create Tweet with error: \(error.localizedDescription)")
+            guard let dictionary = snapshot.value as? [String: Any],
+                  let uid = dictionary["uid"] as? String else { return }
+            UserService.shared.fetchUser(uid: uid) { user in
+                let tweetId = snapshot.key
+                do {
+                    let tweet = try Tweet(user: user, tweetId: tweetId, dictionary: dictionary)
+                    tweets.append(tweet)
+                    completion(tweets)
+                } catch let error as NSError {
+                    print("DEBUG: Failed create Tweet with error: \(error.localizedDescription)")
+                }
             }
-            
         }
     }
 }

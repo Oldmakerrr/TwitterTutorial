@@ -6,10 +6,15 @@
 //
 
 import UIKit
+import SDWebImage
 
 class TweetCell: UICollectionViewCell {
     
 //MARK: - Properties
+    
+    var tweet: Tweet? {
+        didSet { configure() }
+    }
     
     private let profileImageView = ProfileImageView()
     
@@ -45,6 +50,14 @@ class TweetCell: UICollectionViewCell {
     }
     
 //MARK: - Helpers
+    
+    func configure() {
+        guard let tweet = tweet else { return }
+        let user = tweet.user
+        captionLabel.text = tweet.caption
+        infoLabel.text = user.username
+        profileImageView.sd_setImage(with: user.profileImageUrl)
+    }
     
     private func configureUI() {
         profileImageView.backgroundColor = .twitterBlue

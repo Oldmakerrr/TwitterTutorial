@@ -11,6 +11,10 @@ class ProfileHeader: UICollectionReusableView {
     
     //MARK: - Properies
     
+    private let profileFilterView = ProfileFilterView()
+    
+    private let underlineView = UIView()
+    
     private lazy var containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .twitterBlue
@@ -86,6 +90,15 @@ class ProfileHeader: UICollectionReusableView {
         profileImageView.setDimensions(width: 80, height: 80)
         configureButtons()
         configureUserDetailsStackView()
+        addSubview(profileFilterView)
+        profileFilterView.delegate = self
+        profileFilterView.anchor(leading: leadingAnchor,
+                                 bottom: bottomAnchor,
+                                 trailing: trailingAnchor, height: 50)
+        addSubview(underlineView)
+        underlineView.backgroundColor = .twitterBlue
+        underlineView.anchor(leading: leadingAnchor, bottom: bottomAnchor,
+                             width: frame.width / 3, height: 2)
     }
     
     required init?(coder: NSCoder) {
@@ -128,4 +141,16 @@ class ProfileHeader: UICollectionReusableView {
                          paddingTop: 8, paddingLeading: 12, paddingTrailing: 12)
     }
     
+}
+
+//MARK: - ProfileFilterViewDelegate
+
+extension ProfileHeader: ProfileFilterViewDelegate {
+    
+    func didSelect(_ view: ProfileFilterView, cell: ProfileFilterCell) {
+        let xPosition = cell.frame.origin.x
+        UIView.animate(withDuration: 0.3) {
+            self.underlineView.frame.origin.x = xPosition
+        }
+    }
 }

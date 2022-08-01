@@ -36,6 +36,8 @@
 		18B4E44A2883564C00512912 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B4E4492883564C00512912 /* Extentions.swift */; };
 		18C0A4852897EB5600412EE9 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C0A4842897EB5600412EE9 /* ProfileController.swift */; };
 		18C0A4872897F78F00412EE9 /* ProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C0A4862897F78F00412EE9 /* ProfileHeader.swift */; };
+		18C0A4892898146500412EE9 /* ProfileFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C0A4882898146500412EE9 /* ProfileFilterView.swift */; };
+		18C0A48B2898170800412EE9 /* ProfileFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C0A48A2898170800412EE9 /* ProfileFilterCell.swift */; };
 		18DCB5552884ADCA00B1B497 /* InputContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB5542884ADCA00B1B497 /* InputContainerView.swift */; };
 		D0665D6187A37D3AB5D6E71F /* Pods_TwitterTutorial.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C24E755B8A13D212FDD82DF7 /* Pods_TwitterTutorial.framework */; };
 /* End PBXBuildFile section */
@@ -72,6 +74,8 @@
 		18B4E4492883564C00512912 /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		18C0A4842897EB5600412EE9 /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		18C0A4862897F78F00412EE9 /* ProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeader.swift; sourceTree = "<group>"; };
+		18C0A4882898146500412EE9 /* ProfileFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFilterView.swift; sourceTree = "<group>"; };
+		18C0A48A2898170800412EE9 /* ProfileFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFilterCell.swift; sourceTree = "<group>"; };
 		18DCB5542884ADCA00B1B497 /* InputContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputContainerView.swift; sourceTree = "<group>"; };
 		2878F704E20B919272FF4BA6 /* Pods-TwitterTutorial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterTutorial.release.xcconfig"; path = "Target Support Files/Pods-TwitterTutorial/Pods-TwitterTutorial.release.xcconfig"; sourceTree = "<group>"; };
 		652FED57EE9078F4D885FDE7 /* Pods-TwitterTutorial.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterTutorial.debug.xcconfig"; path = "Target Support Files/Pods-TwitterTutorial/Pods-TwitterTutorial.debug.xcconfig"; sourceTree = "<group>"; };
@@ -184,8 +188,10 @@
 				1861F5BA289317B300FF9840 /* CaptionTextView.swift */,
 				181059CD28943D50001C366B /* ProfileImageView.swift */,
 				181059CB28943B22001C366B /* TweetCell.swift */,
+				18C0A48A2898170800412EE9 /* ProfileFilterCell.swift */,
 				181059CF289454CE001C366B /* TweetCellButton.swift */,
 				18C0A4862897F78F00412EE9 /* ProfileHeader.swift */,
+				18C0A4882898146500412EE9 /* ProfileFilterView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -347,6 +353,7 @@
 				1884B13B288F38550013BF4A /* AuthService.swift in Sources */,
 				181059CA2894192D001C366B /* Tweet.swift in Sources */,
 				18842AB72881F6CB0090FB2B /* AppDelegate.swift in Sources */,
+				18C0A48B2898170800412EE9 /* ProfileFilterCell.swift in Sources */,
 				18C0A4852897EB5600412EE9 /* ProfileController.swift in Sources */,
 				18842AD52881FC3B0090FB2B /* ExploreController.swift in Sources */,
 				1873E2A02884943B00BB7350 /* LoginController.swift in Sources */,
@@ -358,6 +365,7 @@
 				1861F5BB289317B300FF9840 /* CaptionTextView.swift in Sources */,
 				181059D0289454CE001C366B /* TweetCellButton.swift in Sources */,
 				18842AB92881F6CB0090FB2B /* SceneDelegate.swift in Sources */,
+				18C0A4892898146500412EE9 /* ProfileFilterView.swift in Sources */,
 				18842AD12881F8310090FB2B /* MainTabController.swift in Sources */,
 				188EA11F2897011D000A5506 /* TweetViewModel.swift in Sources */,
 				181059CC28943B22001C366B /* TweetCell.swift in Sources */,

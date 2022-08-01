@@ -65,6 +65,12 @@ class FeedController: UICollectionViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileImageView)
     }
     
+    private func goToProfileController() {
+        let layout = UICollectionViewFlowLayout()
+        let controller = ProfileController(collectionViewLayout: layout)
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
 }
 
 //MARK: - UICollectionViewDataSource/Delegate
@@ -79,6 +85,7 @@ extension FeedController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TweetCell
         let tweet = tweets[indexPath.row]
         cell.tweet = tweet
+        cell.setProfileImageViewDelegate(self)
         return cell
     }
 }
@@ -91,4 +98,14 @@ extension FeedController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 120)
     }
+}
+
+//MARK: - ProfileImageViewDelegate
+
+extension FeedController: ProfileImageViewDelegate {
+    
+    func didTapped(_ view: ProfileImageView) {
+        goToProfileController()
+    }
+    
 }

@@ -50,6 +50,10 @@ class TweetCell: UICollectionViewCell {
     
 //MARK: - Helpers
     
+    func setProfileImageViewDelegate(_ delegate: ProfileImageViewDelegate) {
+        profileImageView.delegate = delegate
+    }
+    
     func configure() {
         guard let tweet = tweet else { return }
         let viewModel = TweetViewModel(tweet: tweet)
@@ -98,7 +102,7 @@ class TweetCell: UICollectionViewCell {
     }
     
 //MARK: - Selectors
-    
+
     @objc private func handleCommentTapped() {
         
     }

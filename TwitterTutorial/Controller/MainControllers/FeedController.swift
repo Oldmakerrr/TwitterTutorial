@@ -12,7 +12,7 @@ class FeedController: UICollectionViewController {
     
     //MARK: - Properties
     
-    private let reuseIdentifier = "TweetCell"
+    private let reuseIdentifier = "FeedControllerCell"
     private var tweets = [Tweet]() {
         didSet { collectionView.reloadData() }
     }
@@ -88,16 +88,17 @@ extension FeedController {
         cell.setProfileImageViewDelegate(self)
         return cell
     }
+    
 }
 
 //MARK: - UICollectionViewDelegateFlowLayout
 
 extension FeedController: UICollectionViewDelegateFlowLayout {
     
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 120)
     }
+    
 }
 
 //MARK: - ProfileImageViewDelegate

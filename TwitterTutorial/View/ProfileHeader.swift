@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol ProfileHeaderDelegate: AnyObject {
+    func didTappedBack(_ view: ProfileHeader)
+}
+
 class ProfileHeader: UICollectionReusableView {
     
     //MARK: - Properies
+    
+    weak var delegate: ProfileHeaderDelegate?
     
     private var user: User? {
         didSet { configureViewModel() }
@@ -122,7 +128,7 @@ class ProfileHeader: UICollectionReusableView {
     //MARK: - Selectors
     
     @objc private func backButtonHandle() {
-        
+        delegate?.didTappedBack(self)
     }
     
     @objc private func handleEditProfileFollow() {

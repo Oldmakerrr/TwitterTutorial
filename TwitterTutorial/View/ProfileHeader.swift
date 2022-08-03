@@ -11,6 +11,12 @@ class ProfileHeader: UICollectionReusableView {
     
     //MARK: - Properies
     
+    private var user: User? {
+        didSet { configureViewModel() }
+    }
+    
+    private var viewModel: ProfileHeaderViewModel?
+    
     private let profileFilterView = ProfileFilterView()
     
     private let underlineView = UIView()
@@ -34,14 +40,13 @@ class ProfileHeader: UICollectionReusableView {
         imageView.layer.borderWidth = 4
         imageView.backgroundColor = .lightGray
         imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 80 / 2
         return imageView
     }()
     
     private let editProfileFollowButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Loading", for: .normal)
         button.layer.borderColor = UIColor.twitterBlue.cgColor
         button.layer.borderWidth = 1.25
         button.layer.cornerRadius = 18
@@ -76,6 +81,10 @@ class ProfileHeader: UICollectionReusableView {
         return label
     }()
     
+    private let followingButton = UIButton()
+    
+    private let followersButton = UIButton()
+    
     //MARK: - Lifecycle
     
     override init(frame: CGRect) {
@@ -89,7 +98,11 @@ class ProfileHeader: UICollectionReusableView {
         profileImageView.anchor(top: containerView.bottomAnchor, leading: leadingAnchor, paddingTop: -24, paddingLeading: 8)
         profileImageView.setDimensions(width: 80, height: 80)
         configureButtons()
-        configureUserDetailsStackView()
+        let userDetailStackView = UIStackView(arrangedSubviews: [fullnameLabel,
+                                                       usernameLabel,
+                                                       bioLabel])
+        configureUserDetailsStackView(stackView: userDetailStackView)
+        addGestureToLabel(view: userDetailStackView)
         addSubview(profileFilterView)
         profileFilterView.delegate = self
         profileFilterView.anchor(leading: leadingAnchor,
@@ -97,8 +110,9 @@ class ProfileHeader: UICollectionReusableView {
                                  trailing: trailingAnchor, height: 50)
         addSubview(underlineView)
         underlineView.backgroundColor = .twitterBlue
+        let numberOfItem = CGFloat(ProfileFilterOptions.allCases.count)
         underlineView.anchor(leading: leadingAnchor, bottom: bottomAnchor,
-                             width: frame.width / 3, height: 2)
+                             width: frame.width / numberOfItem, height: 2)
     }
     
     required init?(coder: NSCoder) {
@@ -115,6 +129,14 @@ class ProfileHeader: UICollectionReusableView {
         
     }
     
+    @objc private func handleFollowersTapped() {
+        print("DEBUG: FOLLOWERS")
+    }
+    
+    @objc private func handleFollowingTapped() {
+        print("DEBUG: FOLLOWING")
+    }
+    
     //MARK: - Helper functions
     
     private func configureButtons() {
@@ -127,10 +149,7 @@ class ProfileHeader: UICollectionReusableView {
                                        paddingTop: 12, paddingTrailing: 12)
     }
     
-    private func configureUserDetailsStackView() {
-        let stackView = UIStackView(arrangedSubviews: [fullnameLabel,
-                                                       usernameLabel,
-                                                       bioLabel])
+    private func configureUserDetailsStackView(stackView: UIStackView) {
         stackView.axis = .vertical
         stackView.distribution = .fillProportionally
         stackView.spacing = 4
@@ -139,6 +158,33 @@ class ProfileHeader: UICollectionReusableView {
                          leading: leadingAnchor,
                          trailing: trailingAnchor,
                          paddingTop: 8, paddingLeading: 12, paddingTrailing: 12)
+    }
+    
+    private func addGestureToLabel(view: UIView) {
+        let followStackView = UIStackView(arrangedSubviews: [followingButton, followersButton])
+        followStackView.axis = .horizontal
+        followStackView.distribution = .fillEqually
+        followStackView.spacing = 8
+        addSubview(followStackView)
+        followStackView.anchor(top: view.bottomAnchor, leading: leadingAnchor,
+                               paddingTop: 8, paddingLeading: 12)
+        followingButton.addTarget(self, action: #selector(handleFollowingTapped), for: .touchUpInside)
+        followersButton.addTarget(self, action: #selector(handleFollowersTapped), for: .touchUpInside)
+        followersButton.setTitleColor(.black, for: .normal)
+        followingButton.setTitleColor(.black, for: .normal)
+    }
+    
+    private func configureViewModel() {
+        guard let user = user else { return }
+        viewModel = ProfileHeaderViewModel(user: user)
+        profileImageView.sd_setImage(with: user.profileImageUrl)
+        editProfileFollowButton.setTitle(viewModel?.actionButtonTitle, for: .normal)
+        followingButton.setAttributedTitle(viewModel?.followingString, for: .normal)
+        followersButton.setAttributedTitle(viewModel?.followersString, for: .normal)
+    }
+    
+    func setupUser(_ user: User) {
+        self.user = user
     }
     
 }

@@ -16,7 +16,7 @@ class TweetCell: UICollectionViewCell {
         didSet { configure() }
     }
     
-    private let profileImageView = ProfileImageView()
+    private var profileImageView = ProfileImageView()
     
     private let captionLabel: UILabel = {
         let label = UILabel()
@@ -60,6 +60,7 @@ class TweetCell: UICollectionViewCell {
         captionLabel.text = tweet.caption
         infoLabel.attributedText = viewModel.userInfoText
         profileImageView.sd_setImage(with: viewModel.profileImageUrl)
+        profileImageView.setUser(tweet.user)
     }
     
     private func configureUI() {

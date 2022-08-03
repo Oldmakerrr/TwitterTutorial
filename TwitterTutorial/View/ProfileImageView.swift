@@ -8,14 +8,17 @@
 import UIKit
 
 protocol ProfileImageViewDelegate: AnyObject {
-    func didTapped(_ view: ProfileImageView)
+    func didTapped(_ view: ProfileImageView, _ user: User?)
 }
 
 class ProfileImageView: UIImageView {
     
     weak var delegate: ProfileImageViewDelegate?
+
+    private var user: User?
     
-    override init(frame: CGRect = .zero) {
+    init(user: User? = nil, frame: CGRect = .zero) {
+        self.user = user
         super.init(frame: frame)
         contentMode = .scaleAspectFill
         clipsToBounds = true
@@ -31,6 +34,10 @@ class ProfileImageView: UIImageView {
     }
     
     @objc private func tapAction() {
-        delegate?.didTapped(self)
+        delegate?.didTapped(self, user)
+    }
+    
+    func setUser(_ user: User) {
+        self.user = user
     }
 }

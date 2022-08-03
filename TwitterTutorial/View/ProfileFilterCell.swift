@@ -11,11 +11,14 @@ class ProfileFilterCell: UICollectionViewCell {
     
     //MARK: - Properties
     
+    var option: ProfileFilterOptions? {
+        didSet { titleLabel.text = option?.description }
+    }
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .lightGray
         label.font = UIFont.systemFont(ofSize: 14)
-        label.text = "Button"
         return label
     }()
     
@@ -29,6 +32,10 @@ class ProfileFilterCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupCell(title: String) {
+        titleLabel.text = title
     }
     
     override var isSelected: Bool {

@@ -27,7 +27,7 @@ class UploadTweetController: UIViewController {
         return button
     }()
     
-    private let profileImageView = ProfileImageView()
+    private lazy var profileImageView = ProfileImageView()
     
 //MARK: - Lifecycle
     

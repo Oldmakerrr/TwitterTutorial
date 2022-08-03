@@ -65,9 +65,8 @@ class FeedController: UICollectionViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileImageView)
     }
     
-    private func goToProfileController() {
-        let layout = UICollectionViewFlowLayout()
-        let controller = ProfileController(collectionViewLayout: layout)
+    private func goToProfileController(user: User) {
+        let controller = ProfileController(user: user)
         navigationController?.pushViewController(controller, animated: true)
     }
     
@@ -105,8 +104,9 @@ extension FeedController: UICollectionViewDelegateFlowLayout {
 
 extension FeedController: ProfileImageViewDelegate {
     
-    func didTapped(_ view: ProfileImageView) {
-        goToProfileController()
+    func didTapped(_ view: ProfileImageView, _ user: User?) {
+        guard let user = user else { return }
+        goToProfileController(user: user)
     }
     
 }

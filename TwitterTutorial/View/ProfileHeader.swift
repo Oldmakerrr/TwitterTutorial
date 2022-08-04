@@ -66,14 +66,12 @@ class ProfileHeader: UICollectionReusableView {
     
     private let fullnameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Eddie Brock"
         label.font = UIFont.boldSystemFont(ofSize: 20)
         return label
     }()
     
     private let usernameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Venom"
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .lightGray
         return label
@@ -183,6 +181,8 @@ class ProfileHeader: UICollectionReusableView {
     private func configureViewModel() {
         guard let user = user else { return }
         viewModel = ProfileHeaderViewModel(user: user)
+        fullnameLabel.text = user.fullname
+        usernameLabel.text = viewModel?.usernameText
         profileImageView.sd_setImage(with: user.profileImageUrl)
         editProfileFollowButton.setTitle(viewModel?.actionButtonTitle, for: .normal)
         followingButton.setAttributedTitle(viewModel?.followingString, for: .normal)

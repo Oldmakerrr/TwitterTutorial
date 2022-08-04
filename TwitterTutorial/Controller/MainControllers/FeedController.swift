@@ -13,6 +13,7 @@ class FeedController: UICollectionViewController {
     //MARK: - Properties
     
     private let reuseIdentifier = "FeedControllerCell"
+    
     private var tweets = [Tweet]() {
         didSet { collectionView.reloadData() }
     }

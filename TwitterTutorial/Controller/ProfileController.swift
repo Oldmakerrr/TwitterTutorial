@@ -13,6 +13,10 @@ class ProfileController: UICollectionViewController {
     
     let user: User
     
+    private var tweets = [Tweet]() {
+        didSet { collectionView.reloadData() }
+    }
+    
     private let reuseIdentifier = "ProfileControllerCell"
     private let headerIdentifier = "ProfileControllerHeader"
     
@@ -30,6 +34,7 @@ class ProfileController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        fetchTweets()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,6 +45,12 @@ class ProfileController: UICollectionViewController {
     //MARK: - Selectors
     
     //MARK: - API
+    
+    func fetchTweets() {
+        TweetService.shared.fetchTweets(forUser: user) { tweets in
+            self.tweets = tweets
+        }
+    }
     
     //MARK: - Helper Methods
     
@@ -66,12 +77,13 @@ class ProfileController: UICollectionViewController {
 extension ProfileController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return tweets.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TweetCell
-        
+        let tweet = tweets[indexPath.row]
+        cell.tweet = tweet
         return cell
     }
     

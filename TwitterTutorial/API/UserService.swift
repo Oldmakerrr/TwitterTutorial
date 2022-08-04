@@ -23,4 +23,19 @@ struct UserService {
             }
         }
     }
+    
+    func fetchUsers(completion: @escaping ([User]) -> Void) {
+        var users = [User]()
+        REF_USERS.observe(.childAdded) { snapshot in
+            guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
+            let uid = snapshot.key
+            do {
+                let user = try User(uid: uid, dictionary: dictionary)
+                users.append(user)
+                completion(users)
+            } catch {
+                print("DEBUG: Error to create user")
+            }
+        }
+    }
 }

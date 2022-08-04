@@ -11,6 +11,10 @@ class UserCell: UITableViewCell {
     
     //MARK: - Properties
     
+    private var user: User? {
+        didSet { fillCell() }
+    }
+    
     private let profileImageView = ProfileImageView()
     
     private let usernameLabel: UILabel = {
@@ -50,5 +54,16 @@ class UserCell: UITableViewCell {
         stackView.spacing = 2
         addSubview(stackView)
         stackView.centerY(inView: self, leadingAnchor: profileImageView.trailingAnchor, paddingLeft: 12)
+    }
+    
+    func setUser(_ user: User) {
+        self.user = user
+    }
+    
+    private func fillCell() {
+        guard let user = user else { return }
+        profileImageView.sd_setImage(with: user.profileImageUrl)
+        fullnameLabel.text = user.fullname
+        usernameLabel.text = user.username
     }
 }

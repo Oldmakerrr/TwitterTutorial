@@ -13,11 +13,24 @@ class ExploreController: UITableViewController {
     
     let reuseIdentifier = "ExploreControllerCell"
     
+    private var users = [User]() {
+        didSet { tableView.reloadData() }
+    }
+    
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchUsers()
         configureUI()
+    }
+    
+    //MARK: - API
+    
+    func fetchUsers() {
+        UserService.shared.fetchUsers { users in
+            self.users = users
+        }
     }
     
     //MARK: - Helper Methods
@@ -42,11 +55,13 @@ class ExploreController: UITableViewController {
 extension ExploreController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return users.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! UserCell
+        let user = users[indexPath.row]
+        cell.setUser(user)
         return cell
     }
     

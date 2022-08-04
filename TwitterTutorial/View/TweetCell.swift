@@ -68,6 +68,8 @@ class TweetCell: UICollectionViewCell {
         addSubview(profileImageView)
         profileImageView.anchor(top: topAnchor, leading: leadingAnchor,
                                 paddingTop: 8, paddingLeading: 8)
+        profileImageView.setDimensions(width: 48, height: 48)
+        profileImageView.layer.cornerRadius = 48 / 2
         configureLabelStackView()
         confugureButtonStackView()
         infoLabel.font = UIFont.systemFont(ofSize: 14)

@@ -64,13 +64,13 @@ extension UIView {
         }
     }
     
-    func centerY(inView view: UIView, leftAnchor: NSLayoutXAxisAnchor? = nil, paddingLeft: CGFloat? = nil, constant: CGFloat = 0) {
+    func centerY(inView view: UIView, leadingAnchor: NSLayoutXAxisAnchor? = nil, paddingLeft: CGFloat? = nil, constant: CGFloat = 0) {
         translatesAutoresizingMaskIntoConstraints = false
         
         centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: constant).isActive = true
         
-        if let leftAnchor = leftAnchor, let padding = paddingLeft {
-            self.leftAnchor.constraint(equalTo: leftAnchor, constant: padding).isActive = true
+        if let leadingAnchor = leadingAnchor, let padding = paddingLeft {
+            self.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding).isActive = true
         }
     }
     

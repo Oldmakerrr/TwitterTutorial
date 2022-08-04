@@ -22,8 +22,6 @@ class ProfileImageView: UIImageView {
         super.init(frame: frame)
         contentMode = .scaleAspectFill
         clipsToBounds = true
-        setDimensions(width: 48, height: 48)
-        layer.cornerRadius = 48 / 2
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
         addGestureRecognizer(tapGesture)
         isUserInteractionEnabled = true

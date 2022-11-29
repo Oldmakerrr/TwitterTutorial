@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "D9F456BA-ADD0-4DE7-9BCF-0A6BD3E0BA66"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FA4C73AA-0F5C-49B9-8A6F-4E487E851088"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TwitterTutorial/Controller/Authentication/RegistrationController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "handleRegistration()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F02BB8EC-6785-43DE-8844-500319685F27"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TwitterTutorial/API/AuthService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "uploadProfileImage(profileImage:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F02BB8EC-6785-43DE-8844-500319685F27 - e94007f7d4cb670e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TwitterTutorial.AuthService.uploadProfileImage(profileImage: __C.UIImage, completion: (Swift.String) -&gt; ()) -&gt; ()"
+                  moduleName = "TwitterTutorial"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/oldmaker/Documents/projects/Udemy/TwitterTutorial/TwitterTutorial/API/AuthService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "54"
+                  endingLineNumber = "54"
+                  offsetFromSymbolStart = "192">
+               </Location>
+               <Location
+                  uuid = "F02BB8EC-6785-43DE-8844-500319685F27 - e94007f7d4cb670e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TwitterTutorial.AuthService.uploadProfileImage(profileImage: __C.UIImage, completion: (Swift.String) -&gt; ()) -&gt; ()"
+                  moduleName = "TwitterTutorial"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/oldmaker/Documents/projects/Udemy/TwitterTutorial/TwitterTutorial/API/AuthService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "54"
+                  endingLineNumber = "54"
+                  offsetFromSymbolStart = "236">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

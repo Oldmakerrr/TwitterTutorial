@@ -15,14 +15,14 @@ struct TweetService {
     
     func uploadTweet(caption: String,
                      type: UploadTweetConfiguration,
-                     completion: @escaping(Error?, DatabaseReference) -> Void
+                     completion: @escaping(DatabaseCompletion)
     ) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let values: [String: Any] = ["uid": uid,
-                      "timestamp": Int(NSDate().timeIntervalSince1970),
-                      "likes": 0 ,
-                      "retweets": 0,
-                      "caption": caption]
+                                     "timestamp": Int(NSDate().timeIntervalSince1970),
+                                     "likes": 0 ,
+                                     "retweets": 0,
+                                     "caption": caption]
 
         switch type {
         case .tweet:
@@ -75,4 +75,22 @@ struct TweetService {
         }
     }
 
+    func fetchReplies(forTweet tweet: Tweet, completion: @escaping ([Tweet]) -> Void) {
+        var tweets = [Tweet]()
+        REF_TWEETS_REPLIES.child(tweet.tweetId).observeSingleEvent(of: .childAdded) { snapshot in
+            guard let dictionary = snapshot.value as? [String: AnyObject],
+                  let uid = dictionary["uid"] as? String else { return }
+            let tweetUid = snapshot.key
+            UserService.shared.fetchUser(uid: uid) { user in
+                do {
+                    let tweet = try Tweet(user: user, tweetId: tweetUid, dictionary: dictionary)
+                    tweets.append(tweet)
+                    completion(tweets)
+                } catch let error as NSError {
+                    print("DEBUG: Failed create Tweet with error: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
 }

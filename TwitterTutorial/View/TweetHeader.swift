@@ -128,7 +128,7 @@ class TweetHeader: UICollectionReusableView, ReusableView {
         statsView.anchor(top: dateLabel.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, paddingTop: 12, height: 40)
         addSubview(stackViewButtons)
         stackViewButtons.centerX(inView: self)
-        stackViewButtons.anchor(bottom: bottomAnchor, paddingTop: 12)
+        stackViewButtons.anchor(top: statsView.bottomAnchor, paddingTop: 12)
     }
 
     private func updateUI() {

@@ -13,6 +13,10 @@ class TweetController: UICollectionViewController {
 
     let tweet: Tweet
 
+    var replies = [Tweet]() {
+        didSet { collectionView.reloadData() }
+    }
+
     //MARK: - Lifecycle
 
     init(tweet: Tweet) {
@@ -27,7 +31,18 @@ class TweetController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
+        fetchReplies()
     }
+
+    //MARK: - API
+
+    private func fetchReplies() {
+        TweetService.shared.fetchReplies(forTweet: tweet) { replies in
+            self.replies = replies
+        }
+    }
+
+    //MARK: - Helpers
 
     private func configureCollectionView() {
         collectionView.register(TweetHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TweetHeader.identifier)
@@ -47,12 +62,14 @@ class TweetController: UICollectionViewController {
 
 extension TweetController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return replies.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TweetCell.identifier, for: indexPath) as! TweetCell
-
+        let reply = replies[indexPath.row]
+        cell.setStackViewButtonDelegate(self)
+        cell.tweet = reply
         return cell
     }
 

@@ -17,10 +17,13 @@ class TweetController: UICollectionViewController {
         didSet { collectionView.reloadData() }
     }
 
+    private let actionSheet: ActionSheetLauncher
+
     //MARK: - Lifecycle
 
     init(tweet: Tweet) {
         self.tweet = tweet
+        self.actionSheet = ActionSheetLauncher(user: tweet.user)
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
     }
 
@@ -76,6 +79,7 @@ extension TweetController {
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TweetHeader.identifier, for: indexPath) as! TweetHeader
         view.tweet = tweet
+        view.delegate = self
         view.setDelegateToStackViewButtons(self)
         return view
     }
@@ -98,6 +102,8 @@ extension TweetController: UICollectionViewDelegateFlowLayout {
     
 }
 
+//MARK: - StackViewButtonsDelegate
+
 extension TweetController: StackViewButtonsDelegate {
 
     func didTapCommentButton(_ view: StackViewButtons) {
@@ -115,6 +121,16 @@ extension TweetController: StackViewButtonsDelegate {
 
     func didTapShareButton(_ view: StackViewButtons) {
 
+    }
+
+}
+
+//MARK: - TweetHeaderDelegate
+
+extension TweetController: TweetHeaderDelegate {
+
+    func showActionSheet(_ view: TweetHeader) {
+        actionSheet.show()
     }
 
 }

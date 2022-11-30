@@ -11,9 +11,15 @@ protocol ReusableView {
     static var identifier: String { get }
 }
 
+protocol TweetHeaderDelegate: AnyObject {
+    func showActionSheet(_ view: TweetHeader)
+}
+
 class TweetHeader: UICollectionReusableView, ReusableView {
 
     //MARK: - Properties
+
+    weak var delegate: TweetHeaderDelegate?
 
     var tweet: Tweet? {
         didSet { updateUI() }
@@ -97,7 +103,7 @@ class TweetHeader: UICollectionReusableView, ReusableView {
     //MARK: - Selectors
 
     @objc private func showActionSheet() {
-        print("DEBUG: Show action sheet..")
+        delegate?.showActionSheet(self)
     }
 
     //MARK: - Helpers

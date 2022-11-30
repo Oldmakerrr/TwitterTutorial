@@ -30,7 +30,6 @@ class ProfileController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.backgroundColor = .twitterBlue
         configureUI()
         fetchTweets()
         checkIfUserIsFollowed()

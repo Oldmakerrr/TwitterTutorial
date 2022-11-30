@@ -96,7 +96,7 @@ extension FeedController {
         let tweet = tweets[indexPath.row]
         cell.tweet = tweet
         cell.setProfileImageViewDelegate(self)
-        cell.setStackViewButtonDelegate(self)
+        cell.delegate = self
         return cell
     }
 
@@ -131,30 +131,30 @@ extension FeedController: ProfileImageViewDelegate {
     
 }
 
-extension FeedController: StackViewButtonsDelegate {
+extension FeedController: TweetCellDelegate {
 
-    func didTapCommentButton(_ view: StackViewButtons) {
-        guard let tweet = view.tweet else { return }
+    func didTapCommentButton(_ cell: TweetCell) {
+        guard let tweet = cell.tweet else { return }
         goToUploadReplyController(user: tweet.user, tweet: tweet)
     }
 
-    func didTapRetweetButton(_ view: StackViewButtons) {
-        guard let tweet = view.tweet else { return }
+    func didTapRetweetButton(_ cell: TweetCell) {
+
+    }
+
+    func didTapLikeButton(_ cell: TweetCell) {
+        guard let tweet = cell.tweet else { return }
         TweetService.shared.likeTweet(tweet: tweet) { error, reference in
             if let error = error {
                 print("DEBUG: Failed like with error: \(error.localizedDescription)")
             }
-            view.tweet?.didLike.toggle()
+            cell.tweet?.didLike.toggle()
             let likes = tweet.didLike ? tweet.likes - 1 : tweet.likes + 1
-            view.tweet?.likes = likes
+            cell.tweet?.likes = likes
         }
     }
 
-    func didTapLikeButton(_ view: StackViewButtons) {
-
-    }
-
-    func didTapShareButton(_ view: StackViewButtons) {
+    func didTapShareButton(_ cell: TweetCell) {
 
     }
 

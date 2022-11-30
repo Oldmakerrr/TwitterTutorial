@@ -79,8 +79,8 @@ extension TweetController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TweetCell.identifier, for: indexPath) as! TweetCell
         let reply = replies[indexPath.row]
-        cell.setStackViewButtonDelegate(self)
         cell.tweet = reply
+        cell.delegate = self
         return cell
     }
 
@@ -88,7 +88,6 @@ extension TweetController {
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TweetHeader.identifier, for: indexPath) as! TweetHeader
         view.tweet = tweet
         view.delegate = self
-        view.setDelegateToStackViewButtons(self)
         return view
     }
 
@@ -112,22 +111,22 @@ extension TweetController: UICollectionViewDelegateFlowLayout {
 
 //MARK: - StackViewButtonsDelegate
 
-extension TweetController: StackViewButtonsDelegate {
+extension TweetController: TweetCellDelegate {
 
-    func didTapCommentButton(_ view: StackViewButtons) {
-        guard let tweet = view.tweet else { return }
+    func didTapCommentButton(_ cell: TweetCell) {
+        guard let tweet = cell.tweet else { return }
         goToUploadReplyController(user: tweet.user, tweet: tweet)
     }
 
-    func didTapRetweetButton(_ view: StackViewButtons) {
+    func didTapRetweetButton(_ cell: TweetCell) {
 
     }
 
-    func didTapLikeButton(_ view: StackViewButtons) {
+    func didTapLikeButton(_ cell: TweetCell) {
 
     }
 
-    func didTapShareButton(_ view: StackViewButtons) {
+    func didTapShareButton(_ cell: TweetCell) {
 
     }
 
@@ -136,6 +135,24 @@ extension TweetController: StackViewButtonsDelegate {
 //MARK: - TweetHeaderDelegate
 
 extension TweetController: TweetHeaderDelegate {
+
+    func didTapCommentButton(_ view: TweetHeader) {
+        guard let tweet = view.tweet else { return }
+        goToUploadReplyController(user: tweet.user, tweet: tweet)
+    }
+
+    func didTapRetweetButton(_ view: TweetHeader) {
+
+    }
+
+    func didTapLikeButton(_ view: TweetHeader) {
+
+    }
+
+    func didTapShareButton(_ view: TweetHeader) {
+        
+    }
+
 
     func showActionSheet(_ view: TweetHeader) {
         if tweet.user.isCurrentUser {

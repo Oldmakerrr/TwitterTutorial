@@ -99,7 +99,11 @@ struct TweetService {
         REF_TWEETS.child(tweet.tweetId).child("likes").setValue(likes)
         if tweet.didLike {
             //unlike tweet
-
+            //remove user which has likes tweet
+            REF_USER_LIKES.child(userUid).child(tweet.tweetId).removeValue { error, reference in
+                //remove tweet which likes users
+                REF_TWEET_LIKES.child(tweet.tweetId).child(userUid).removeValue(completionBlock: completion)
+            }
         } else {
             //like tweet
             //set user which has likes tweet

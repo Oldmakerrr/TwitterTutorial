@@ -16,8 +16,6 @@ protocol StackViewButtonsDelegate: AnyObject {
 
 class StackViewButtons: UIStackView {
 
-    var tweet: Tweet?
-
     weak var delegate: StackViewButtonsDelegate?
 
     private let commentButton = TweetCellButton(imageName: "comment")
@@ -52,6 +50,11 @@ class StackViewButtons: UIStackView {
         retweetButton.addTarget(self, action: #selector(handleRetweetTapped), for: .touchUpInside)
         likeButton.addTarget(self, action: #selector(handleLikeTapped), for: .touchUpInside)
         shareButton.addTarget(self, action: #selector(handleShareTapped), for: .touchUpInside)
+    }
+
+    func setLikeButtonImage(_ image: UIImage?, withColor color: UIColor) {
+        likeButton.setImage(image, for: .normal)
+        likeButton.tintColor = color
     }
 
     @objc private func handleCommentTapped() {

@@ -8,9 +8,18 @@
 import UIKit
 import SDWebImage
 
+protocol TweetCellDelegate: AnyObject {
+    func didTapCommentButton(_ cell: TweetCell)
+    func didTapRetweetButton(_ cell: TweetCell)
+    func didTapLikeButton(_ cell: TweetCell)
+    func didTapShareButton(_ cell: TweetCell)
+}
+
 class TweetCell: UICollectionViewCell, ReusableView {
     
 //MARK: - Properties
+
+    weak var delegate: TweetCellDelegate?
 
     static var identifier: String {
         String(describing: self)
@@ -57,12 +66,12 @@ class TweetCell: UICollectionViewCell, ReusableView {
     
     func configure() {
         guard let tweet = tweet else { return }
-        stackViewButtons.tweet = tweet
         let viewModel = TweetViewModel(tweet: tweet)
         captionLabel.text = tweet.caption
         infoLabel.attributedText = viewModel.userInfoText
         profileImageView.sd_setImage(with: viewModel.profileImageUrl)
         profileImageView.setUser(tweet.user)
+        stackViewButtons.setLikeButtonImage(viewModel.likeButtonImage, withColor: viewModel.likeButtonTintColor)
     }
     
     private func configureUI() {
@@ -74,6 +83,7 @@ class TweetCell: UICollectionViewCell, ReusableView {
         profileImageView.layer.cornerRadius = 48 / 2
         configureLabelStackView()
         addSubview(stackViewButtons)
+        stackViewButtons.delegate = self
         stackViewButtons.centerX(inView: self)
         stackViewButtons.anchor(bottom: bottomAnchor,  paddingBottom: 8)
         infoLabel.font = UIFont.systemFont(ofSize: 14)
@@ -91,4 +101,24 @@ class TweetCell: UICollectionViewCell, ReusableView {
                          trailing: trailingAnchor, paddingLeading: 12, paddingTrailing: 20)
     }
     
+}
+
+extension TweetCell: StackViewButtonsDelegate {
+
+    func didTapCommentButton(_ view: StackViewButtons) {
+        delegate?.didTapCommentButton(self)
+    }
+
+    func didTapRetweetButton(_ view: StackViewButtons) {
+        delegate?.didTapRetweetButton(self)
+    }
+
+    func didTapLikeButton(_ view: StackViewButtons) {
+        delegate?.didTapLikeButton(self)
+    }
+
+    func didTapShareButton(_ view: StackViewButtons) {
+        delegate?.didTapShareButton(self)
+    }
+
 }

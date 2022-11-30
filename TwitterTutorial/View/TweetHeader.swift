@@ -13,6 +13,10 @@ protocol ReusableView {
 
 protocol TweetHeaderDelegate: AnyObject {
     func showActionSheet(_ view: TweetHeader)
+    func didTapCommentButton(_ view: TweetHeader)
+    func didTapRetweetButton(_ view: TweetHeader)
+    func didTapLikeButton(_ view: TweetHeader)
+    func didTapShareButton(_ view: TweetHeader)
 }
 
 class TweetHeader: UICollectionReusableView, ReusableView {
@@ -133,6 +137,7 @@ class TweetHeader: UICollectionReusableView, ReusableView {
         addSubview(statsView)
         statsView.anchor(top: dateLabel.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, paddingTop: 12, height: 40)
         addSubview(stackViewButtons)
+        stackViewButtons.delegate = self
         stackViewButtons.centerX(inView: self)
         stackViewButtons.anchor(top: statsView.bottomAnchor, paddingTop: 12)
     }
@@ -140,7 +145,6 @@ class TweetHeader: UICollectionReusableView, ReusableView {
     private func updateUI() {
         guard let tweet = tweet else { return }
         let viewModel = TweetViewModel(tweet: tweet)
-        stackViewButtons.tweet = tweet
         captionLabel.text = tweet.caption
         fullnameLabel.text = tweet.user.fullname
         usernameLabel.text = viewModel.userNameText
@@ -162,4 +166,24 @@ extension TweetHeader: ProfileImageViewDelegate {
         print("DEBUG: show user profile info..")
     }
 
+}
+
+extension TweetHeader: StackViewButtonsDelegate {
+    func didTapCommentButton(_ view: StackViewButtons) {
+        delegate?.didTapCommentButton(self)
+    }
+
+    func didTapRetweetButton(_ view: StackViewButtons) {
+        delegate?.didTapRetweetButton(self)
+    }
+
+    func didTapLikeButton(_ view: StackViewButtons) {
+        delegate?.didTapLikeButton(self)
+    }
+
+    func didTapShareButton(_ view: StackViewButtons) {
+        delegate?.didTapShareButton(self)
+    }
+
+    
 }

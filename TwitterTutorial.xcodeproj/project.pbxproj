@@ -43,6 +43,7 @@
 		D0665D6187A37D3AB5D6E71F /* Pods_TwitterTutorial.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C24E755B8A13D212FDD82DF7 /* Pods_TwitterTutorial.framework */; };
 		F8ADC3C4293736BA00AA23E7 /* TweetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3C3293736BA00AA23E7 /* TweetController.swift */; };
 		F8ADC3C62937390F00AA23E7 /* TweetHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3C52937390F00AA23E7 /* TweetHeader.swift */; };
+		F8ADC3C8293755D200AA23E7 /* StackViewButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3C7293755D200AA23E7 /* StackViewButtons.swift */; };
 		F8C53DF8293518DA0071D6D8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8C53DF7293518DA0071D6D8 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +99,7 @@
 		C24E755B8A13D212FDD82DF7 /* Pods_TwitterTutorial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TwitterTutorial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8ADC3C3293736BA00AA23E7 /* TweetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetController.swift; sourceTree = "<group>"; };
 		F8ADC3C52937390F00AA23E7 /* TweetHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetHeader.swift; sourceTree = "<group>"; };
+		F8ADC3C7293755D200AA23E7 /* StackViewButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewButtons.swift; sourceTree = "<group>"; };
 		F8C53DF7293518DA0071D6D8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -214,6 +216,7 @@
 			children = (
 				18DCB5542884ADCA00B1B497 /* InputContainerView.swift */,
 				184A2C0D288B066A008918A8 /* AuthButton.swift */,
+				F8ADC3C7293755D200AA23E7 /* StackViewButtons.swift */,
 				1861F5BA289317B300FF9840 /* CaptionTextView.swift */,
 				181059CD28943D50001C366B /* ProfileImageView.swift */,
 				F8ADC3C52937390F00AA23E7 /* TweetHeader.swift */,
@@ -442,6 +445,7 @@
 				F8ADC3C4293736BA00AA23E7 /* TweetController.swift in Sources */,
 				1861F5BF2893356B00FF9840 /* TweetService.swift in Sources */,
 				18C0A4872897F78F00412EE9 /* ProfileHeader.swift in Sources */,
+				F8ADC3C8293755D200AA23E7 /* StackViewButtons.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

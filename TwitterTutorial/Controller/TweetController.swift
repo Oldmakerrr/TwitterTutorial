@@ -51,6 +51,8 @@ extension TweetController {
 
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TweetHeader.identifier, for: indexPath) as! TweetHeader
+        view.tweet = tweet
+        view.setDelegateToStackViewButtons(self)
         return view
     }
 
@@ -61,11 +63,31 @@ extension TweetController {
 extension TweetController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 370)
+        return CGSize(width: view.frame.width, height: 240)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 120)
     }
     
+}
+
+extension TweetController: StackViewButtonsDelegate {
+
+    func didTapCommentButton(_ view: StackViewButtons) {
+
+    }
+
+    func didTapRetweetButton(_ view: StackViewButtons) {
+
+    }
+
+    func didTapLikeButton(_ view: StackViewButtons) {
+
+    }
+
+    func didTapShareButton(_ view: StackViewButtons) {
+
+    }
+
 }

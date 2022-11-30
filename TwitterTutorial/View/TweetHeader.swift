@@ -15,6 +15,10 @@ class TweetHeader: UICollectionReusableView, ReusableView {
 
     //MARK: - Properties
 
+    var tweet: Tweet? {
+        didSet { updateUI() }
+    }
+
     static var identifier: String {
         String(describing: self)
     }
@@ -24,17 +28,11 @@ class TweetHeader: UICollectionReusableView, ReusableView {
     private let usernameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.text = "User Name"
         label.textColor = .lightGray
         return label
     }()
 
-    private let fullnameLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.text = "Full Name"
-        return label
-    }()
+    private let fullnameLabel = UILabel()
 
     private let captionLabel: UILabel = {
         let label = UILabel()
@@ -60,19 +58,9 @@ class TweetHeader: UICollectionReusableView, ReusableView {
         return button
     }()
 
-    private let likesLabel: UILabel = {
-        let label = UILabel()
-        label.text = "0 Likes"
-        label.font = UIFont.systemFont(ofSize: 14)
-        return label
-    }()
+    private let likesLabel = UILabel()
 
-    private let retweetsLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.text = "0 Retweets"
-        return label
-    }()
+    private let retweetsLabel = UILabel()
 
     private lazy var statsView: UIView = {
         let view = UIView()
@@ -92,6 +80,8 @@ class TweetHeader: UICollectionReusableView, ReusableView {
         bottonDivider.anchor(leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, paddingLeading: 8, height: 1)
         return view
     }()
+
+    private let stackViewButtons = StackViewButtons()
 
     //MARK: - Lifecycle
 
@@ -113,9 +103,12 @@ class TweetHeader: UICollectionReusableView, ReusableView {
     //MARK: - Helpers
 
     private func configureUI() {
+        likesLabel.font = UIFont.systemFont(ofSize: 14)
+        retweetsLabel.font = UIFont.systemFont(ofSize: 14)
+        fullnameLabel.font = UIFont.systemFont(ofSize: 14)
         let labelStackView = UIStackView(arrangedSubviews: [fullnameLabel, usernameLabel])
         labelStackView.axis = .vertical
-        labelStackView.spacing = 2
+        labelStackView.spacing = -4
         profileImageView.delegate = self
         profileImageView.backgroundColor = .twitterBlue
         profileImageView.setDimensions(width: 48, height: 48)
@@ -133,6 +126,25 @@ class TweetHeader: UICollectionReusableView, ReusableView {
         optionButton.anchor(trailing: trailingAnchor, paddingTrailing: 8)
         addSubview(statsView)
         statsView.anchor(top: dateLabel.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, paddingTop: 20, height: 40)
+        addSubview(stackViewButtons)
+        stackViewButtons.centerX(inView: self)
+        stackViewButtons.anchor(bottom: bottomAnchor, paddingTop: 12)
+    }
+
+    private func updateUI() {
+        guard let tweet = tweet else { return }
+        let viewModel = TweetViewModel(tweet: tweet)
+        captionLabel.text = tweet.caption
+        fullnameLabel.text = tweet.user.fullname
+        usernameLabel.text = viewModel.userNameText
+        profileImageView.sd_setImage(with: viewModel.profileImageUrl)
+        dateLabel.text = viewModel.headerTimestamp
+        retweetsLabel.attributedText = viewModel.retweetAttributedString
+        likesLabel.attributedText = viewModel.likesAttributedString
+    }
+
+    func setDelegateToStackViewButtons(_ delegate: StackViewButtonsDelegate) {
+        stackViewButtons.delegate = delegate
     }
 
 }

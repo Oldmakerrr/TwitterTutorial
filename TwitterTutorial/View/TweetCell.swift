@@ -30,20 +30,13 @@ class TweetCell: UICollectionViewCell, ReusableView {
     }()
     
     private let infoLabel = UILabel()
-    
-    private let commentButton = TweetCellButton(imageName: "comment")
-    
-    private let retweetButton = TweetCellButton(imageName: "retweet")
-    
-    private let likeButton = TweetCellButton(imageName: "like")
-    
-    private let shareButton = TweetCellButton(imageName: "share")
-    
+
+    let stackViewButtons = StackViewButtons()
+
 //MARK: - Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addTargetsToButtons()
         configureUI()
     }
     
@@ -75,7 +68,10 @@ class TweetCell: UICollectionViewCell, ReusableView {
         profileImageView.setDimensions(width: 48, height: 48)
         profileImageView.layer.cornerRadius = 48 / 2
         configureLabelStackView()
-        confugureButtonStackView()
+        addSubview(stackViewButtons)
+        stackViewButtons.delegate = self
+        stackViewButtons.centerX(inView: self)
+        stackViewButtons.anchor(bottom: bottomAnchor,  paddingBottom: 8)
         infoLabel.font = UIFont.systemFont(ofSize: 14)
         addSeparateView(toView: self)
     }
@@ -92,36 +88,24 @@ class TweetCell: UICollectionViewCell, ReusableView {
                          paddingTop: 12, paddingLeading: 12)
     }
     
-    private func confugureButtonStackView() {
-        let stackView = UIStackView(arrangedSubviews: [commentButton, retweetButton, likeButton, shareButton])
-        stackView.axis = .horizontal
-        stackView.spacing = 72
-        addSubview(stackView)
-        stackView.centerX(inView: self)
-        stackView.anchor(bottom: bottomAnchor,  paddingBottom: 8)
-    }
-    
-    private func addTargetsToButtons() {
-        commentButton.addTarget(self, action: #selector(handleCommentTapped), for: .touchUpInside)
-        retweetButton.addTarget(self, action: #selector(handleRetweetTapped), for: .touchUpInside)
-        likeButton.addTarget(self, action: #selector(handleLikeTapped), for: .touchUpInside)
-        shareButton.addTarget(self, action: #selector(handleShareTapped), for: .touchUpInside)
-    }
-    
-//MARK: - Selectors
+}
 
-    @objc private func handleCommentTapped() {
+extension TweetCell: StackViewButtonsDelegate {
+
+    func didTapCommentButton(_ view: StackViewButtons) {
         
     }
-    @objc private func handleRetweetTapped() {
-        
+
+    func didTapRetweetButton(_ view: StackViewButtons) {
+
     }
-    @objc private func handleLikeTapped() {
-        
+
+    func didTapLikeButton(_ view: StackViewButtons) {
+
     }
-    @objc private func handleShareTapped() {
-        
+
+    func didTapShareButton(_ view: StackViewButtons) {
+
     }
-    
-    
+
 }

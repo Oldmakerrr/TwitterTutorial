@@ -11,19 +11,18 @@ class TweetController: UICollectionViewController {
 
     //MARK: - Properties
 
-    let tweet: Tweet
+    var tweet: Tweet
 
     var replies = [Tweet]() {
         didSet { collectionView.reloadData() }
     }
 
-    private let actionSheet: ActionSheetLauncher
+    private var actionSheet: ActionSheetLauncher?
 
     //MARK: - Lifecycle
 
     init(tweet: Tweet) {
         self.tweet = tweet
-        self.actionSheet = ActionSheetLauncher(user: tweet.user)
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
     }
 
@@ -35,9 +34,18 @@ class TweetController: UICollectionViewController {
         super.viewDidLoad()
         configureCollectionView()
         fetchReplies()
+        checkIfUserIsFollowed()
     }
 
     //MARK: - API
+
+    private func checkIfUserIsFollowed() {
+        UserService.shared.checkIfUserIsFollowed(uid: tweet.user.uid) { [self] isFollowed in
+            tweet.user.isFollowed = isFollowed
+            actionSheet = ActionSheetLauncher(user: tweet.user)
+            actionSheet?.delegate = self
+        }
+    }
 
     private func fetchReplies() {
         TweetService.shared.fetchReplies(forTweet: tweet) { replies in
@@ -130,7 +138,49 @@ extension TweetController: StackViewButtonsDelegate {
 extension TweetController: TweetHeaderDelegate {
 
     func showActionSheet(_ view: TweetHeader) {
-        actionSheet.show()
+        if tweet.user.isCurrentUser {
+            guard let actionSheet = actionSheet else { return }
+            actionSheet.show()
+        } else {
+            UserService.shared.checkIfUserIsFollowed(uid: tweet.user.uid) { [self] isFollowed in
+                var user = tweet.user
+                user.isFollowed = isFollowed
+                actionSheet = ActionSheetLauncher(user: user)
+                actionSheet?.delegate = self
+                actionSheet?.show()
+            }
+        }
+    }
+
+}
+
+//MARK: - ActionSheetLauncherDelegate
+
+extension TweetController: ActionSheetLauncherDelegate {
+
+    func didSelect(option: ActionSheetOption) {
+        switch option {
+        case .follow(let user):
+            UserService.shared.followUser(uid: user.uid) { error, reference in
+                if let error = error {
+                    print("DEBUG: Failed follow to \(user.username), with error: \(error.localizedDescription)")
+                }
+                print("Did follow user: \(user.username)")
+            }
+        case .unfollow(let user):
+            UserService.shared.unfollowUser(uid: user.uid) { error, reference in
+                if let error = error {
+                    print("DEBUG: Failed unfollow to \(user.username), with error: \(error.localizedDescription)")
+                }
+                print("Did unfollow user: \(user.username)")
+            }
+        case .report:
+            showAlert(withMessage: "Your report sending to administrator, thanks for your attention")
+        case .delete:
+            print("Delete")
+        case .blockUser(let user):
+            showAlert(withMessage: "User @\(user.username) successfully blocked")
+        }
     }
 
 }

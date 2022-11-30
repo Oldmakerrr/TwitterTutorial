@@ -18,8 +18,9 @@ struct ActionSheetViewModel {
         } else {
             let followOption: ActionSheetOption = user.isFollowed ? .unfollow(user) : .follow(user)
             results.append(followOption)
+            results.append(.report)
+            results.append(.blockUser(user))
         }
-        results.append(.report)
         return results
     }
 
@@ -33,6 +34,7 @@ enum ActionSheetOption {
     case unfollow(User)
     case report
     case delete
+    case blockUser(User)
 
     var description: String {
         switch self {
@@ -44,6 +46,8 @@ enum ActionSheetOption {
             return "Report Tweet"
         case .delete:
             return "Delete Tweet"
+        case .blockUser(let user):
+            return "Block \(user.username)"
         }
     }
 }

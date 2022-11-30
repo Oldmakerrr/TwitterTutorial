@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol ActionSheetLauncherDelegate: AnyObject {
+    func didSelect(option: ActionSheetOption)
+}
+
 class ActionSheetLauncher: NSObject {
 
     //MARK: - Properties
+
+    weak var delegate: ActionSheetLauncherDelegate?
 
     private let viewModel: ActionSheetViewModel
     var animateDuration: TimeInterval = 0.3
@@ -65,28 +71,30 @@ class ActionSheetLauncher: NSObject {
     //MARK: - Selectors
 
     @objc private func handleDismisal() {
-        UIView.animate(withDuration: animateDuration) { [self] in
-            blackView.alpha = 0
-            tableView.frame.origin.y += height
-        }
+        showTableView(false)
     }
 
     //MARK: - Helper
 
+    private func showTableView(_ shouldShow: Bool, completion: ((Bool) -> Void)? = nil) {
+        UIView.animate(withDuration: animateDuration, animations: { [self] in
+            blackView.alpha = shouldShow ? 1 : 0
+            tableView.frame.origin.y += shouldShow ? -height : height
+        }, completion: completion)
+    }
+
     func show() {
-        guard let window = UIApplication.shared.connectedScenes.compactMap({ ($0 as? UIWindowScene)?.keyWindow }).first else { return }
+        guard let window = UIApplication
+            .shared
+            .connectedScenes
+            .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).first else { return }
         self.window = window
         window.addSubview(blackView)
         blackView.frame = window.frame
-
         window.addSubview(tableView)
         tableView.frame = CGRect(x: 0, y: window.frame.height,
                                  width: window.frame.width, height: height)
-        UIView.animate(withDuration: animateDuration) { [self] in
-            blackView.alpha = 1
-            tableView.frame.origin.y -= height
-        }
-        
+        showTableView(true)
     }
 
     private func configureTargets() {
@@ -108,7 +116,7 @@ class ActionSheetLauncher: NSObject {
     }
 }
 
-//MARK: - UITableViewDataSource/Delegate
+//MARK: - UITableViewDataSource
 
 extension ActionSheetLauncher: UITableViewDataSource {
 
@@ -124,6 +132,8 @@ extension ActionSheetLauncher: UITableViewDataSource {
 
 }
 
+//MARK: - UITableViewDelegate
+
 extension ActionSheetLauncher: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -132,5 +142,12 @@ extension ActionSheetLauncher: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return footerHeight
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let option = viewModel.options[indexPath.row]
+        showTableView(false) { _ in
+            self.delegate?.didSelect(option: option)
+        }
     }
 }

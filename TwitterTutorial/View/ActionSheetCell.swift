@@ -43,6 +43,7 @@ class ActionSheetCell: UITableViewCell, ReusableView {
     //MARK: - Helpers
 
     private func configureUI() {
+        selectionStyle = .none
         titleLabel.font = UIFont.systemFont(ofSize: 18)
         addSubview(optionImageView)
         optionImageView.centerY(inView: self)

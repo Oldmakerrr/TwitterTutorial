@@ -140,3 +140,20 @@ extension CGFloat {
     static let screenWidth = UIScreen.main.bounds.width
     
 }
+
+//MARK: - UIViewController
+
+extension UIViewController {
+
+    func showAlert(withTitle title: String? = nil,
+                   withMessage message: String? = nil,
+                   actionTitle: String = "Done",
+                   actionStyle: UIAlertAction.Style = .default
+    ) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: actionTitle, style: .default)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true)
+    }
+    
+}

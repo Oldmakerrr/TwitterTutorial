@@ -46,6 +46,8 @@
 		F8ADC3C8293755D200AA23E7 /* StackViewButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3C7293755D200AA23E7 /* StackViewButtons.swift */; };
 		F8ADC3CA293772ED00AA23E7 /* UploadTweetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3C9293772ED00AA23E7 /* UploadTweetViewModel.swift */; };
 		F8ADC3CC2937978A00AA23E7 /* ActionSheetLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3CB2937978A00AA23E7 /* ActionSheetLauncher.swift */; };
+		F8ADC3CE2937ABBB00AA23E7 /* ActionSheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3CD2937ABBB00AA23E7 /* ActionSheetCell.swift */; };
+		F8ADC3D02937B55D00AA23E7 /* ActionSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3CF2937B55D00AA23E7 /* ActionSheetViewModel.swift */; };
 		F8C53DF8293518DA0071D6D8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8C53DF7293518DA0071D6D8 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -104,6 +106,8 @@
 		F8ADC3C7293755D200AA23E7 /* StackViewButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewButtons.swift; sourceTree = "<group>"; };
 		F8ADC3C9293772ED00AA23E7 /* UploadTweetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadTweetViewModel.swift; sourceTree = "<group>"; };
 		F8ADC3CB2937978A00AA23E7 /* ActionSheetLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetLauncher.swift; sourceTree = "<group>"; };
+		F8ADC3CD2937ABBB00AA23E7 /* ActionSheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetCell.swift; sourceTree = "<group>"; };
+		F8ADC3CF2937B55D00AA23E7 /* ActionSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetViewModel.swift; sourceTree = "<group>"; };
 		F8C53DF7293518DA0071D6D8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -211,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				188EA11E2897011D000A5506 /* TweetViewModel.swift */,
+				F8ADC3CF2937B55D00AA23E7 /* ActionSheetViewModel.swift */,
 				18B5999E2899B1F5003AD491 /* ProfileHeaderViewModel.swift */,
 				F8ADC3C9293772ED00AA23E7 /* UploadTweetViewModel.swift */,
 			);
@@ -221,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				18DCB5542884ADCA00B1B497 /* InputContainerView.swift */,
+				F8ADC3CD2937ABBB00AA23E7 /* ActionSheetCell.swift */,
 				184A2C0D288B066A008918A8 /* AuthButton.swift */,
 				F8ADC3C7293755D200AA23E7 /* StackViewButtons.swift */,
 				1861F5BA289317B300FF9840 /* CaptionTextView.swift */,
@@ -427,12 +433,14 @@
 				F8ADC3C62937390F00AA23E7 /* TweetHeader.swift in Sources */,
 				18C0A48B2898170800412EE9 /* ProfileFilterCell.swift in Sources */,
 				18C0A4852897EB5600412EE9 /* ProfileController.swift in Sources */,
+				F8ADC3CE2937ABBB00AA23E7 /* ActionSheetCell.swift in Sources */,
 				18842AD52881FC3B0090FB2B /* ExploreController.swift in Sources */,
 				1873E2A02884943B00BB7350 /* LoginController.swift in Sources */,
 				18DCB5552884ADCA00B1B497 /* InputContainerView.swift in Sources */,
 				1855AAD828901A7D005E2967 /* User.swift in Sources */,
 				1861F5B42891D1AE00FF9840 /* UploadTweetController.swift in Sources */,
 				184A2C0C288AFD0C008918A8 /* Utilities.swift in Sources */,
+				F8ADC3D02937B55D00AA23E7 /* ActionSheetViewModel.swift in Sources */,
 				18B4E44A2883564C00512912 /* Extentions.swift in Sources */,
 				F8ADC3CA293772ED00AA23E7 /* UploadTweetViewModel.swift in Sources */,
 				1861F5BB289317B300FF9840 /* CaptionTextView.swift in Sources */,

@@ -216,12 +216,12 @@
 				184A2C0D288B066A008918A8 /* AuthButton.swift */,
 				1861F5BA289317B300FF9840 /* CaptionTextView.swift */,
 				181059CD28943D50001C366B /* ProfileImageView.swift */,
+				F8ADC3C52937390F00AA23E7 /* TweetHeader.swift */,
 				181059CB28943B22001C366B /* TweetCell.swift */,
 				18C0A48A2898170800412EE9 /* ProfileFilterCell.swift */,
 				18F97A62289C1D280067E8DB /* UserCell.swift */,
 				181059CF289454CE001C366B /* TweetCellButton.swift */,
 				18C0A4862897F78F00412EE9 /* ProfileHeader.swift */,
-				F8ADC3C52937390F00AA23E7 /* TweetHeader.swift */,
 				18C0A4882898146500412EE9 /* ProfileFilterView.swift */,
 			);
 			path = View;

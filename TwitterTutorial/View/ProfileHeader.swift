@@ -9,6 +9,7 @@ import UIKit
 
 protocol ProfileHeaderDelegate: AnyObject {
     func didTappedBack(_ view: ProfileHeader)
+    func handleEditProfileFollow(_ view: ProfileHeader)
 }
 
 class ProfileHeader: UICollectionReusableView {
@@ -103,8 +104,8 @@ class ProfileHeader: UICollectionReusableView {
         profileImageView.setDimensions(width: 80, height: 80)
         configureButtons()
         let userDetailStackView = UIStackView(arrangedSubviews: [fullnameLabel,
-                                                       usernameLabel,
-                                                       bioLabel])
+                                                                 usernameLabel,
+                                                                 bioLabel])
         configureUserDetailsStackView(stackView: userDetailStackView)
         addGestureToLabel(view: userDetailStackView)
         addSubview(profileFilterView)
@@ -130,7 +131,7 @@ class ProfileHeader: UICollectionReusableView {
     }
     
     @objc private func handleEditProfileFollow() {
-        
+        delegate?.handleEditProfileFollow(self)
     }
     
     @objc private func handleFollowersTapped() {
@@ -142,6 +143,11 @@ class ProfileHeader: UICollectionReusableView {
     }
     
     //MARK: - Helper functions
+
+    func updateButtonTitle(isFollowed: Bool) {
+        let title = isFollowed ? "Following" : "Follow"
+        editProfileFollowButton.setTitle(title, for: .normal)
+    }
     
     private func configureButtons() {
         backButton.addTarget(self, action: #selector(backButtonHandle), for: .touchUpInside)

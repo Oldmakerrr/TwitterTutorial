@@ -11,7 +11,7 @@ class ProfileController: UICollectionViewController {
     
     //MARK: - Properties
     
-    let user: User
+    var user: User
     
     private var tweets = [Tweet]() {
         didSet { collectionView.reloadData() }
@@ -35,6 +35,8 @@ class ProfileController: UICollectionViewController {
         super.viewDidLoad()
         configureUI()
         fetchTweets()
+        checkIfUserIsFollowed()
+        fetchUserStats()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,6 +51,20 @@ class ProfileController: UICollectionViewController {
     func fetchTweets() {
         TweetService.shared.fetchTweets(forUser: user) { tweets in
             self.tweets = tweets
+        }
+    }
+
+    func checkIfUserIsFollowed() {
+        UserService.shared.checkIfUserIsFollowed(uid: user.uid) { isFollowed in
+            self.user.isFollowed = isFollowed
+            self.collectionView.reloadData()
+        }
+    }
+
+    func fetchUserStats() {
+        UserService.shared.fetchUserStats(uid: user.uid) { stats in
+            self.user.stats = stats
+            self.collectionView.reloadData()
         }
     }
     
@@ -101,7 +117,7 @@ extension ProfileController {
 extension ProfileController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 350)
+        return CGSize(width: view.frame.width, height: 370)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -113,6 +129,26 @@ extension ProfileController: UICollectionViewDelegateFlowLayout {
 //MARK: - ProfileHeaderDelegate
 
 extension ProfileController: ProfileHeaderDelegate {
+
+    func handleEditProfileFollow(_ view: ProfileHeader) {
+
+        if user.isCurrentUser {
+            print("DEBUG: Show edit profile controller..")
+            return
+        }
+
+        if user.isFollowed {
+            UserService.shared.unfollowUser(uid: user.uid) { error, reference in
+                self.user.isFollowed = false
+                self.collectionView.reloadData()
+            }
+        } else {
+            UserService.shared.followUser(uid: self.user.uid) { error, reference in
+                self.user.isFollowed = true 
+                self.collectionView.reloadData()
+            }
+        }
+    }
     
     func didTappedBack(_ view: ProfileHeader) {
         navigationController?.popViewController(animated: true)

@@ -8,6 +8,8 @@
 import FirebaseAuth
 import FirebaseDatabase
 
+typealias DatabaseCompletion = ((Error?, DatabaseReference) -> Void)
+
 struct UserService {
     
     static let shared = UserService()
@@ -38,4 +40,51 @@ struct UserService {
             }
         }
     }
+
+    func followUser(uid: String, completion: @escaping(DatabaseCompletion)) {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        REF_USER_FOLLOWING.child(currentUid).updateChildValues([uid: 1]) { error, reference in
+            REF_USER_FOLLOWERS.child(uid).updateChildValues([currentUid: 1], withCompletionBlock: completion)
+        }
+    }
+
+    func unfollowUser(uid: String, completion: @escaping(DatabaseCompletion)) {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        REF_USER_FOLLOWING.child(currentUid).removeValue { error, reference in
+            REF_USER_FOLLOWERS.child(uid).removeValue(completionBlock: completion)
+        }
+
+    }
+
+    func checkIfUserIsFollowed(uid: String, complition: @escaping (Bool) -> Void) {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        REF_USER_FOLLOWING.child(currentUid).child(uid).observeSingleEvent(of: .value) { snapshot in
+            complition(snapshot.exists())
+        }
+    }
+
+    func fetchUserStats(uid: String, completion: @escaping (UserRelationStats) -> Void) {
+        var followers: Int?
+        var following: Int?
+        let dispatchGroup = DispatchGroup()
+        DispatchQueue.global().async(group: dispatchGroup) {
+            dispatchGroup.enter()
+            REF_USER_FOLLOWERS.child(uid).observeSingleEvent(of: .value) { snapshot in
+                followers = snapshot.children.allObjects.count
+                dispatchGroup.leave()
+            }
+            dispatchGroup.enter()
+            REF_USER_FOLLOWING.child(uid).observeSingleEvent(of: .value) { snapshot in
+                following = snapshot.children.allObjects.count
+                dispatchGroup.leave()
+            }
+        }
+        dispatchGroup.notify(queue: .main) {
+            guard let followers = followers, let following = following else { return }
+            let stats = UserRelationStats(followers: followers, following: following)
+            completion(stats)
+        }
+    }
 }
+
+

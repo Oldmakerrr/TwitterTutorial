@@ -14,6 +14,8 @@ struct User {
     let username: String
     let profileImageUrl: URL
     let uid: String
+    var isFollowed: Bool = false
+    var stats: UserRelationStats?
     var isCurrentUser: Bool { return Auth.auth().currentUser?.uid == uid }
     
     init(uid: String, dictionary: [String: AnyObject]) throws {
@@ -40,4 +42,9 @@ struct User {
             throw NSError(domain: "Failed to parse Profile Image URL", code: 104)
         }
     }
+}
+
+struct UserRelationStats {
+    var followers: Int
+    var following: Int
 }

@@ -84,10 +84,7 @@ class ActionSheetLauncher: NSObject {
     }
 
     func show() {
-        guard let window = UIApplication
-            .shared
-            .connectedScenes
-            .compactMap({ ($0 as? UIWindowScene)?.keyWindow }).first else { return }
+        guard let window = UIApplication.shared.keyWindow else { return }
         self.window = window
         window.addSubview(blackView)
         blackView.frame = window.frame

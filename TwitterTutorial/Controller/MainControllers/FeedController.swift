@@ -139,7 +139,15 @@ extension FeedController: StackViewButtonsDelegate {
     }
 
     func didTapRetweetButton(_ view: StackViewButtons) {
-
+        guard let tweet = view.tweet else { return }
+        TweetService.shared.likeTweet(tweet: tweet) { error, reference in
+            if let error = error {
+                print("DEBUG: Failed like with error: \(error.localizedDescription)")
+            }
+            view.tweet?.didLike.toggle()
+            let likes = tweet.didLike ? tweet.likes - 1 : tweet.likes + 1
+            view.tweet?.likes = likes
+        }
     }
 
     func didTapLikeButton(_ view: StackViewButtons) {

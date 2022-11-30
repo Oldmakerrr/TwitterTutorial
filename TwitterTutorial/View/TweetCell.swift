@@ -8,9 +8,13 @@
 import UIKit
 import SDWebImage
 
-class TweetCell: UICollectionViewCell {
+class TweetCell: UICollectionViewCell, ReusableView {
     
 //MARK: - Properties
+
+    static var identifier: String {
+        String(describing: self)
+    }
     
     var tweet: Tweet? {
         didSet { configure() }

@@ -12,9 +12,13 @@ protocol ProfileHeaderDelegate: AnyObject {
     func handleEditProfileFollow(_ view: ProfileHeader)
 }
 
-class ProfileHeader: UICollectionReusableView {
-    
+class ProfileHeader: UICollectionReusableView, ReusableView {
+
     //MARK: - Properies
+
+    static var identifier: String {
+        String(describing: self)
+    }
     
     weak var delegate: ProfileHeaderDelegate?
     

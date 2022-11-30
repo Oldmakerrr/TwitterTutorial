@@ -12,8 +12,6 @@ class FeedController: UICollectionViewController {
     
     //MARK: - Properties
     
-    private let reuseIdentifier = "FeedControllerCell"
-    
     private var tweets = [Tweet]() {
         didSet { collectionView.reloadData() }
     }
@@ -49,7 +47,7 @@ class FeedController: UICollectionViewController {
     
     private func configureUI() {
         view.backgroundColor = .white
-        collectionView.register(TweetCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.register(TweetCell.self, forCellWithReuseIdentifier: TweetCell.identifier)
         configureNavigationBar()
     }
     
@@ -87,11 +85,17 @@ extension FeedController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TweetCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TweetCell.identifier, for: indexPath) as! TweetCell
         let tweet = tweets[indexPath.row]
         cell.tweet = tweet
         cell.setProfileImageViewDelegate(self)
         return cell
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let tweet = tweets[indexPath.row]
+        let controller = TweetController(tweet: tweet)
+        navigationController?.pushViewController(controller, animated: true)
     }
     
 }

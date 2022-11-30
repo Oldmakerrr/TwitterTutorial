@@ -17,9 +17,6 @@ class ProfileController: UICollectionViewController {
         didSet { collectionView.reloadData() }
     }
     
-    private let reuseIdentifier = "ProfileControllerCell"
-    private let headerIdentifier = "ProfileControllerHeader"
-    
     //MARK: - Lifecycle
     
     init(user: User, layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()) {
@@ -75,10 +72,10 @@ class ProfileController: UICollectionViewController {
     }
     
     private func configureCollectionView() {
-        collectionView.register(TweetCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.register(TweetCell.self, forCellWithReuseIdentifier: TweetCell.identifier)
         collectionView.register(ProfileHeader.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                withReuseIdentifier: headerIdentifier)
+                                withReuseIdentifier: ProfileHeader.identifier)
         collectionView.contentInsetAdjustmentBehavior = .never
     }
     
@@ -97,14 +94,14 @@ extension ProfileController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TweetCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TweetCell.identifier, for: indexPath) as! TweetCell
         let tweet = tweets[indexPath.row]
         cell.tweet = tweet
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerIdentifier, for: indexPath) as! ProfileHeader
+        let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProfileHeader.identifier, for: indexPath) as! ProfileHeader
         view.setupUser(user)
         view.delegate = self
         return view

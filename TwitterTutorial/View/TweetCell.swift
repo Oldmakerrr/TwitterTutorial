@@ -84,8 +84,7 @@ class TweetCell: UICollectionViewCell, ReusableView {
         addSubview(stackView)
         stackView.anchor(top: profileImageView.topAnchor,
                          leading: profileImageView.trailingAnchor,
-                         trailing: trailingAnchor,
-                         paddingTop: 12, paddingLeading: 12)
+                         trailing: trailingAnchor, paddingLeading: 12, paddingTrailing: 20)
     }
     
 }

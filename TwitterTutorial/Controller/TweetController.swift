@@ -34,6 +34,13 @@ class TweetController: UICollectionViewController {
         collectionView.register(TweetCell.self, forCellWithReuseIdentifier: TweetCell.identifier)
     }
 
+    private func goToUploadReplyController(user: User, tweet: Tweet) {
+        let controller = UploadTweetController(user: user, config: .reply(tweet))
+        let navigationController = UINavigationController(rootViewController: controller)
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true)
+    }
+
 }
 
 //MARK: - UICollectionViewDataSource/Delegate
@@ -77,7 +84,8 @@ extension TweetController: UICollectionViewDelegateFlowLayout {
 extension TweetController: StackViewButtonsDelegate {
 
     func didTapCommentButton(_ view: StackViewButtons) {
-
+        guard let tweet = view.tweet else { return }
+        goToUploadReplyController(user: tweet.user, tweet: tweet)
     }
 
     func didTapRetweetButton(_ view: StackViewButtons) {

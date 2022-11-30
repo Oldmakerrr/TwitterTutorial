@@ -44,6 +44,7 @@
 		F8ADC3C4293736BA00AA23E7 /* TweetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3C3293736BA00AA23E7 /* TweetController.swift */; };
 		F8ADC3C62937390F00AA23E7 /* TweetHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3C52937390F00AA23E7 /* TweetHeader.swift */; };
 		F8ADC3C8293755D200AA23E7 /* StackViewButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3C7293755D200AA23E7 /* StackViewButtons.swift */; };
+		F8ADC3CA293772ED00AA23E7 /* UploadTweetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3C9293772ED00AA23E7 /* UploadTweetViewModel.swift */; };
 		F8C53DF8293518DA0071D6D8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8C53DF7293518DA0071D6D8 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +101,7 @@
 		F8ADC3C3293736BA00AA23E7 /* TweetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetController.swift; sourceTree = "<group>"; };
 		F8ADC3C52937390F00AA23E7 /* TweetHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetHeader.swift; sourceTree = "<group>"; };
 		F8ADC3C7293755D200AA23E7 /* StackViewButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewButtons.swift; sourceTree = "<group>"; };
+		F8ADC3C9293772ED00AA23E7 /* UploadTweetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadTweetViewModel.swift; sourceTree = "<group>"; };
 		F8C53DF7293518DA0071D6D8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -207,6 +209,7 @@
 			children = (
 				188EA11E2897011D000A5506 /* TweetViewModel.swift */,
 				18B5999E2899B1F5003AD491 /* ProfileHeaderViewModel.swift */,
+				F8ADC3C9293772ED00AA23E7 /* UploadTweetViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -428,6 +431,7 @@
 				1861F5B42891D1AE00FF9840 /* UploadTweetController.swift in Sources */,
 				184A2C0C288AFD0C008918A8 /* Utilities.swift in Sources */,
 				18B4E44A2883564C00512912 /* Extentions.swift in Sources */,
+				F8ADC3CA293772ED00AA23E7 /* UploadTweetViewModel.swift in Sources */,
 				1861F5BB289317B300FF9840 /* CaptionTextView.swift in Sources */,
 				181059D0289454CE001C366B /* TweetCellButton.swift in Sources */,
 				18842AB92881F6CB0090FB2B /* SceneDelegate.swift in Sources */,

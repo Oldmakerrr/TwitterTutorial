@@ -16,6 +16,8 @@ protocol StackViewButtonsDelegate: AnyObject {
 
 class StackViewButtons: UIStackView {
 
+    var tweet: Tweet?
+
     weak var delegate: StackViewButtonsDelegate?
 
     private let commentButton = TweetCellButton(imageName: "comment")

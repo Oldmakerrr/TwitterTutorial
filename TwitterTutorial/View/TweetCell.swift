@@ -50,9 +50,14 @@ class TweetCell: UICollectionViewCell, ReusableView {
     func setProfileImageViewDelegate(_ delegate: ProfileImageViewDelegate) {
         profileImageView.delegate = delegate
     }
+
+    func setStackViewButtonDelegate(_ delegate: StackViewButtonsDelegate) {
+        stackViewButtons.delegate = delegate
+    }
     
     func configure() {
         guard let tweet = tweet else { return }
+        stackViewButtons.tweet = tweet
         let viewModel = TweetViewModel(tweet: tweet)
         captionLabel.text = tweet.caption
         infoLabel.attributedText = viewModel.userInfoText
@@ -69,7 +74,6 @@ class TweetCell: UICollectionViewCell, ReusableView {
         profileImageView.layer.cornerRadius = 48 / 2
         configureLabelStackView()
         addSubview(stackViewButtons)
-        stackViewButtons.delegate = self
         stackViewButtons.centerX(inView: self)
         stackViewButtons.anchor(bottom: bottomAnchor,  paddingBottom: 8)
         infoLabel.font = UIFont.systemFont(ofSize: 14)
@@ -87,24 +91,4 @@ class TweetCell: UICollectionViewCell, ReusableView {
                          trailing: trailingAnchor, paddingLeading: 12, paddingTrailing: 20)
     }
     
-}
-
-extension TweetCell: StackViewButtonsDelegate {
-
-    func didTapCommentButton(_ view: StackViewButtons) {
-        
-    }
-
-    func didTapRetweetButton(_ view: StackViewButtons) {
-
-    }
-
-    func didTapLikeButton(_ view: StackViewButtons) {
-
-    }
-
-    func didTapShareButton(_ view: StackViewButtons) {
-
-    }
-
 }

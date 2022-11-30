@@ -73,6 +73,13 @@ class FeedController: UICollectionViewController {
         let controller = ProfileController(user: user)
         navigationController?.pushViewController(controller, animated: true)
     }
+
+    private func goToUploadReplyController(user: User, tweet: Tweet) {
+        let controller = UploadTweetController(user: user, config: .reply(tweet))
+        let navigationController = UINavigationController(rootViewController: controller)
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true)
+    }
     
 }
 
@@ -89,6 +96,7 @@ extension FeedController {
         let tweet = tweets[indexPath.row]
         cell.tweet = tweet
         cell.setProfileImageViewDelegate(self)
+        cell.setStackViewButtonDelegate(self)
         return cell
     }
 
@@ -121,4 +129,26 @@ extension FeedController: ProfileImageViewDelegate {
         goToProfileController(user: user)
     }
     
+}
+
+extension FeedController: StackViewButtonsDelegate {
+
+    func didTapCommentButton(_ view: StackViewButtons) {
+        guard let tweet = view.tweet else { return }
+        goToUploadReplyController(user: tweet.user, tweet: tweet)
+    }
+
+    func didTapRetweetButton(_ view: StackViewButtons) {
+
+    }
+
+    func didTapLikeButton(_ view: StackViewButtons) {
+
+    }
+
+    func didTapShareButton(_ view: StackViewButtons) {
+
+    }
+
+
 }

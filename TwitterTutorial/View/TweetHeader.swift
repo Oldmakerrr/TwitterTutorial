@@ -134,6 +134,7 @@ class TweetHeader: UICollectionReusableView, ReusableView {
     private func updateUI() {
         guard let tweet = tweet else { return }
         let viewModel = TweetViewModel(tweet: tweet)
+        stackViewButtons.tweet = tweet
         captionLabel.text = tweet.caption
         fullnameLabel.text = tweet.user.fullname
         usernameLabel.text = viewModel.userNameText

@@ -9,6 +9,7 @@ import UIKit
 
 protocol NotificationCellDelegate: AnyObject {
     func didTappedProfileImage(_ cell: NotificationCell)
+    func didTappedFollow(_ cell: NotificationCell)
 }
 
 class NotificationCell: UITableViewCell, ReusableView {
@@ -35,6 +36,8 @@ class NotificationCell: UITableViewCell, ReusableView {
         return label
     }()
 
+    private let followButton = FollowButton()
+
     //MARK: - Lifecycle
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -59,6 +62,16 @@ class NotificationCell: UITableViewCell, ReusableView {
                      paddingLeading: 12, paddingTrailing: 12)
         profileImageView.setSize(40)
         profileImageView.delegate = self
+        setupFollowButton()
+    }
+
+    private func setupFollowButton() {
+        contentView.addSubview(followButton)
+        followButton.addTarget(self, action: #selector(handleFollow), for: .touchUpInside)
+        followButton.centerY(inView: contentView)
+        followButton.setDimensions(width: 88, height: 28)
+        followButton.anchor(trailing: contentView.trailingAnchor, paddingTrailing: 12)
+        followButton.layer.cornerRadius = 14
     }
 
     private func updateUI() {
@@ -66,10 +79,15 @@ class NotificationCell: UITableViewCell, ReusableView {
         let viewModel = NotificationViewModel(notification: notification)
         notificationLabel.attributedText = viewModel.notificationText
         profileImageView.sd_setImage(with: viewModel.profileImageUrl)
+        followButton.isHidden = viewModel.shouldHideFollowButton
+        followButton.setTitle(viewModel.followButtonTitle, for: .normal)
     }
 
     //MARK: - Selector
 
+    @objc private func handleFollow() {
+        delegate?.didTappedFollow(self)
+    }
 }
 
 extension NotificationCell: ProfileImageViewDelegate {

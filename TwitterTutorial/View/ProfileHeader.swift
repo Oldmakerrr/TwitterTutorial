@@ -56,16 +56,7 @@ class ProfileHeader: UICollectionReusableView, ReusableView {
         return imageView
     }()
     
-    private let editProfileFollowButton: UIButton = {
-        let button = UIButton()
-        button.layer.borderColor = UIColor.twitterBlue.cgColor
-        button.layer.borderWidth = 1.25
-        button.layer.cornerRadius = 18
-        button.layer.masksToBounds = true
-        button.setTitleColor(.twitterBlue, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        return button
-    }()
+    private let editProfileFollowButton = FollowButton()
     
     //Labels
     

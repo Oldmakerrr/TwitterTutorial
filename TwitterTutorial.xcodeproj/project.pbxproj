@@ -52,6 +52,7 @@
 		F8ADC3D42938A33600AA23E7 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3D32938A33600AA23E7 /* NotificationService.swift */; };
 		F8ADC3D62938B79900AA23E7 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3D52938B79900AA23E7 /* NotificationCell.swift */; };
 		F8ADC3D82938C7FE00AA23E7 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3D72938C7FE00AA23E7 /* NotificationViewModel.swift */; };
+		F8ADC3DA2938E43F00AA23E7 /* FollowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3D92938E43F00AA23E7 /* FollowButton.swift */; };
 		F8C53DF8293518DA0071D6D8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8C53DF7293518DA0071D6D8 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -116,6 +117,7 @@
 		F8ADC3D32938A33600AA23E7 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		F8ADC3D52938B79900AA23E7 /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		F8ADC3D72938C7FE00AA23E7 /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
+		F8ADC3D92938E43F00AA23E7 /* FollowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowButton.swift; sourceTree = "<group>"; };
 		F8C53DF7293518DA0071D6D8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -248,6 +250,7 @@
 				18F97A62289C1D280067E8DB /* UserCell.swift */,
 				181059CF289454CE001C366B /* TweetCellButton.swift */,
 				18C0A4862897F78F00412EE9 /* ProfileHeader.swift */,
+				F8ADC3D92938E43F00AA23E7 /* FollowButton.swift */,
 				18C0A4882898146500412EE9 /* ProfileFilterView.swift */,
 			);
 			path = View;
@@ -441,6 +444,7 @@
 				1884B13B288F38550013BF4A /* AuthService.swift in Sources */,
 				181059CA2894192D001C366B /* Tweet.swift in Sources */,
 				18842AB72881F6CB0090FB2B /* AppDelegate.swift in Sources */,
+				F8ADC3DA2938E43F00AA23E7 /* FollowButton.swift in Sources */,
 				18B5999F2899B1F5003AD491 /* ProfileHeaderViewModel.swift in Sources */,
 				F8ADC3C62937390F00AA23E7 /* TweetHeader.swift in Sources */,
 				18C0A48B2898170800412EE9 /* ProfileFilterCell.swift in Sources */,

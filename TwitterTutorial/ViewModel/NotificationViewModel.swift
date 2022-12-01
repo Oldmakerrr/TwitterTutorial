@@ -36,6 +36,14 @@ struct NotificationViewModel {
         user.profileImageUrl
     }
 
+    var shouldHideFollowButton: Bool {
+        return type != .follow
+    }
+
+    var followButtonTitle: String {
+        user.isFollowed ? "Following" : "Follow"
+    }
+
     var notificationText: NSAttributedString? {
         guard let timestamp = timestamp else { return nil }
         let attributedText = NSMutableAttributedString(string: user.username,

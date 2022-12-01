@@ -22,7 +22,7 @@ struct Notification {
     let tweet: Tweet?
     let type: NotificationType
 
-    init?(user: User, tweet: Tweet?, dictionary: [String: AnyObject]) {
+    init?(user: User, tweet: Tweet? = nil, dictionary: [String: AnyObject]) {
         self.user = user
         self.tweet = tweet
         self.tweetId = dictionary["tweetId"] as? String

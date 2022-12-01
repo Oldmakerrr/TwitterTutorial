@@ -75,12 +75,10 @@ class TweetCell: UICollectionViewCell, ReusableView {
     }
     
     private func configureUI() {
-        profileImageView.backgroundColor = .twitterBlue
         addSubview(profileImageView)
         profileImageView.anchor(top: topAnchor, leading: leadingAnchor,
                                 paddingTop: 8, paddingLeading: 8)
-        profileImageView.setDimensions(width: 48, height: 48)
-        profileImageView.layer.cornerRadius = 48 / 2
+        profileImageView.setSize()
         configureLabelStackView()
         addSubview(stackViewButtons)
         stackViewButtons.delegate = self

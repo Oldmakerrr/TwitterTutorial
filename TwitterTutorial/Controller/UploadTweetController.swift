@@ -90,8 +90,7 @@ class UploadTweetController: UIViewController {
         configureNavigationBar()
         configureStackView()
         profileImageView.sd_setImage(with: user.profileImageUrl, completed: nil)
-        profileImageView.setDimensions(width: 48, height: 48)
-        profileImageView.layer.cornerRadius = 48 / 2
+        profileImageView.setSize()
     }
     
     private func configureNavigationBar() {

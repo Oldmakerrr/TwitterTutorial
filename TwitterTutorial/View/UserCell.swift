@@ -44,9 +44,7 @@ class UserCell: UITableViewCell {
     
     private func configureUI() {
         addSubview(profileImageView)
-        profileImageView.backgroundColor = .twitterBlue
-        profileImageView.setDimensions(width: 40, height: 40)
-        profileImageView.layer.cornerRadius = 40 / 2
+        profileImageView.setSize(40)
         profileImageView.centerY(inView: self, leadingAnchor: leadingAnchor, paddingLeft: 12)
         
         let stackView = UIStackView(arrangedSubviews: [usernameLabel, fullnameLabel])

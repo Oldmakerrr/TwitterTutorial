@@ -120,9 +120,7 @@ class TweetHeader: UICollectionReusableView, ReusableView {
         labelStackView.axis = .vertical
         labelStackView.spacing = -4
         profileImageView.delegate = self
-        profileImageView.backgroundColor = .twitterBlue
-        profileImageView.setDimensions(width: 48, height: 48)
-        profileImageView.layer.cornerRadius = 48 / 2
+        profileImageView.setSize()
         let stackView = UIStackView(arrangedSubviews: [profileImageView, labelStackView])
         stackView.spacing = 12
         addSubview(stackView)

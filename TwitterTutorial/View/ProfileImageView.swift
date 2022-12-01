@@ -25,6 +25,7 @@ class ProfileImageView: UIImageView {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
         addGestureRecognizer(tapGesture)
         isUserInteractionEnabled = true
+        backgroundColor = .twitterBlue
     }
     
     required init?(coder: NSCoder) {
@@ -37,5 +38,10 @@ class ProfileImageView: UIImageView {
     
     func setUser(_ user: User) {
         self.user = user
+    }
+
+    func setSize(_ size: CGFloat = 48) {
+        setDimensions(width: size, height: size)
+        layer.cornerRadius = size / 2
     }
 }

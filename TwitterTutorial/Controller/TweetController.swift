@@ -212,6 +212,7 @@ extension TweetController: ActionSheetLauncherDelegate {
                 if let error = error {
                     print("DEBUG: Failed follow to \(user.username), with error: \(error.localizedDescription)")
                 }
+                NotificationService.shared.uploadNotification(type: .follow, user: user)
                 print("Did follow user: \(user.username)")
             }
         case .unfollow(let user):

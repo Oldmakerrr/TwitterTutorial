@@ -12,9 +12,23 @@ class ProfileController: UICollectionViewController {
     //MARK: - Properties
     
     var user: User
-    
-    private var tweets = [Tweet]() {
+
+    private var selectedFilter: ProfileFilterOptions = .tweets {
         didSet { collectionView.reloadData() }
+    }
+    
+    private var tweets = [Tweet]()
+    private var likedTweets = [Tweet]()
+    private var replies = [Tweet]()
+    private var currentDataSource: [Tweet] {
+        switch selectedFilter {
+        case .tweets:
+            return tweets
+        case .replies:
+            return replies
+        case .likes:
+            return likedTweets
+        }
     }
     
     //MARK: - Lifecycle
@@ -34,6 +48,8 @@ class ProfileController: UICollectionViewController {
         fetchTweets()
         checkIfUserIsFollowed()
         fetchUserStats()
+        fetchLikedTweets()
+        fetchReplies()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,6 +60,30 @@ class ProfileController: UICollectionViewController {
     //MARK: - Selectors
     
     //MARK: - API
+
+    private func fetchReplies() {
+        TweetService.shared.fetchRelies(forUser: user) { replies in
+            self.replies = replies
+            for (index, reply) in self.replies.enumerated() {
+                TweetService.shared.checkIfUserLikedTweet(reply) { didLike in
+                    guard didLike == true else { return }
+                    self.replies[index].didLike = true
+                }
+            }
+        }
+    }
+
+    private func fetchLikedTweets() {
+        TweetService.shared.fetchLikedTweets(forUser: user) { [self] likedTweets in
+            self.likedTweets = likedTweets
+            for (index, tweet) in self.likedTweets.enumerated() {
+                TweetService.shared.checkIfUserLikedTweet(tweet) { didLike in
+                    guard didLike == true else { return }
+                    self.likedTweets[index].didLike = true
+                }
+            }
+        }
+    }
 
     private func checkIfUserLikedTweets(_ tweets: [Tweet]) {
         for (index, tweet) in tweets.enumerated() {
@@ -58,6 +98,7 @@ class ProfileController: UICollectionViewController {
         TweetService.shared.fetchTweets(forUser: user) { tweets in
             self.tweets = tweets
             self.checkIfUserLikedTweets(tweets)
+            self.collectionView.reloadData()
         }
     }
 
@@ -87,6 +128,8 @@ class ProfileController: UICollectionViewController {
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                 withReuseIdentifier: ProfileHeader.identifier)
         collectionView.contentInsetAdjustmentBehavior = .never
+        guard let tabHeight = tabBarController?.tabBar.frame.height else { return }
+        collectionView.contentInset.bottom = tabHeight
     }
     
     private func configureNavigationBar() {
@@ -107,13 +150,13 @@ class ProfileController: UICollectionViewController {
 extension ProfileController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tweets.count
+        return currentDataSource.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TweetCell.identifier, for: indexPath) as! TweetCell
         cell.delegate = self
-        let tweet = tweets[indexPath.row]
+        let tweet = currentDataSource[indexPath.row]
         cell.tweet = tweet
         return cell
     }
@@ -136,9 +179,9 @@ extension ProfileController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let viewModel = TweetViewModel(tweet: tweets[indexPath.row])
+        let viewModel = TweetViewModel(tweet: currentDataSource[indexPath.row])
         let height = viewModel.size(forWidth: view.frame.width, withFont: UIFont.systemFont(ofSize: 14)).height
-        return CGSize(width: view.frame.width, height: height + 120)
+        return CGSize(width: view.frame.width, height: height + 90)
     }
     
 }
@@ -146,6 +189,10 @@ extension ProfileController: UICollectionViewDelegateFlowLayout {
 //MARK: - ProfileHeaderDelegate
 
 extension ProfileController: ProfileHeaderDelegate {
+
+    func didChangeFilterOptoin(_ view: ProfileHeader, selectedFilter: ProfileFilterOptions) {
+        self.selectedFilter = selectedFilter
+    }
 
     func handleEditProfileFollow(_ view: ProfileHeader) {
 

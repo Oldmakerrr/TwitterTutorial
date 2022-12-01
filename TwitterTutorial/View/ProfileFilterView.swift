@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ProfileFilterViewDelegate: AnyObject {
-    func didSelect(_ view: ProfileFilterView, cell: ProfileFilterCell)
+    func didSelect(_ view: ProfileFilterView, selectedFilter: ProfileFilterOptions)
 }
 
 class ProfileFilterView: UIView {
@@ -16,6 +16,8 @@ class ProfileFilterView: UIView {
     //MARK: - Properties
     
     weak var delegate: ProfileFilterViewDelegate?
+
+    private let underlineView = UIView()
     
     private let reuseIdentifier = "ProfileFilterViewCell"
     
@@ -37,12 +39,19 @@ class ProfileFilterView: UIView {
         collectionView.register(ProfileFilterCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         let selectedIndexPath = IndexPath(row: 0, section: 0)
         collectionView.selectItem(at: selectedIndexPath, animated: false, scrollPosition: .left)
+        underlineView.backgroundColor = .twitterBlue
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    override func layoutSubviews() {
+        addSubview(underlineView)
+        let numberOfItem = CGFloat(ProfileFilterOptions.allCases.count)
+        underlineView.anchor(leading: leadingAnchor, bottom: bottomAnchor,
+                             width: frame.width / numberOfItem, height: 2)
+    }
 }
 
 //MARK: - UICollectionViewDataSource
@@ -67,8 +76,15 @@ extension ProfileFilterView: UICollectionViewDataSource {
 extension ProfileFilterView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? ProfileFilterCell else { return }
-        delegate?.didSelect(self, cell: cell)
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ProfileFilterCell,
+              let selectedFilter = ProfileFilterOptions(rawValue: indexPath.row) else { return }
+        let xPosition = cell.frame.origin.x
+        UIView.animate(withDuration: 0.3) {
+            self.underlineView.frame.origin.x = xPosition
+
+        } completion: { _ in
+            self.delegate?.didSelect(self, selectedFilter: selectedFilter)
+        }
     }
     
 }

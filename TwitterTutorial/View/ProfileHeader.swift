@@ -10,6 +10,7 @@ import UIKit
 protocol ProfileHeaderDelegate: AnyObject {
     func didTappedBack(_ view: ProfileHeader)
     func handleEditProfileFollow(_ view: ProfileHeader)
+    func didChangeFilterOptoin(_ view: ProfileHeader, selectedFilter: ProfileFilterOptions)
 }
 
 class ProfileHeader: UICollectionReusableView, ReusableView {
@@ -29,8 +30,6 @@ class ProfileHeader: UICollectionReusableView, ReusableView {
     private var viewModel: ProfileHeaderViewModel?
     
     private let profileFilterView = ProfileFilterView()
-    
-    private let underlineView = UIView()
     
     private lazy var containerView: UIView = {
         let view = UIView()
@@ -108,11 +107,7 @@ class ProfileHeader: UICollectionReusableView, ReusableView {
         profileFilterView.anchor(leading: leadingAnchor,
                                  bottom: bottomAnchor,
                                  trailing: trailingAnchor, height: 50)
-        addSubview(underlineView)
-        underlineView.backgroundColor = .twitterBlue
-        let numberOfItem = CGFloat(ProfileFilterOptions.allCases.count)
-        underlineView.anchor(leading: leadingAnchor, bottom: bottomAnchor,
-                             width: frame.width / numberOfItem, height: 2)
+        
     }
     
     required init?(coder: NSCoder) {
@@ -198,12 +193,10 @@ class ProfileHeader: UICollectionReusableView, ReusableView {
 
 //MARK: - ProfileFilterViewDelegate
 
-extension ProfileHeader: ProfileFilterViewDelegate {
-    
-    func didSelect(_ view: ProfileFilterView, cell: ProfileFilterCell) {
-        let xPosition = cell.frame.origin.x
-        UIView.animate(withDuration: 0.3) {
-            self.underlineView.frame.origin.x = xPosition
-        }
+extension ProfileHeader: ProfileFilterViewDelegate  {
+
+    func didSelect(_ view: ProfileFilterView, selectedFilter: ProfileFilterOptions) {
+        delegate?.didChangeFilterOptoin(self, selectedFilter: selectedFilter)
     }
+
 }

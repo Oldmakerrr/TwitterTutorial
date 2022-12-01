@@ -32,7 +32,11 @@ struct TweetService {
             }
         case .reply(let tweet):
             REF_TWEETS_REPLIES.child(tweet.tweetId).childByAutoId()
-                .updateChildValues(values, withCompletionBlock: completion)
+                .updateChildValues(values) { error, reference in
+                    guard let replyId = reference.key else { return }
+                    REF_USER_REPLIES.child(uid)
+                        .updateChildValues([tweet.tweetId: replyId], withCompletionBlock: completion)
+                }
         }
     }
     
@@ -81,6 +85,16 @@ struct TweetService {
         }
     }
 
+    func fetchLikedTweets(forUser user: User, completion: @escaping ([Tweet]) -> Void) {
+        var tweets = [Tweet]()
+        REF_USER_LIKES.child(user.uid).observe(.childAdded) { snapshot in
+            self.fetchTweet(withTweetID: snapshot.key) { tweet in
+                tweets.append(tweet)
+                completion(tweets)
+            }
+        }
+    }
+
     func fetchReplies(forTweet tweet: Tweet, completion: @escaping ([Tweet]) -> Void) {
         var tweets = [Tweet]()
         REF_TWEETS_REPLIES.child(tweet.tweetId).observeSingleEvent(of: .childAdded) { snapshot in
@@ -94,6 +108,27 @@ struct TweetService {
                     completion(tweets)
                 } catch let error as NSError {
                     print("DEBUG: Failed create Tweet with error: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+
+    func fetchRelies(forUser user: User, completion: @escaping ([Tweet]) -> Void) {
+        var replies = [Tweet]()
+        REF_USER_REPLIES.child(user.uid).observe(.childAdded) { snapshot in
+            let tweetKey = snapshot.key
+            guard let replyKey = snapshot.value as? String else { return }
+            REF_TWEETS_REPLIES.child(tweetKey).child(replyKey).observeSingleEvent(of: .value) { snapshot in
+                guard let dictionary = snapshot.value as? [String: Any],
+                      let uid = dictionary["uid"] as? String else { return }
+                UserService.shared.fetchUser(uid: uid) { user in
+                    do {
+                        let reply = try Tweet(user: user, tweetId: tweetKey, dictionary: dictionary)
+                        replies.append(reply)
+                        completion(replies)
+                    } catch let error as NSError {
+                        print("DEBUG: Failed create Tweet with error: \(error.localizedDescription)")
+                    }
                 }
             }
         }

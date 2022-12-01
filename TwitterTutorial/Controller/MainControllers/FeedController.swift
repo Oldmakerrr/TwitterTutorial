@@ -27,29 +27,33 @@ class FeedController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        fetchTweets()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
-        fetchTweets()
     }
     
     //MARK: - API
     
     fileprivate func checkIfUserLikedTweets(_ tweets: [Tweet]) {
-        for (index, tweet) in tweets.enumerated() {
+        tweets.forEach { tweet in
             TweetService.shared.checkIfUserLikedTweet(tweet) { didLike in
                 guard didLike == true else { return }
-                self.tweets[index].didLike = true
+                if let index = tweets.firstIndex(where: { $0.tweetId == tweet.tweetId}) {
+                    self.tweets[index].didLike = true
+                }
             }
         }
     }
 
     private func fetchTweets() {
+        collectionView.refreshControl?.beginRefreshing()
         TweetService.shared.fetchTweets { [self] tweets in
-            self.tweets = tweets
-            checkIfUserLikedTweets(tweets)
+            self.tweets = tweets.sorted(by: { $0.timestamp > $1.timestamp })
+            checkIfUserLikedTweets(self.tweets)
+            collectionView.refreshControl?.endRefreshing()
         }
     }
     
@@ -59,6 +63,9 @@ class FeedController: UICollectionViewController {
         view.backgroundColor = .white
         collectionView.register(TweetCell.self, forCellWithReuseIdentifier: TweetCell.identifier)
         configureNavigationBar()
+        let refreshControl = UIRefreshControl()
+        collectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
     }
     
     private func configureNavigationBar() {
@@ -89,6 +96,12 @@ class FeedController: UICollectionViewController {
         let navigationController = UINavigationController(rootViewController: controller)
         navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: true)
+    }
+
+    //MARK: - Selectors
+
+    @objc private func handleRefresh() {
+        fetchTweets()
     }
     
 }

@@ -43,18 +43,22 @@ struct TweetService {
     
     func fetchTweets(completion: @escaping([Tweet]) -> Void) {
         var tweets = [Tweet]()
-        REF_TWEETS.observe(.childAdded) { snapshot in
-            guard let dictionary = snapshot.value as? [String: Any],
-                  let uid = dictionary["uid"] as? String else { return }
-            UserService.shared.fetchUser(uid: uid) { user in
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        REF_USER_FOLLOWING.child(currentUid).observe(.childAdded) { snapshot in
+            let followingUid = snapshot.key
+            REF_USER_TWEETS.child(followingUid).observe(.childAdded) { snapshot in
                 let tweetId = snapshot.key
-                do {
-                    let tweet = try Tweet(user: user, tweetId: tweetId, dictionary: dictionary)
+                self.fetchTweet(withTweetID: tweetId) { tweet in
                     tweets.append(tweet)
                     completion(tweets)
-                } catch let error as NSError {
-                    print("DEBUG: Failed create Tweet with error: \(error.localizedDescription)")
                 }
+            }
+        }
+        REF_USER_TWEETS.child(currentUid).observe(.childAdded) { snapshot in
+            let tweetId = snapshot.key
+            self.fetchTweet(withTweetID: tweetId) { tweet in
+                tweets.append(tweet)
+                completion(tweets)
             }
         }
     }

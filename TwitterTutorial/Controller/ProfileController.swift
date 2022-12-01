@@ -44,10 +44,20 @@ class ProfileController: UICollectionViewController {
     //MARK: - Selectors
     
     //MARK: - API
+
+    private func checkIfUserLikedTweets(_ tweets: [Tweet]) {
+        for (index, tweet) in tweets.enumerated() {
+            TweetService.shared.checkIfUserLikedTweet(tweet) { didLike in
+                guard didLike == true else { return }
+                self.tweets[index].didLike = true
+            }
+        }
+    }
     
     func fetchTweets() {
         TweetService.shared.fetchTweets(forUser: user) { tweets in
             self.tweets = tweets
+            self.checkIfUserLikedTweets(tweets)
         }
     }
 
@@ -82,6 +92,13 @@ class ProfileController: UICollectionViewController {
     private func configureNavigationBar() {
         navigationController?.navigationBar.isHidden = true
     }
+
+    private func goToUploadReplyController(user: User, tweet: Tweet) {
+        let controller = UploadTweetController(user: user, config: .reply(tweet))
+        let navigationController = UINavigationController(rootViewController: controller)
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true)
+    }
     
 }
 
@@ -95,6 +112,7 @@ extension ProfileController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TweetCell.identifier, for: indexPath) as! TweetCell
+        cell.delegate = self
         let tweet = tweets[indexPath.row]
         cell.tweet = tweet
         return cell
@@ -153,4 +171,38 @@ extension ProfileController: ProfileHeaderDelegate {
         navigationController?.popViewController(animated: true)
     }
     
+}
+
+//MARK: - TweetCellDelegate
+
+extension ProfileController: TweetCellDelegate {
+
+    func didTapCommentButton(_ cell: TweetCell) {
+        guard let tweet = cell.tweet else { return }
+        goToUploadReplyController(user: tweet.user, tweet: tweet)
+    }
+
+    func didTapRetweetButton(_ cell: TweetCell) {
+
+    }
+
+    func didTapLikeButton(_ cell: TweetCell) {
+        guard let tweet = cell.tweet else { return }
+        TweetService.shared.likeTweet(tweet: tweet) { error, reference in
+            if let error = error {
+                print("DEBUG: Failed like with error: \(error.localizedDescription)")
+            }
+            cell.tweet?.didLike.toggle()
+            let likes = tweet.didLike ? tweet.likes - 1 : tweet.likes + 1
+            cell.tweet?.likes = likes
+            guard !tweet.didLike else { return }
+            NotificationService.shared.uploadNotification(type: .like, tweet: tweet)
+        }
+
+    }
+
+    func didTapShareButton(_ cell: TweetCell) {
+
+    }
+
 }

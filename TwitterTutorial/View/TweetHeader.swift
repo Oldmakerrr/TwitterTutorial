@@ -152,6 +152,7 @@ class TweetHeader: UICollectionReusableView, ReusableView {
         dateLabel.text = viewModel.headerTimestamp
         retweetsLabel.attributedText = viewModel.retweetAttributedString
         likesLabel.attributedText = viewModel.likesAttributedString
+        stackViewButtons.setLikeButtonImage(viewModel.likeButtonImage, withColor: viewModel.likeButtonTintColor)
     }
 
     func setDelegateToStackViewButtons(_ delegate: StackViewButtonsDelegate) {

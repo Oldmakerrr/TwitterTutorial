@@ -10,7 +10,6 @@ import Foundation
 struct Tweet {
     let caption: String
     let tweetId: String
-    let uid: String
     var likes: Int
     let timestamp: Date
     let retweetsCount: Int
@@ -24,11 +23,6 @@ struct Tweet {
             self.caption = caption
         } else {
             throw NSError(domain: "Failed to parse Caption", code: 201)
-        }
-        if let uid = dictionary["uid"] as? String {
-            self.uid = uid
-        } else {
-            throw NSError(domain: "Failed to parse Uid", code: 202)
         }
         if let likes = dictionary["likes"] as? Int {
             self.likes = likes

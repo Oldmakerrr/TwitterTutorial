@@ -48,6 +48,8 @@
 		F8ADC3CC2937978A00AA23E7 /* ActionSheetLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3CB2937978A00AA23E7 /* ActionSheetLauncher.swift */; };
 		F8ADC3CE2937ABBB00AA23E7 /* ActionSheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3CD2937ABBB00AA23E7 /* ActionSheetCell.swift */; };
 		F8ADC3D02937B55D00AA23E7 /* ActionSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3CF2937B55D00AA23E7 /* ActionSheetViewModel.swift */; };
+		F8ADC3D22938890200AA23E7 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3D12938890200AA23E7 /* Notification.swift */; };
+		F8ADC3D42938A33600AA23E7 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3D32938A33600AA23E7 /* NotificationService.swift */; };
 		F8C53DF8293518DA0071D6D8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8C53DF7293518DA0071D6D8 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -108,6 +110,8 @@
 		F8ADC3CB2937978A00AA23E7 /* ActionSheetLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetLauncher.swift; sourceTree = "<group>"; };
 		F8ADC3CD2937ABBB00AA23E7 /* ActionSheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetCell.swift; sourceTree = "<group>"; };
 		F8ADC3CF2937B55D00AA23E7 /* ActionSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetViewModel.swift; sourceTree = "<group>"; };
+		F8ADC3D12938890200AA23E7 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		F8ADC3D32938A33600AA23E7 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		F8C53DF7293518DA0071D6D8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -193,6 +197,7 @@
 			children = (
 				1884B13A288F38550013BF4A /* AuthService.swift */,
 				1861F5BE2893356B00FF9840 /* TweetService.swift */,
+				F8ADC3D32938A33600AA23E7 /* NotificationService.swift */,
 				1855AAD5288FF833005E2967 /* UserService.swift */,
 			);
 			path = API;
@@ -247,6 +252,7 @@
 			children = (
 				1855AAD728901A7D005E2967 /* User.swift */,
 				181059C92894192D001C366B /* Tweet.swift */,
+				F8ADC3D12938890200AA23E7 /* Notification.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -444,6 +450,7 @@
 				18B4E44A2883564C00512912 /* Extentions.swift in Sources */,
 				F8ADC3CA293772ED00AA23E7 /* UploadTweetViewModel.swift in Sources */,
 				1861F5BB289317B300FF9840 /* CaptionTextView.swift in Sources */,
+				F8ADC3D22938890200AA23E7 /* Notification.swift in Sources */,
 				181059D0289454CE001C366B /* TweetCellButton.swift in Sources */,
 				18842AB92881F6CB0090FB2B /* SceneDelegate.swift in Sources */,
 				18C0A4892898146500412EE9 /* ProfileFilterView.swift in Sources */,
@@ -451,6 +458,7 @@
 				188EA11F2897011D000A5506 /* TweetViewModel.swift in Sources */,
 				181059CC28943B22001C366B /* TweetCell.swift in Sources */,
 				181059CE28943D50001C366B /* ProfileImageView.swift in Sources */,
+				F8ADC3D42938A33600AA23E7 /* NotificationService.swift in Sources */,
 				1873E2A2288494BB00BB7350 /* RegistrationController.swift in Sources */,
 				1855AAD6288FF833005E2967 /* UserService.swift in Sources */,
 				1884B139288E7EA00013BF4A /* Constants.swift in Sources */,

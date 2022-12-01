@@ -39,6 +39,15 @@ class TweetController: UICollectionViewController {
 
     //MARK: - API
 
+    private func checkIfUserLikedTweets(_ tweets: [Tweet]) {
+        for (index, tweet) in tweets.enumerated() {
+            TweetService.shared.checkIfUserLikedTweet(tweet) { didLike in
+                guard didLike == true else { return }
+                self.replies[index].didLike = true
+            }
+        }
+    }
+
     private func checkIfUserIsFollowed() {
         UserService.shared.checkIfUserIsFollowed(uid: tweet.user.uid) { [self] isFollowed in
             tweet.user.isFollowed = isFollowed
@@ -50,6 +59,7 @@ class TweetController: UICollectionViewController {
     private func fetchReplies() {
         TweetService.shared.fetchReplies(forTweet: tweet) { replies in
             self.replies = replies
+            self.checkIfUserLikedTweets(replies)
         }
     }
 
@@ -123,7 +133,17 @@ extension TweetController: TweetCellDelegate {
     }
 
     func didTapLikeButton(_ cell: TweetCell) {
-
+        guard let tweet = cell.tweet else { return }
+        TweetService.shared.likeTweet(tweet: tweet) { error, reference in
+            if let error = error {
+                print("DEBUG: Failed like with error: \(error.localizedDescription)")
+            }
+            cell.tweet?.didLike.toggle()
+            let likes = tweet.didLike ? tweet.likes - 1 : tweet.likes + 1
+            cell.tweet?.likes = likes
+            guard !tweet.didLike else { return }
+            NotificationService.shared.uploadNotification(type: .like, tweet: tweet)
+        }
     }
 
     func didTapShareButton(_ cell: TweetCell) {
@@ -146,11 +166,21 @@ extension TweetController: TweetHeaderDelegate {
     }
 
     func didTapLikeButton(_ view: TweetHeader) {
-
+        guard let tweet = view.tweet else { return }
+        TweetService.shared.likeTweet(tweet: tweet) { error, reference in
+            if let error = error {
+                print("DEBUG: Failed like with error: \(error.localizedDescription)")
+            }
+            view.tweet?.didLike.toggle()
+            let likes = tweet.didLike ? tweet.likes - 1 : tweet.likes + 1
+            view.tweet?.likes = likes
+            guard !tweet.didLike else { return }
+            NotificationService.shared.uploadNotification(type: .like, tweet: tweet)
+        }
     }
 
     func didTapShareButton(_ view: TweetHeader) {
-        
+
     }
 
 

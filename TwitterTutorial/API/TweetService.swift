@@ -18,7 +18,7 @@ struct TweetService {
                      completion: @escaping(DatabaseCompletion)
     ) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        let values: [String: Any] = ["uid": uid,
+        var values: [String: Any] = ["uid": uid,
                                      "timestamp": Int(NSDate().timeIntervalSince1970),
                                      "likes": 0 ,
                                      "retweets": 0,
@@ -31,6 +31,7 @@ struct TweetService {
                 REF_USER_TWEETS.child(uid).updateChildValues([tweetId : 1], withCompletionBlock: completion)
             }
         case .reply(let tweet):
+            values["replyingTo"] = tweet.user.username
             REF_TWEETS_REPLIES.child(tweet.tweetId).childByAutoId()
                 .updateChildValues(values) { error, reference in
                     guard let replyId = reference.key else { return }
@@ -121,9 +122,10 @@ struct TweetService {
             REF_TWEETS_REPLIES.child(tweetKey).child(replyKey).observeSingleEvent(of: .value) { snapshot in
                 guard let dictionary = snapshot.value as? [String: Any],
                       let uid = dictionary["uid"] as? String else { return }
+                let replyId = snapshot.key
                 UserService.shared.fetchUser(uid: uid) { user in
                     do {
-                        let reply = try Tweet(user: user, tweetId: tweetKey, dictionary: dictionary)
+                        let reply = try Tweet(user: user, tweetId: replyId, dictionary: dictionary)
                         replies.append(reply)
                         completion(replies)
                     } catch let error as NSError {

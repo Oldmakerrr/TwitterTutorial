@@ -68,6 +68,13 @@ class TweetHeader: UICollectionReusableView, ReusableView {
         return button
     }()
 
+    private let replyLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .lightGray
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
+    }()
+
     private let likesLabel = UILabel()
 
     private let retweetsLabel = UILabel()
@@ -121,16 +128,22 @@ class TweetHeader: UICollectionReusableView, ReusableView {
         labelStackView.spacing = -4
         profileImageView.delegate = self
         profileImageView.setSize()
-        let stackView = UIStackView(arrangedSubviews: [profileImageView, labelStackView])
-        stackView.spacing = 12
-        addSubview(stackView)
-        stackView.anchor(top: topAnchor, leading: leadingAnchor, paddingTop: 16, paddingLeading: 16)
+        let imageCaptionStack = UIStackView(arrangedSubviews: [profileImageView, labelStackView])
+        imageCaptionStack.spacing = 12
+
+        let stack = UIStackView(arrangedSubviews: [replyLabel, imageCaptionStack])
+        stack.axis = .vertical
+        stack.spacing = 8
+        stack.distribution = .fillProportionally
+
+        addSubview(stack)
+        stack.anchor(top: topAnchor, leading: leadingAnchor, paddingTop: 16, paddingLeading: 16)
         addSubview(captionLabel)
-        captionLabel.anchor(top: stackView.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, paddingTop: 12, paddingLeading: 16, paddingTrailing: 16)
+        captionLabel.anchor(top: imageCaptionStack.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, paddingTop: 12, paddingLeading: 16, paddingTrailing: 16)
         addSubview(dateLabel)
         dateLabel.anchor(top: captionLabel.bottomAnchor, leading: leadingAnchor, paddingTop: 20, paddingLeading: 16)
         addSubview(optionButton)
-        optionButton.centerY(inView: stackView)
+        optionButton.centerY(inView: imageCaptionStack)
         optionButton.anchor(trailing: trailingAnchor, paddingTrailing: 8)
         addSubview(statsView)
         statsView.anchor(top: dateLabel.bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, paddingTop: 12, height: 40)
@@ -151,6 +164,8 @@ class TweetHeader: UICollectionReusableView, ReusableView {
         retweetsLabel.attributedText = viewModel.retweetAttributedString
         likesLabel.attributedText = viewModel.likesAttributedString
         stackViewButtons.setLikeButtonImage(viewModel.likeButtonImage, withColor: viewModel.likeButtonTintColor)
+        replyLabel.isHidden = viewModel.shouldHideRepplyLabel
+        replyLabel.text = viewModel.replyText
     }
 
     func setDelegateToStackViewButtons(_ delegate: StackViewButtonsDelegate) {

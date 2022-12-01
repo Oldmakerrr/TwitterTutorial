@@ -37,6 +37,12 @@ class TweetController: UICollectionViewController {
         checkIfUserIsFollowed()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = false
+        navigationController?.navigationBar.barStyle = .default
+    }
+
     //MARK: - API
 
     private func checkIfUserLikedTweets(_ tweets: [Tweet]) {
@@ -110,13 +116,14 @@ extension TweetController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         let viewModel = TweetViewModel(tweet: tweet)
         let height = viewModel.size(forWidth: view.frame.width, withFont: UIFont.systemFont(ofSize: 20)).height
-        return CGSize(width: view.frame.width - 32, height: height + 220)
+        let viewHeight: CGFloat = viewModel.tweet.isReply ? 240 : 220
+        return CGSize(width: view.frame.width - 32, height: height + viewHeight)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let viewModel = TweetViewModel(tweet: replies[indexPath.row])
         let height = viewModel.size(forWidth: view.frame.width, withFont: UIFont.systemFont(ofSize: 14)).height
-        return CGSize(width: view.frame.width, height: height + 80)
+        return CGSize(width: view.frame.width, height: height + 90)
     }
     
 }

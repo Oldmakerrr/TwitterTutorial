@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 
 struct TweetViewModel {
+
+    //MARK: - Properties
     
     let tweet: Tweet
     let user: User
@@ -68,11 +70,24 @@ struct TweetViewModel {
         let name = tweet.didLike ? "like_filled" : "like"
         return UIImage(named: name)
     }
+
+    var shouldHideRepplyLabel: Bool {
+        !tweet.isReply
+    }
+
+    var replyText: String? {
+        guard let replyingTo = tweet.replyingTo else { return nil }
+        return "→ replying to @\(replyingTo)"
+    }
+
+    //MARK: - Lifecycle
     
     init(tweet: Tweet) {
         self.tweet = tweet
         self.user = tweet.user
     }
+
+    //MARK: - Helpers
 
     private func attributedString(withValue value: Int, text: String) -> NSAttributedString {
         let title = NSMutableAttributedString(string: "\(value) ",

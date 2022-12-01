@@ -15,6 +15,10 @@ struct Tweet {
     let retweetsCount: Int
     var user: User
     var didLike = false
+    var replyingTo: String?
+    var isReply: Bool {
+        return replyingTo != nil
+    }
     
     init(user: User, tweetId: String, dictionary: [String: Any]) throws {
         self.user = user
@@ -39,7 +43,9 @@ struct Tweet {
         } else {
             throw NSError(domain: "Failed to parse Retweets Count", code: 205)
         }
-        
+        if let replyingTo = dictionary["replyingTo"] as? String {
+            self.replyingTo = replyingTo
+        }
     }
     
 }

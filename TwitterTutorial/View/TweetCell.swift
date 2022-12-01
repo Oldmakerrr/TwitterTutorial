@@ -26,8 +26,15 @@ class TweetCell: UICollectionViewCell, ReusableView {
     }
     
     var tweet: Tweet? {
-        didSet { configure() }
+        didSet { configure()}
     }
+
+    private let replyLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .lightGray
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
+    }()
     
     private var profileImageView = ProfileImageView()
     
@@ -72,12 +79,11 @@ class TweetCell: UICollectionViewCell, ReusableView {
         profileImageView.sd_setImage(with: viewModel.profileImageUrl)
         profileImageView.setUser(tweet.user)
         stackViewButtons.setLikeButtonImage(viewModel.likeButtonImage, withColor: viewModel.likeButtonTintColor)
+        replyLabel.text = viewModel.replyText
+        replyLabel.isHidden = viewModel.shouldHideRepplyLabel
     }
     
     private func configureUI() {
-        addSubview(profileImageView)
-        profileImageView.anchor(top: topAnchor, leading: leadingAnchor,
-                                paddingTop: 8, paddingLeading: 8)
         profileImageView.setSize()
         configureLabelStackView()
         addSubview(stackViewButtons)
@@ -93,10 +99,21 @@ class TweetCell: UICollectionViewCell, ReusableView {
         stackView.axis = .vertical
         stackView.distribution = .fillProportionally
         stackView.spacing = 4
-        addSubview(stackView)
-        stackView.anchor(top: profileImageView.topAnchor,
-                         leading: profileImageView.trailingAnchor,
-                         trailing: trailingAnchor, paddingLeading: 12, paddingTrailing: 20)
+
+        let imageStackView = UIStackView(arrangedSubviews: [profileImageView, stackView])
+        imageStackView.distribution = .fillProportionally
+        imageStackView.spacing = 12
+        imageStackView.alignment = .leading
+
+        let stack = UIStackView(arrangedSubviews: [replyLabel, imageStackView])
+        stack.axis = .vertical
+        stack.spacing = 8
+        stack.distribution = .fillProportionally
+
+        addSubview(stack)
+        stack.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor,
+                     paddingTop: 4, paddingLeading: 12, paddingTrailing: 12)
+
     }
     
 }

@@ -38,7 +38,6 @@ class NotificationsController: UITableViewController {
                 let user = notification.user
                 UserService.shared.checkIfUserIsFollowed(uid: user.uid) { isFollowed in
                     self.notifications[index].user.isFollowed = isFollowed
-                    self.refreshControl?.endRefreshing()
                 }
             }
         }
@@ -49,6 +48,7 @@ class NotificationsController: UITableViewController {
         NotificationService.shared.fetchNotifications { [self] notifications in
             self.notifications = notifications
             checkIfUserIsFollowed(notifications)
+            self.refreshControl?.endRefreshing()
         }
     }
     

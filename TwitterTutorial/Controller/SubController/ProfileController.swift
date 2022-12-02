@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class ProfileController: UIViewController {
     
@@ -232,7 +233,7 @@ extension ProfileController: ProfileHeaderDelegate {
             }
         } else {
             UserService.shared.followUser(uid: self.user.uid) { error, reference in
-                self.user.isFollowed = true 
+                self.user.isFollowed = true
                 self.collectionView.reloadData()
                 self.updateHeader()
                 NotificationService.shared.uploadNotification(toUser: self.user, type: .follow)
@@ -290,6 +291,17 @@ extension ProfileController: TweetCellDelegate {
 //MARK: - EditProfileControllerDelegate
 
 extension ProfileController: EditProfileControllerDelegate {
+
+    func handleLogout() {
+        do {
+            try Auth.auth().signOut()
+            let navigationController = UINavigationController(rootViewController: LoginController())
+            navigationController.modalPresentationStyle = .fullScreen
+            self.present(navigationController, animated: true)
+        } catch let error {
+            print("DEBUG: Failed to sigh out with error: \(error.localizedDescription)")
+        }
+    }
 
     func controller(_ controller: EditProfileController, wantsToUpdate user: User) {
         controller.dismiss(animated: true)

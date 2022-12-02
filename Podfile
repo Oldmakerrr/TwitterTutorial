@@ -11,4 +11,5 @@ target 'TwitterTutorial' do
 	pod 'FirebaseDatabase'
 	pod 'FirebaseCore'
 	pod 'SDWebImage'
+	pod 'ActiveLabel'
 end

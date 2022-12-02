@@ -1,4 +1,5 @@
 PODS:
+  - ActiveLabel (1.1.0)
   - FirebaseAppCheckInterop (9.1.0)
   - FirebaseAuth (9.1.0):
     - FirebaseCore (~> 9.0)
@@ -64,6 +65,7 @@ PODS:
   - SDWebImage/Core (5.12.3)
 
 DEPENDENCIES:
+  - ActiveLabel
   - FirebaseAuth
   - FirebaseCore
   - FirebaseDatabase
@@ -72,6 +74,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - ActiveLabel
     - FirebaseAppCheckInterop
     - FirebaseAuth
     - FirebaseAuthInterop
@@ -91,6 +94,7 @@ SPEC REPOS:
     - SDWebImage
 
 SPEC CHECKSUMS:
+  ActiveLabel: 5e3f4de79a1952d4604b845a0610d4776e4b82b3
   FirebaseAppCheckInterop: 39f963659691a896a4f16065c00183f128ab5d46
   FirebaseAuth: 77247e07732ec5cdb20cc58ef40ad84d2fcce847
   FirebaseAuthInterop: 81e0af3efc37bde8f58807d5f8e50f40ef18d275
@@ -109,6 +113,6 @@ SPEC CHECKSUMS:
   PromisesObjC: 99b6f43f9e1044bd87a95a60beff28c2c44ddb72
   SDWebImage: 53179a2dba77246efa8a9b85f5c5b21f8f43e38f
 
-PODFILE CHECKSUM: 9036cdd0ef353387f30c4ac9d1eed9b6956f975f
+PODFILE CHECKSUM: 7838fd729f35db94884a80f7eec4f083a87cde0a
 
 COCOAPODS: 1.11.3

@@ -204,7 +204,10 @@ extension ProfileController: ProfileHeaderDelegate {
     func handleEditProfileFollow(_ view: ProfileHeader) {
 
         if user.isCurrentUser {
-            print("DEBUG: Show edit profile controller..")
+            let controller = EditProfileController(user: user)
+            let navigation = UINavigationController(rootViewController: controller)
+            navigation.modalPresentationStyle = .fullScreen
+            present(navigation, animated: true)
             return
         }
 

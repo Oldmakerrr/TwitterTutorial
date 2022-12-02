@@ -53,6 +53,7 @@
 		F8ADC3D62938B79900AA23E7 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3D52938B79900AA23E7 /* NotificationCell.swift */; };
 		F8ADC3D82938C7FE00AA23E7 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3D72938C7FE00AA23E7 /* NotificationViewModel.swift */; };
 		F8ADC3DA2938E43F00AA23E7 /* FollowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3D92938E43F00AA23E7 /* FollowButton.swift */; };
+		F8ADC3DC2939CBAE00AA23E7 /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3DB2939CBAE00AA23E7 /* EditProfileController.swift */; };
 		F8C53DF8293518DA0071D6D8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8C53DF7293518DA0071D6D8 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -118,6 +119,7 @@
 		F8ADC3D52938B79900AA23E7 /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		F8ADC3D72938C7FE00AA23E7 /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		F8ADC3D92938E43F00AA23E7 /* FollowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowButton.swift; sourceTree = "<group>"; };
+		F8ADC3DB2939CBAE00AA23E7 /* EditProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
 		F8C53DF7293518DA0071D6D8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -218,6 +220,7 @@
 				1861F5B32891D1AE00FF9840 /* UploadTweetController.swift */,
 				F8ADC3C3293736BA00AA23E7 /* TweetController.swift */,
 				18C0A4842897EB5600412EE9 /* ProfileController.swift */,
+				F8ADC3DB2939CBAE00AA23E7 /* EditProfileController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				1884B139288E7EA00013BF4A /* Constants.swift in Sources */,
 				18842AD32881FBCF0090FB2B /* FeedController.swift in Sources */,
 				F8ADC3CC2937978A00AA23E7 /* ActionSheetLauncher.swift in Sources */,
+				F8ADC3DC2939CBAE00AA23E7 /* EditProfileController.swift in Sources */,
 				184A2C0E288B066A008918A8 /* AuthButton.swift in Sources */,
 				18F97A63289C1D280067E8DB /* UserCell.swift in Sources */,
 				F8ADC3C4293736BA00AA23E7 /* TweetController.swift in Sources */,

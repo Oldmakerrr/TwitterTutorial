@@ -172,6 +172,10 @@ class TweetHeader: UICollectionReusableView, ReusableView {
         stackViewButtons.delegate = delegate
     }
 
+    func setDelegateImageProfile(_ delegate: ProfileImageViewDelegate) {
+        profileImageView.delegate = delegate
+    }
+
 }
 
 extension TweetHeader: ProfileImageViewDelegate {

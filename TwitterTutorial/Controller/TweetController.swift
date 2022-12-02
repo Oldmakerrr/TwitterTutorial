@@ -83,6 +83,10 @@ class TweetController: UICollectionViewController {
         present(navigationController, animated: true)
     }
 
+    private func goToProfileController(user: User) {
+        let controller = ProfileController(user: user)
+        navigationController?.pushViewController(controller, animated: true)
+    }
 }
 
 //MARK: - UICollectionViewDataSource/Delegate
@@ -96,6 +100,7 @@ extension TweetController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TweetCell.identifier, for: indexPath) as! TweetCell
         let reply = replies[indexPath.row]
         cell.tweet = reply
+        cell.setProfileImageViewDelegate(self)
         cell.delegate = self
         return cell
     }
@@ -103,6 +108,7 @@ extension TweetController {
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TweetHeader.identifier, for: indexPath) as! TweetHeader
         view.tweet = tweet
+        view.setDelegateImageProfile(self)
         view.delegate = self
         return view
     }
@@ -238,6 +244,20 @@ extension TweetController: ActionSheetLauncherDelegate {
         case .blockUser(let user):
             showAlert(withMessage: "User @\(user.username) successfully blocked")
         }
+    }
+
+}
+
+//MARK: - ProfileImageViewDelegate
+
+extension TweetController: ProfileImageViewDelegate {
+
+    func didTapped(_ view: ProfileImageView, _ user: User?) {
+        guard let user = user else {
+            let user = tweet.user
+            goToProfileController(user: user)
+            return }
+        goToProfileController(user: user)
     }
 
 }

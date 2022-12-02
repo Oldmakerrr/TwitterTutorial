@@ -7,12 +7,23 @@
 
 import UIKit
 
+protocol EditProfileControllerDelegate: AnyObject {
+    func controller(_ controller: EditProfileController, wantsToUpdate user: User)
+}
+
 class EditProfileController: UITableViewController {
 
     //MARK: - Properties
 
-    private let user: User
+    weak var delegate: EditProfileControllerDelegate?
+
+    private var user: User
+    private var selectedImage: UIImage? {
+        didSet { headerView.setImage(selectedImage) }
+    }
     private let headerView: EditProfileHeader
+    private let imagePicker = UIImagePickerController()
+    private var isUserInfoChanged = false
 
     //MARK: - Lifecycle
 
@@ -20,17 +31,17 @@ class EditProfileController: UITableViewController {
         self.user = user
         headerView = EditProfileHeader(user: user)
         super.init(style: .plain)
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationBar()
         configureTableView()
+        configureImagePicker()
     }
 
     //MARK: - Selectors
@@ -40,11 +51,16 @@ class EditProfileController: UITableViewController {
     }
 
     @objc private func handleDone() {
-        dismiss(animated: true)
-        print("DEBUG: Tapped done button..")
+        updateUserData()
     }
 
     //MARK: - API
+
+    private func updateUserData() {
+        UserService.shared.saveUserData(user: user) { [self] error, reference in
+            delegate?.controller(self, wantsToUpdate: user)
+        }
+    }
 
     //MARK: - Helpers
 
@@ -78,6 +94,10 @@ class EditProfileController: UITableViewController {
         headerView.delegate = self
         tableView.tableFooterView = UIView()
     }
+
+    private func configureImagePicker() {
+        imagePicker.delegate = self
+    }
 }
 
 //MARK: - UITableViewDataSource
@@ -90,6 +110,7 @@ extension EditProfileController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: EditProfileCell.identifier, for: indexPath) as! EditProfileCell
+        cell.delegate = self
         if let option = EditProfileOption(rawValue: indexPath.row) {
             cell.viewModel = EditProfileViewModel(user: user, option: option)
         }
@@ -111,7 +132,39 @@ extension EditProfileController {
 extension EditProfileController: EditProfileHeaderDelegate {
 
     func didTapChangePhotoButton(_ view: EditProfileHeader) {
-        print("Tapped Change Photo Button..")
+        present(imagePicker, animated: true)
+    }
+
+}
+
+//MARK: - UIImagePickerControllerDelegate
+
+extension EditProfileController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[.editedImage] as? UIImage else { return }
+        selectedImage = image
+        dismiss(animated: true)
+    }
+}
+
+//MARK: - EditProfileCellDelegate
+
+extension EditProfileController: EditProfileCellDelegate {
+
+    func didUpdateUserInfo(_ cell: EditProfileCell) {
+        guard let viewModel = cell.viewModel, let value = cell.infoTextField.text else { return }
+        isUserInfoChanged = true
+        navigationItem.rightBarButtonItem?.isEnabled = isUserInfoChanged
+        let option = viewModel.option
+        switch option {
+        case .fullname:
+            user.fullname = value
+        case .username:
+            user.username = value
+        case .bio:
+            user.bio = value
+        }
     }
 
 }

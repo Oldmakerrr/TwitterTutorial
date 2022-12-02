@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol EditProfileCellDelegate: AnyObject {
+    func didUpdateUserInfo(_ cell: EditProfileCell)
+}
+
 class EditProfileCell: UITableViewCell, ReusableView {
 
     //MARK: - Properties
+
+    weak var delegate: EditProfileCellDelegate?
 
     var viewModel: EditProfileViewModel? {
         didSet { updateUI() }
@@ -30,7 +36,7 @@ class EditProfileCell: UITableViewCell, ReusableView {
         return textField
     }()
 
-    let bioTextLabel: InputTextView = {
+    let bioTextView: InputTextView = {
         let textField = InputTextView()
         textField.font = UIFont.systemFont(ofSize: 14)
         textField.textColor = .twitterBlue
@@ -53,7 +59,7 @@ class EditProfileCell: UITableViewCell, ReusableView {
     //MARK: - Selectors
 
     @objc private func handleUpdateUserInfo() {
-
+        delegate?.didUpdateUserInfo(self)
     }
 
     //MARK: - Helpers
@@ -68,24 +74,25 @@ class EditProfileCell: UITableViewCell, ReusableView {
         infoTextField.anchor(top: topAnchor, leading: titleLabel.trailingAnchor, trailing: trailingAnchor,
                              paddingTop: 10, paddingLeading: 16, paddingTrailing: 8)
 
-        contentView.addSubview(bioTextLabel)
-        bioTextLabel.anchor(top: topAnchor, leading: titleLabel.trailingAnchor, trailing: trailingAnchor,
+        contentView.addSubview(bioTextView)
+        bioTextView.anchor(top: topAnchor, leading: titleLabel.trailingAnchor, trailing: trailingAnchor,
                              paddingTop: 2, paddingLeading: 12, paddingTrailing: 8)
     }
 
     private func addTargets() {
         infoTextField.addTarget(self, action: #selector(handleUpdateUserInfo), for: .editingDidEnd)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUpdateUserInfo), name: UITextView.textDidEndEditingNotification, object: nil)
     }
 
     private func updateUI() {
         guard let viewModel = viewModel else { return }
         infoTextField.isHidden = viewModel.shouldHideTextField
-        bioTextLabel.isHidden = viewModel.shuldHideTextView
+        bioTextView.isHidden = viewModel.shuldHideTextView
         titleLabel.text = viewModel.titleText
         infoTextField.text = viewModel.optionValue
-        bioTextLabel.text = viewModel.optionValue
+        bioTextView.text = viewModel.optionValue
         infoTextField.placeholder = viewModel.placeholder
-        bioTextLabel.placeholderLabel.text = viewModel.placeholder
+        bioTextView.placeholderLabel.text = viewModel.placeholder
     }
 
 }

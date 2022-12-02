@@ -205,6 +205,7 @@ extension ProfileController: ProfileHeaderDelegate {
 
         if user.isCurrentUser {
             let controller = EditProfileController(user: user)
+            controller.delegate = self
             let navigation = UINavigationController(rootViewController: controller)
             navigation.modalPresentationStyle = .fullScreen
             present(navigation, animated: true)
@@ -261,6 +262,18 @@ extension ProfileController: TweetCellDelegate {
 
     func didTapShareButton(_ cell: TweetCell) {
 
+    }
+
+}
+
+//MARK: - EditProfileControllerDelegate
+
+extension ProfileController: EditProfileControllerDelegate {
+
+    func controller(_ controller: EditProfileController, wantsToUpdate user: User) {
+        controller.dismiss(animated: true)
+        self.user = user
+        collectionView.reloadData()
     }
 
 }

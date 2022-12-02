@@ -19,7 +19,7 @@ class EditProfileHeader: UIView {
 
     private let user: User
 
-    private let profileImage: ProfileImageView
+    private let profileImageView: ProfileImageView
 
     private let changePhotoButton: UIButton = {
         let button = UIButton()
@@ -33,7 +33,7 @@ class EditProfileHeader: UIView {
 
     init(user: User) {
         self.user = user
-        profileImage = ProfileImageView(user: user)
+        profileImageView = ProfileImageView(user: user)
         super.init(frame: .zero)
         configureUI()
         addTargets()
@@ -53,20 +53,24 @@ class EditProfileHeader: UIView {
 
     private func configureUI() {
         backgroundColor = .twitterBlue
-        addSubview(profileImage)
-        profileImage.center(inView: self, yConstant: -16)
-        profileImage.setSize(100)
-        profileImage.layer.borderWidth = 3
-        profileImage.layer.borderColor = UIColor.white.cgColor
+        addSubview(profileImageView)
+        profileImageView.center(inView: self, yConstant: -16)
+        profileImageView.setSize(100)
+        profileImageView.layer.borderWidth = 3
+        profileImageView.layer.borderColor = UIColor.white.cgColor
 
         addSubview(changePhotoButton)
         changePhotoButton.centerX(inView: self,
-                                  topAnchor: profileImage.bottomAnchor,
+                                  topAnchor: profileImageView.bottomAnchor,
                                   paddingTop: 8)
-        profileImage.sd_setImage(with: user.profileImageUrl)
+        profileImageView.sd_setImage(with: user.profileImageUrl)
     }
 
     private func addTargets() {
         changePhotoButton.addTarget(self, action: #selector(handleChangeProfilePhoto), for: .touchUpInside)
+    }
+
+    func setImage(_ image: UIImage?) {
+        profileImageView.image = image
     }
 }

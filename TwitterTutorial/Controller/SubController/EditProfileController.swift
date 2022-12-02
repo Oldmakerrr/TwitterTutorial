@@ -24,6 +24,9 @@ class EditProfileController: UITableViewController {
     private let headerView: EditProfileHeader
     private let imagePicker = UIImagePickerController()
     private var isUserInfoChanged = false
+    private var isImageChanged: Bool {
+        selectedImage != nil
+    }
 
     //MARK: - Lifecycle
 
@@ -51,14 +54,43 @@ class EditProfileController: UITableViewController {
     }
 
     @objc private func handleDone() {
+        view.endEditing(true)
+        guard isImageChanged || isUserInfoChanged else { return }
         updateUserData()
     }
 
     //MARK: - API
 
     private func updateUserData() {
-        UserService.shared.saveUserData(user: user) { [self] error, reference in
-            delegate?.controller(self, wantsToUpdate: user)
+        if isImageChanged && !isUserInfoChanged {
+            UserService.shared.updateProfileImage(image: selectedImage) { [self] imageProfileUrl in
+                self.user.profileImageUrl = imageProfileUrl
+                delegate?.controller(self, wantsToUpdate: user)
+            }
+        }
+
+        if !isImageChanged && isUserInfoChanged {
+            UserService.shared.saveUserData(user: user) { [self] error, reference in
+                delegate?.controller(self, wantsToUpdate: user)
+            }
+        }
+
+        if isImageChanged && isUserInfoChanged {
+            let group = DispatchGroup()
+            DispatchQueue.global().async(group: group) { [self] in
+                group.enter()
+                UserService.shared.saveUserData(user: user) { error, reference in
+                    group.leave()
+                }
+                group.enter()
+                UserService.shared.updateProfileImage(image: selectedImage) { imageProfileUrl in
+                    self.user.profileImageUrl = imageProfileUrl
+                    group.leave()
+                }
+            }
+            group.notify(queue: .main) { [self] in
+                delegate?.controller(self, wantsToUpdate: user)
+            }
         }
     }
 
@@ -83,7 +115,6 @@ class EditProfileController: UITableViewController {
         navigationItem.title = "Edit Profile"
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleDone))
-        navigationItem.rightBarButtonItem?.isEnabled = false
     }
 
     private func configureTableView() {
@@ -97,6 +128,7 @@ class EditProfileController: UITableViewController {
 
     private func configureImagePicker() {
         imagePicker.delegate = self
+        imagePicker.allowsEditing = true
     }
 }
 
@@ -155,7 +187,6 @@ extension EditProfileController: EditProfileCellDelegate {
     func didUpdateUserInfo(_ cell: EditProfileCell) {
         guard let viewModel = cell.viewModel, let value = cell.infoTextField.text else { return }
         isUserInfoChanged = true
-        navigationItem.rightBarButtonItem?.isEnabled = isUserInfoChanged
         let option = viewModel.option
         switch option {
         case .fullname:
@@ -163,7 +194,7 @@ extension EditProfileController: EditProfileCellDelegate {
         case .username:
             user.username = value
         case .bio:
-            user.bio = value
+            user.bio = cell.bioTextView.text
         }
     }
 

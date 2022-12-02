@@ -53,7 +53,7 @@ struct AuthService {
     private func uploadProfileImage(profileImage: UIImage, completion: @escaping (String) -> Void) {
         guard let imageData = profileImage.jpegData(compressionQuality: 0.3) else { return }
         let filename = UUID().uuidString
-        let storageRef = STARAGE_PROFILE_IMAGES.child(filename)
+        let storageRef = STORAGE_PROFILE_IMAGES.child(filename)
         storageRef.putData(imageData) { meta, error in
             storageRef.downloadURL { url, error in
                 guard let profileUrl = url?.absoluteString else { return }

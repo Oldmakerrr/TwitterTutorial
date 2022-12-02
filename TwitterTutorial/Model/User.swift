@@ -12,7 +12,7 @@ struct User {
     var fullname: String
     let email: String
     var username: String
-    let profileImageUrl: URL
+    var profileImageUrl: URL
     let uid: String
     var isFollowed: Bool = false
     var stats: UserRelationStats?

@@ -76,7 +76,6 @@ class ProfileHeader: UICollectionReusableView, ReusableView {
         let label = UILabel()
         label.numberOfLines = 3
         label.font = UIFont.systemFont(ofSize: 16)
-        label.text = "This is a user bio that will span more than one line for tset purpose."
         return label
     }()
     
@@ -183,6 +182,9 @@ class ProfileHeader: UICollectionReusableView, ReusableView {
         editProfileFollowButton.setTitle(viewModel?.actionButtonTitle, for: .normal)
         followingButton.setAttributedTitle(viewModel?.followingString, for: .normal)
         followersButton.setAttributedTitle(viewModel?.followersString, for: .normal)
+        if let bio = user.bio, !bio.isEmpty {
+            bioLabel.text = bio
+        }
     }
     
     func setupUser(_ user: User) {

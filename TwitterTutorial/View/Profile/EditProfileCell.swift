@@ -93,6 +93,7 @@ class EditProfileCell: UITableViewCell, ReusableView {
         bioTextView.text = viewModel.optionValue
         infoTextField.placeholder = viewModel.placeholder
         bioTextView.placeholderLabel.text = viewModel.placeholder
+        bioTextView.placeholderLabel.isHidden = viewModel.shouldHidePlaceholder
     }
 
 }

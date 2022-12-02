@@ -161,7 +161,7 @@ extension TweetController: TweetCellDelegate {
             let likes = tweet.didLike ? tweet.likes - 1 : tweet.likes + 1
             cell.tweet?.likes = likes
             guard !tweet.didLike else { return }
-            NotificationService.shared.uploadNotification(type: .like, tweet: tweet)
+            NotificationService.shared.uploadNotification(toUser: tweet.user, type: .like, tweetId: tweet.tweetId)
         }
     }
 
@@ -201,7 +201,7 @@ extension TweetController: TweetHeaderDelegate {
             let likes = tweet.didLike ? tweet.likes - 1 : tweet.likes + 1
             view.tweet?.likes = likes
             guard !tweet.didLike else { return }
-            NotificationService.shared.uploadNotification(type: .like, tweet: tweet)
+            NotificationService.shared.uploadNotification(toUser: tweet.user, type: .like, tweetId: tweet.tweetId)
         }
     }
 
@@ -238,7 +238,7 @@ extension TweetController: ActionSheetLauncherDelegate {
                 if let error = error {
                     print("DEBUG: Failed follow to \(user.username), with error: \(error.localizedDescription)")
                 }
-                NotificationService.shared.uploadNotification(type: .follow, user: user)
+                NotificationService.shared.uploadNotification(toUser: user, type: .follow)
                 print("Did follow user: \(user.username)")
             }
         case .unfollow(let user):

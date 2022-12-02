@@ -221,7 +221,7 @@ extension ProfileController: ProfileHeaderDelegate {
             UserService.shared.followUser(uid: self.user.uid) { error, reference in
                 self.user.isFollowed = true 
                 self.collectionView.reloadData()
-                NotificationService.shared.uploadNotification(type: .follow, user: self.user)
+                NotificationService.shared.uploadNotification(toUser: self.user, type: .follow)
             }
         }
     }
@@ -262,7 +262,7 @@ extension ProfileController: TweetCellDelegate {
             let likes = tweet.didLike ? tweet.likes - 1 : tweet.likes + 1
             cell.tweet?.likes = likes
             guard !tweet.didLike else { return }
-            NotificationService.shared.uploadNotification(type: .like, tweet: tweet)
+            NotificationService.shared.uploadNotification(toUser: tweet.user, type: .like, tweetId: tweet.tweetId)
         }
 
     }

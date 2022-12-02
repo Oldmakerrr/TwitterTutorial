@@ -106,8 +106,6 @@ extension NotificationsController {
         TweetService.shared.fetchTweet(withTweetID: tweetId) { tweet in
             let controller = TweetController(tweet: tweet)
             self.navigationController?.pushViewController(controller, animated: true)
-//            let navigation = UINavigationController(rootViewController: controller)
-//            self.present(navigation, animated: true)
         }
     }
 }
@@ -129,7 +127,7 @@ extension NotificationsController: NotificationCellDelegate {
         } else {
             UserService.shared.followUser(uid: user.uid) { error, reference in
                 cell.notification?.user.isFollowed = true
-                NotificationService.shared.uploadNotification(type: .follow, user: user)
+                NotificationService.shared.uploadNotification(toUser: user, type: .follow)
             }
         }
     }

@@ -78,10 +78,11 @@ class UploadTweetController: UIViewController {
                 return
             }
             if case .reply(let tweet) = self.config {
-                NotificationService.shared.uploadNotification(type: .reply, tweet: tweet)
+                NotificationService.shared.uploadNotification(toUser: tweet.user, type: .reply, tweetId: tweet.tweetId)
+                self.uploadMentionNotification(forCaption: caption, tweetId: tweet.tweetId)
+            } else {
+                self.uploadMentionNotification(forCaption: caption)
             }
-
-
             self.dismiss(animated: true)
         }
     }
@@ -91,6 +92,23 @@ class UploadTweetController: UIViewController {
     }
     
 //MARK: - API
+
+    func uploadMentionNotification(forCaption caption: String, tweetId: String? = nil) {
+        guard caption.contains("@") else { return }
+        let words = caption.components(separatedBy: .whitespaces)
+
+        words.forEach { word in
+            guard word.contains("@") else { return }
+            var username = word.trimmingCharacters(in: .symbols)
+            username = username.trimmingCharacters(in: .punctuationCharacters)
+
+            UserService.shared.fetchUser(withUsername: username) { mentionedUser in
+                NotificationService.shared.uploadNotification(toUser: mentionedUser,
+                                                              type: .mention,
+                                                              tweetId: tweetId)
+            }
+        }
+    }
     
 //MARK: - Helper Methods
     

@@ -35,8 +35,9 @@ class ProfileHeader: UICollectionReusableView, ReusableView {
         let view = UIView()
         view.backgroundColor = .twitterBlue
         view.addSubview(backButton)
-        backButton.anchor(top: view.topAnchor, leading: view.leadingAnchor,
-                          paddingTop: .screenHeight * 0.05,
+        backButton.anchor(top: view.topAnchor,
+                          leading: view.leadingAnchor,
+                          paddingTop: 16,
                           paddingLeading: 16)
         backButton.setDimensions(width: 30, height: 30)
         return view
@@ -87,26 +88,7 @@ class ProfileHeader: UICollectionReusableView, ReusableView {
     
     override init(frame: CGRect) {
         super .init(frame: frame)
-        addSubview(containerView)
-        containerView.anchor(top: topAnchor,
-                             leading: leadingAnchor,
-                             trailing: trailingAnchor,
-                             height: .screenHeight * 0.16)
-        addSubview(profileImageView)
-        profileImageView.anchor(top: containerView.bottomAnchor, leading: leadingAnchor, paddingTop: -24, paddingLeading: 8)
-        profileImageView.setDimensions(width: 80, height: 80)
-        configureButtons()
-        let userDetailStackView = UIStackView(arrangedSubviews: [fullnameLabel,
-                                                                 usernameLabel,
-                                                                 bioLabel])
-        configureUserDetailsStackView(stackView: userDetailStackView)
-        addGestureToLabel(view: userDetailStackView)
-        addSubview(profileFilterView)
-        profileFilterView.delegate = self
-        profileFilterView.anchor(leading: leadingAnchor,
-                                 bottom: bottomAnchor,
-                                 trailing: trailingAnchor, height: 50)
-        
+        configureUI()
     }
     
     required init?(coder: NSCoder) {
@@ -133,9 +115,35 @@ class ProfileHeader: UICollectionReusableView, ReusableView {
     
     //MARK: - Helper functions
 
-    func updateButtonTitle(isFollowed: Bool) {
-        let title = isFollowed ? "Following" : "Follow"
-        editProfileFollowButton.setTitle(title, for: .normal)
+    private func configureUI() {
+        backgroundColor = .white
+        addSubview(containerView)
+        containerView.anchor(top: topAnchor,
+                             leading: leadingAnchor,
+                             trailing: trailingAnchor,
+                             height: .screenHeight * 0.1)
+        addSubview(profileImageView)
+        profileImageView.anchor(top: containerView.bottomAnchor, leading: leadingAnchor, paddingTop: -24, paddingLeading: 8)
+        profileImageView.setDimensions(width: 80, height: 80)
+        configureButtons()
+        let userDetailStackView = UIStackView(arrangedSubviews: [fullnameLabel,
+                                                                 usernameLabel,
+                                                                 bioLabel])
+        configureUserDetailsStackView(stackView: userDetailStackView)
+        addGestureToLabel()
+        let followStackView = UIStackView(arrangedSubviews: [followingButton, followersButton])
+        followStackView.axis = .horizontal
+        followStackView.distribution = .fillEqually
+        followStackView.spacing = 8
+        addSubview(followStackView)
+        followStackView.anchor(top: userDetailStackView.bottomAnchor, leading: leadingAnchor,
+                               paddingTop: 8, paddingLeading: 12)
+        addSubview(profileFilterView)
+        profileFilterView.delegate = self
+        profileFilterView.anchor(top: followStackView.bottomAnchor,
+                                 leading: leadingAnchor,
+                                 bottom: bottomAnchor,
+                                 trailing: trailingAnchor, height: 50)
     }
     
     private func configureButtons() {
@@ -159,14 +167,7 @@ class ProfileHeader: UICollectionReusableView, ReusableView {
                          paddingTop: 8, paddingLeading: 12, paddingTrailing: 12)
     }
     
-    private func addGestureToLabel(view: UIView) {
-        let followStackView = UIStackView(arrangedSubviews: [followingButton, followersButton])
-        followStackView.axis = .horizontal
-        followStackView.distribution = .fillEqually
-        followStackView.spacing = 8
-        addSubview(followStackView)
-        followStackView.anchor(top: view.bottomAnchor, leading: leadingAnchor,
-                               paddingTop: 8, paddingLeading: 12)
+    private func addGestureToLabel() {
         followingButton.addTarget(self, action: #selector(handleFollowingTapped), for: .touchUpInside)
         followersButton.addTarget(self, action: #selector(handleFollowersTapped), for: .touchUpInside)
         followersButton.setTitleColor(.black, for: .normal)
@@ -189,6 +190,11 @@ class ProfileHeader: UICollectionReusableView, ReusableView {
     
     func setupUser(_ user: User) {
         self.user = user
+    }
+
+    func updateButtonTitle(isFollowed: Bool) {
+        let title = isFollowed ? "Following" : "Follow"
+        editProfileFollowButton.setTitle(title, for: .normal)
     }
     
 }

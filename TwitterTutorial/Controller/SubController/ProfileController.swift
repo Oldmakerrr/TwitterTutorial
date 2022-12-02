@@ -7,16 +7,21 @@
 
 import UIKit
 
-class ProfileController: UICollectionViewController {
+class ProfileController: UIViewController {
     
     //MARK: - Properties
     
     var user: User
 
     private var selectedFilter: ProfileFilterOptions = .tweets {
-        didSet { collectionView.reloadData() }
+        didSet {
+            collectionView.reloadData()
+            updateHeader()
+        }
     }
-    
+
+    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private let headerView = ProfileHeader()
     private var tweets = [Tweet]()
     private var likedTweets = [Tweet]()
     private var replies = [Tweet]()
@@ -33,9 +38,9 @@ class ProfileController: UICollectionViewController {
     
     //MARK: - Lifecycle
     
-    init(user: User, layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()) {
+    init(user: User) {
         self.user = user
-        super.init(collectionViewLayout: layout)
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -58,7 +63,9 @@ class ProfileController: UICollectionViewController {
     }
     
     //MARK: - Selectors
-    
+
+
+
     //MARK: - API
 
     private func fetchReplies() {
@@ -99,6 +106,7 @@ class ProfileController: UICollectionViewController {
             self.tweets = tweets
             self.checkIfUserLikedTweets(tweets)
             self.collectionView.reloadData()
+            self.updateHeader()
         }
     }
 
@@ -106,6 +114,7 @@ class ProfileController: UICollectionViewController {
         UserService.shared.checkIfUserIsFollowed(uid: user.uid) { isFollowed in
             self.user.isFollowed = isFollowed
             self.collectionView.reloadData()
+            self.updateHeader()
         }
     }
 
@@ -113,6 +122,7 @@ class ProfileController: UICollectionViewController {
         UserService.shared.fetchUserStats(uid: user.uid) { stats in
             self.user.stats = stats
             self.collectionView.reloadData()
+            self.updateHeader()
         }
     }
     
@@ -120,13 +130,22 @@ class ProfileController: UICollectionViewController {
     
     private func configureUI() {
         configureCollectionView()
+        view.addSubview(headerView)
+        headerView.delegate = self
+        headerView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                          leading: view.leadingAnchor,
+                          trailing: view.trailingAnchor)
+        view.addSubview(collectionView)
+        collectionView.anchor(top: headerView.bottomAnchor,
+                              leading: view.leadingAnchor,
+                              bottom: view.bottomAnchor,
+                              trailing: view.trailingAnchor)
     }
     
     private func configureCollectionView() {
+        collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.register(TweetCell.self, forCellWithReuseIdentifier: TweetCell.identifier)
-        collectionView.register(ProfileHeader.self,
-                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                withReuseIdentifier: ProfileHeader.identifier)
         collectionView.contentInsetAdjustmentBehavior = .never
         guard let tabHeight = tabBarController?.tabBar.frame.height else { return }
         collectionView.contentInset.bottom = tabHeight
@@ -142,33 +161,30 @@ class ProfileController: UICollectionViewController {
         navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: true)
     }
+
+    private func updateHeader() {
+        headerView.setupUser(user)
+    }
     
 }
 
 //MARK: - UICollectionViewDataSource/Delegate
 
-extension ProfileController {
+extension ProfileController: UICollectionViewDataSource, UICollectionViewDelegate {
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return currentDataSource.count
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TweetCell.identifier, for: indexPath) as! TweetCell
         cell.delegate = self
         let tweet = currentDataSource[indexPath.row]
         cell.tweet = tweet
         return cell
     }
-    
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProfileHeader.identifier, for: indexPath) as! ProfileHeader
-        view.setupUser(user)
-        view.delegate = self
-        return view
-    }
 
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let tweet = currentDataSource[indexPath.row]
         let controller = TweetController(tweet: tweet)
         navigationController?.pushViewController(controller, animated: true)
@@ -179,10 +195,6 @@ extension ProfileController {
 //MARK: - UICollectionViewDelegateFlowLayout
 
 extension ProfileController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 370)
-    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let viewModel = TweetViewModel(tweet: currentDataSource[indexPath.row])
@@ -216,11 +228,13 @@ extension ProfileController: ProfileHeaderDelegate {
             UserService.shared.unfollowUser(uid: user.uid) { error, reference in
                 self.user.isFollowed = false
                 self.collectionView.reloadData()
+                self.updateHeader()
             }
         } else {
             UserService.shared.followUser(uid: self.user.uid) { error, reference in
                 self.user.isFollowed = true 
                 self.collectionView.reloadData()
+                self.updateHeader()
                 NotificationService.shared.uploadNotification(toUser: self.user, type: .follow)
             }
         }
@@ -281,6 +295,7 @@ extension ProfileController: EditProfileControllerDelegate {
         controller.dismiss(animated: true)
         self.user = user
         collectionView.reloadData()
+        self.updateHeader()
     }
 
 }

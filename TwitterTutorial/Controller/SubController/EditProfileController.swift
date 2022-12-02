@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 protocol EditProfileControllerDelegate: AnyObject {
     func controller(_ controller: EditProfileController, wantsToUpdate user: User)
@@ -22,6 +23,7 @@ class EditProfileController: UITableViewController {
         didSet { headerView.setImage(selectedImage) }
     }
     private let headerView: EditProfileHeader
+    private let footerView = EditProfileFooter()
     private let imagePicker = UIImagePickerController()
     private var isUserInfoChanged = false
     private var isImageChanged: Bool {
@@ -94,6 +96,14 @@ class EditProfileController: UITableViewController {
         }
     }
 
+    private func logUserOut() {
+        do {
+            try Auth.auth().signOut()
+        } catch let error {
+            print("DEBUG: Failed to sigh out with error: \(error.localizedDescription)")
+        }
+    }
+
     //MARK: - Helpers
 
     private func configureNavigationBar() {
@@ -122,8 +132,10 @@ class EditProfileController: UITableViewController {
         tableView.register(EditProfileCell.self, forCellReuseIdentifier: EditProfileCell.identifier)
         tableView.isScrollEnabled = false
         headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 180)
+        footerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
         headerView.delegate = self
-        tableView.tableFooterView = UIView()
+        tableView.tableFooterView = footerView
+        footerView.delegate = self
     }
 
     private func configureImagePicker() {
@@ -198,4 +210,14 @@ extension EditProfileController: EditProfileCellDelegate {
         }
     }
 
+}
+
+//MARK: - EditProfileFooterDelegate
+
+extension EditProfileController: EditProfileFooterDelegate {
+
+    func didLogoutTapped(_ view: EditProfileFooter) {
+        logUserOut()
+    }
+    
 }

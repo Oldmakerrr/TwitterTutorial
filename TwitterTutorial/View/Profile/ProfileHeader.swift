@@ -13,13 +13,9 @@ protocol ProfileHeaderDelegate: AnyObject {
     func didChangeFilterOptoin(_ view: ProfileHeader, selectedFilter: ProfileFilterOptions)
 }
 
-class ProfileHeader: UICollectionReusableView, ReusableView {
+class ProfileHeader: UICollectionReusableView {
 
     //MARK: - Properies
-
-    static var identifier: String {
-        String(describing: self)
-    }
     
     weak var delegate: ProfileHeaderDelegate?
     

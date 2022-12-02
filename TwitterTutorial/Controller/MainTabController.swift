@@ -33,7 +33,6 @@ class MainTabController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .twitterBlue
-      //  logUserOut()
         authenticateUser()
     }
     
@@ -57,14 +56,6 @@ class MainTabController: UITabBarController {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         UserService.shared.fetchUser(uid: uid) { user in
             self.user = user
-        }
-    }
-    
-    private func logUserOut() {
-        do {
-            try Auth.auth().signOut()
-        } catch let error {
-            print("DEBUG: Failed to sigh out with error: \(error.localizedDescription)")
         }
     }
     

@@ -57,6 +57,7 @@
 		F8ADC3E12939D46900AA23E7 /* EditProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3E02939D46900AA23E7 /* EditProfileHeader.swift */; };
 		F8ADC3E32939DA2700AA23E7 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3E22939DA2700AA23E7 /* EditProfileViewModel.swift */; };
 		F8ADC3E52939DAAF00AA23E7 /* EditProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3E42939DAAF00AA23E7 /* EditProfileCell.swift */; };
+		F8ADC3E7293A55CA00AA23E7 /* EditProfileFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3E6293A55CA00AA23E7 /* EditProfileFooter.swift */; };
 		F8C53DF8293518DA0071D6D8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8C53DF7293518DA0071D6D8 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -126,6 +127,7 @@
 		F8ADC3E02939D46900AA23E7 /* EditProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileHeader.swift; sourceTree = "<group>"; };
 		F8ADC3E22939DA2700AA23E7 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		F8ADC3E42939DAAF00AA23E7 /* EditProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileCell.swift; sourceTree = "<group>"; };
+		F8ADC3E6293A55CA00AA23E7 /* EditProfileFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileFooter.swift; sourceTree = "<group>"; };
 		F8C53DF7293518DA0071D6D8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -304,6 +306,7 @@
 				18C0A4882898146500412EE9 /* ProfileFilterView.swift */,
 				18C0A4862897F78F00412EE9 /* ProfileHeader.swift */,
 				F8ADC3E42939DAAF00AA23E7 /* EditProfileCell.swift */,
+				F8ADC3E6293A55CA00AA23E7 /* EditProfileFooter.swift */,
 				F8ADC3E02939D46900AA23E7 /* EditProfileHeader.swift */,
 			);
 			path = Profile;
@@ -515,6 +518,7 @@
 				1884B139288E7EA00013BF4A /* Constants.swift in Sources */,
 				18842AD32881FBCF0090FB2B /* FeedController.swift in Sources */,
 				F8ADC3CC2937978A00AA23E7 /* ActionSheetLauncher.swift in Sources */,
+				F8ADC3E7293A55CA00AA23E7 /* EditProfileFooter.swift in Sources */,
 				F8ADC3DC2939CBAE00AA23E7 /* EditProfileController.swift in Sources */,
 				184A2C0E288B066A008918A8 /* AuthButton.swift in Sources */,
 				18F97A63289C1D280067E8DB /* UserCell.swift in Sources */,

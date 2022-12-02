@@ -1,5 +1,5 @@
 //
-//  CaptionTextView.swift
+//  InputTextView.swift
 //  TwitterTutorial
 //
 //  Created by Apple on 28.07.2022.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CaptionTextView: UITextView {
+class InputTextView: UITextView {
     
     let placeholderLabel: UILabel = {
         let label = UILabel()

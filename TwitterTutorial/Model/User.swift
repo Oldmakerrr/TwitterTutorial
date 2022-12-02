@@ -16,6 +16,7 @@ struct User {
     let uid: String
     var isFollowed: Bool = false
     var stats: UserRelationStats?
+    var bio: String?
     var isCurrentUser: Bool { return Auth.auth().currentUser?.uid == uid }
     
     init(uid: String, dictionary: [String: AnyObject]) throws {
@@ -35,6 +36,9 @@ struct User {
         } else {
             throw NSError(domain: "Failed to parse Username", code: 103)
         }
+        if let bio = dictionary["bio"] as? String {
+            self.bio = bio
+        } 
         if let profileImage = dictionary["profileImageUrl"] as? String,
             let profileImageUrl = URL(string: profileImage)  {
             self.profileImageUrl = profileImageUrl

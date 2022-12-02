@@ -16,7 +16,7 @@
 		1855AAD6288FF833005E2967 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1855AAD5288FF833005E2967 /* UserService.swift */; };
 		1855AAD828901A7D005E2967 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1855AAD728901A7D005E2967 /* User.swift */; };
 		1861F5B42891D1AE00FF9840 /* UploadTweetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1861F5B32891D1AE00FF9840 /* UploadTweetController.swift */; };
-		1861F5BB289317B300FF9840 /* CaptionTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1861F5BA289317B300FF9840 /* CaptionTextView.swift */; };
+		1861F5BB289317B300FF9840 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1861F5BA289317B300FF9840 /* InputTextView.swift */; };
 		1861F5BF2893356B00FF9840 /* TweetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1861F5BE2893356B00FF9840 /* TweetService.swift */; };
 		1873E2A02884943B00BB7350 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1873E29F2884943B00BB7350 /* LoginController.swift */; };
 		1873E2A2288494BB00BB7350 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1873E2A1288494BB00BB7350 /* RegistrationController.swift */; };
@@ -55,6 +55,8 @@
 		F8ADC3DA2938E43F00AA23E7 /* FollowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3D92938E43F00AA23E7 /* FollowButton.swift */; };
 		F8ADC3DC2939CBAE00AA23E7 /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3DB2939CBAE00AA23E7 /* EditProfileController.swift */; };
 		F8ADC3E12939D46900AA23E7 /* EditProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3E02939D46900AA23E7 /* EditProfileHeader.swift */; };
+		F8ADC3E32939DA2700AA23E7 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3E22939DA2700AA23E7 /* EditProfileViewModel.swift */; };
+		F8ADC3E52939DAAF00AA23E7 /* EditProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8ADC3E42939DAAF00AA23E7 /* EditProfileCell.swift */; };
 		F8C53DF8293518DA0071D6D8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8C53DF7293518DA0071D6D8 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -78,7 +80,7 @@
 		1855AAD5288FF833005E2967 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		1855AAD728901A7D005E2967 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		1861F5B32891D1AE00FF9840 /* UploadTweetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadTweetController.swift; sourceTree = "<group>"; };
-		1861F5BA289317B300FF9840 /* CaptionTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionTextView.swift; sourceTree = "<group>"; };
+		1861F5BA289317B300FF9840 /* InputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
 		1861F5BE2893356B00FF9840 /* TweetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetService.swift; sourceTree = "<group>"; };
 		1873E29F2884943B00BB7350 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		1873E2A1288494BB00BB7350 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
@@ -122,6 +124,8 @@
 		F8ADC3D92938E43F00AA23E7 /* FollowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowButton.swift; sourceTree = "<group>"; };
 		F8ADC3DB2939CBAE00AA23E7 /* EditProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
 		F8ADC3E02939D46900AA23E7 /* EditProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileHeader.swift; sourceTree = "<group>"; };
+		F8ADC3E22939DA2700AA23E7 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
+		F8ADC3E42939DAAF00AA23E7 /* EditProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileCell.swift; sourceTree = "<group>"; };
 		F8C53DF7293518DA0071D6D8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -228,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				188EA11E2897011D000A5506 /* TweetViewModel.swift */,
+				F8ADC3E22939DA2700AA23E7 /* EditProfileViewModel.swift */,
 				F8ADC3D72938C7FE00AA23E7 /* NotificationViewModel.swift */,
 				F8ADC3CF2937B55D00AA23E7 /* ActionSheetViewModel.swift */,
 				18B5999E2899B1F5003AD491 /* ProfileHeaderViewModel.swift */,
@@ -244,7 +249,7 @@
 				18DCB5542884ADCA00B1B497 /* InputContainerView.swift */,
 				184A2C0D288B066A008918A8 /* AuthButton.swift */,
 				F8ADC3C7293755D200AA23E7 /* StackViewButtons.swift */,
-				1861F5BA289317B300FF9840 /* CaptionTextView.swift */,
+				1861F5BA289317B300FF9840 /* InputTextView.swift */,
 				181059CD28943D50001C366B /* ProfileImageView.swift */,
 				F8ADC3D92938E43F00AA23E7 /* FollowButton.swift */,
 				F8ADC3CD2937ABBB00AA23E7 /* ActionSheetCell.swift */,
@@ -298,6 +303,7 @@
 				18C0A48A2898170800412EE9 /* ProfileFilterCell.swift */,
 				18C0A4882898146500412EE9 /* ProfileFilterView.swift */,
 				18C0A4862897F78F00412EE9 /* ProfileHeader.swift */,
+				F8ADC3E42939DAAF00AA23E7 /* EditProfileCell.swift */,
 				F8ADC3E02939D46900AA23E7 /* EditProfileHeader.swift */,
 			);
 			path = Profile;
@@ -480,6 +486,7 @@
 				18C0A48B2898170800412EE9 /* ProfileFilterCell.swift in Sources */,
 				18C0A4852897EB5600412EE9 /* ProfileController.swift in Sources */,
 				F8ADC3CE2937ABBB00AA23E7 /* ActionSheetCell.swift in Sources */,
+				F8ADC3E52939DAAF00AA23E7 /* EditProfileCell.swift in Sources */,
 				18842AD52881FC3B0090FB2B /* ExploreController.swift in Sources */,
 				1873E2A02884943B00BB7350 /* LoginController.swift in Sources */,
 				18DCB5552884ADCA00B1B497 /* InputContainerView.swift in Sources */,
@@ -492,7 +499,7 @@
 				F8ADC3D02937B55D00AA23E7 /* ActionSheetViewModel.swift in Sources */,
 				18B4E44A2883564C00512912 /* Extentions.swift in Sources */,
 				F8ADC3CA293772ED00AA23E7 /* UploadTweetViewModel.swift in Sources */,
-				1861F5BB289317B300FF9840 /* CaptionTextView.swift in Sources */,
+				1861F5BB289317B300FF9840 /* InputTextView.swift in Sources */,
 				F8ADC3D22938890200AA23E7 /* Notification.swift in Sources */,
 				181059D0289454CE001C366B /* TweetCellButton.swift in Sources */,
 				18842AB92881F6CB0090FB2B /* SceneDelegate.swift in Sources */,
@@ -503,6 +510,7 @@
 				181059CE28943D50001C366B /* ProfileImageView.swift in Sources */,
 				F8ADC3D42938A33600AA23E7 /* NotificationService.swift in Sources */,
 				1873E2A2288494BB00BB7350 /* RegistrationController.swift in Sources */,
+				F8ADC3E32939DA2700AA23E7 /* EditProfileViewModel.swift in Sources */,
 				1855AAD6288FF833005E2967 /* UserService.swift in Sources */,
 				1884B139288E7EA00013BF4A /* Constants.swift in Sources */,
 				18842AD32881FBCF0090FB2B /* FeedController.swift in Sources */,

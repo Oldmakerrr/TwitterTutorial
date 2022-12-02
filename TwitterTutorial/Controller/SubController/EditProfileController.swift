@@ -72,12 +72,41 @@ class EditProfileController: UITableViewController {
 
     private func configureTableView() {
         tableView.tableHeaderView = headerView
+        tableView.register(EditProfileCell.self, forCellReuseIdentifier: EditProfileCell.identifier)
         tableView.isScrollEnabled = false
         headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 180)
         headerView.delegate = self
         tableView.tableFooterView = UIView()
     }
 }
+
+//MARK: - UITableViewDataSource
+
+extension EditProfileController {
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return EditProfileOption.allCases.count
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: EditProfileCell.identifier, for: indexPath) as! EditProfileCell
+        if let option = EditProfileOption(rawValue: indexPath.row) {
+            cell.viewModel = EditProfileViewModel(user: user, option: option)
+        }
+        return cell
+    }
+}
+
+//MARK: - UITableViewDelegate
+
+extension EditProfileController {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let option = EditProfileOption.init(rawValue: indexPath.row) else { return 0 }
+        return option == .bio ? 100 : 48
+    }
+}
+
+//MARK: - EditProfileHeaderDelegate
 
 extension EditProfileController: EditProfileHeaderDelegate {
 

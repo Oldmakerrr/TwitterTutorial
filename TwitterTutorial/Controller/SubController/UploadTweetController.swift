@@ -15,7 +15,7 @@ class UploadTweetController: UIViewController {
     private let config: UploadTweetConfiguration
     private let viewModel: UploadTweetViewModel
     
-    private let caprionTextView = CaptionTextView()
+    private let caprionTextView = InputTextView()
     
     private lazy var actionButton: UIButton = {
         let button = UIButton(type: .system)

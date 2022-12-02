@@ -11,12 +11,14 @@ class EditProfileController: UITableViewController {
 
     //MARK: - Properties
 
-    let user: User
+    private let user: User
+    private let headerView: EditProfileHeader
 
     //MARK: - Lifecycle
 
     init(user: User) {
         self.user = user
+        headerView = EditProfileHeader(user: user)
         super.init(style: .plain)
         
     }
@@ -28,6 +30,7 @@ class EditProfileController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationBar()
+        configureTableView()
     }
 
     //MARK: - Selectors
@@ -50,6 +53,7 @@ class EditProfileController: UITableViewController {
             let appearance = UINavigationBarAppearance()
             appearance.configureWithOpaqueBackground()
             appearance.backgroundColor = .twitterBlue
+            appearance.shadowColor = .clear
             appearance.titleTextAttributes = [.font: UIFont.boldSystemFont(ofSize: 20.0),
                                               .foregroundColor: UIColor.white]
             navigationController?.navigationBar.standardAppearance = appearance
@@ -65,4 +69,20 @@ class EditProfileController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleDone))
         navigationItem.rightBarButtonItem?.isEnabled = false
     }
+
+    private func configureTableView() {
+        tableView.tableHeaderView = headerView
+        tableView.isScrollEnabled = false
+        headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 180)
+        headerView.delegate = self
+        tableView.tableFooterView = UIView()
+    }
+}
+
+extension EditProfileController: EditProfileHeaderDelegate {
+
+    func didTapChangePhotoButton(_ view: EditProfileHeader) {
+        print("Tapped Change Photo Button..")
+    }
+
 }

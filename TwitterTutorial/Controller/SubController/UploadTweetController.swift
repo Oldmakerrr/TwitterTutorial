@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ActiveLabel
 
 class UploadTweetController: UIViewController {
     
@@ -31,11 +32,12 @@ class UploadTweetController: UIViewController {
     
     private lazy var profileImageView = ProfileImageView()
 
-    private lazy var replyLabel: UILabel = {
-        let label = UILabel()
+    private lazy var replyLabel: ActiveLabel = {
+        let label = ActiveLabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .lightGray
         label.text = viewModel.replyText
+        label.mentionColor = .twitterBlue
         label.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         return label
     }()
@@ -57,6 +59,13 @@ class UploadTweetController: UIViewController {
         super.viewDidLoad()
         actionButton.addTarget(self, action: #selector(uploadTweet), for: .touchUpInside)
         configureUI()
+        configureMentionHendle()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = false
+        navigationController?.navigationBar.barStyle = .default
     }
     
 //MARK: - Selectors
@@ -115,5 +124,13 @@ class UploadTweetController: UIViewController {
                          paddingTop: 16, paddingLeading: 16, paddingTrailing: 16)
         replyLabel.isHidden = !viewModel.shouldShowReplyLabel
     }
-    
+
+    private func configureMentionHendle() {
+        replyLabel.handleMentionTap { username in
+            UserService.shared.fetchUser(withUsername: username) { user in
+                let controller = ProfileController(user: user)
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
+        }
+    }
 }

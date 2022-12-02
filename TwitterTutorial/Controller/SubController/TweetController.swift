@@ -138,6 +138,10 @@ extension TweetController: UICollectionViewDelegateFlowLayout {
 
 extension TweetController: TweetCellDelegate {
 
+    func didActiveLabel(_ cell: TweetCell, username: String) {
+
+    }
+
     func didTapCommentButton(_ cell: TweetCell) {
         guard let tweet = cell.tweet else { return }
         goToUploadReplyController(user: tweet.user, tweet: tweet)
@@ -170,6 +174,13 @@ extension TweetController: TweetCellDelegate {
 //MARK: - TweetHeaderDelegate
 
 extension TweetController: TweetHeaderDelegate {
+
+    func didActiveLabel(_ cell: TweetHeader, username: String) {
+        UserService.shared.fetchUser(withUsername: username) { user in
+            let controller = ProfileController(user: user)
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
+    }
 
     func didTapCommentButton(_ view: TweetHeader) {
         guard let tweet = view.tweet else { return }

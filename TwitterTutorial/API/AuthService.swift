@@ -43,8 +43,9 @@ struct AuthService {
                               "username": username,
                               "fullname": fullname,
                               "profileImageUrl": profileImageUrl]
-                
-                REF_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)
+                REF_USER_USERNAMES.updateChildValues([username:uid]) { error, reference in
+                    REF_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)
+                }
             }
         }
     }

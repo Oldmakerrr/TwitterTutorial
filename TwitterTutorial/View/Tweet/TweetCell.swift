@@ -7,12 +7,14 @@
 
 import UIKit
 import SDWebImage
+import ActiveLabel
 
 protocol TweetCellDelegate: AnyObject {
     func didTapCommentButton(_ cell: TweetCell)
     func didTapRetweetButton(_ cell: TweetCell)
     func didTapLikeButton(_ cell: TweetCell)
     func didTapShareButton(_ cell: TweetCell)
+    func didActiveLabel(_ cell: TweetCell, username: String)
 }
 
 class TweetCell: UICollectionViewCell, ReusableView {
@@ -29,8 +31,9 @@ class TweetCell: UICollectionViewCell, ReusableView {
         didSet { configure()}
     }
 
-    private let replyLabel: UILabel = {
-        let label = UILabel()
+    private let replyLabel: ActiveLabel = {
+        let label = ActiveLabel()
+        label.mentionColor = .twitterBlue
         label.textColor = .lightGray
         label.font = UIFont.systemFont(ofSize: 12)
         return label
@@ -38,8 +41,10 @@ class TweetCell: UICollectionViewCell, ReusableView {
     
     private var profileImageView = ProfileImageView()
     
-    private let captionLabel: UILabel = {
-        let label = UILabel()
+    private let captionLabel: ActiveLabel = {
+        let label = ActiveLabel()
+        label.mentionColor = .twitterBlue
+        label.hashtagColor = .twitterBlue
         label.font = UIFont.systemFont(ofSize: 14)
         label.numberOfLines = 0
         return label
@@ -54,6 +59,7 @@ class TweetCell: UICollectionViewCell, ReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
+        configureMentionHendle()
     }
     
     required init?(coder: NSCoder) {
@@ -114,6 +120,15 @@ class TweetCell: UICollectionViewCell, ReusableView {
         stack.anchor(top: topAnchor, leading: leadingAnchor, trailing: trailingAnchor,
                      paddingTop: 4, paddingLeading: 12, paddingTrailing: 12)
 
+    }
+
+    private func configureMentionHendle() {
+        replyLabel.handleMentionTap { mention in
+            self.delegate?.didActiveLabel(self, username: mention)
+        }
+        captionLabel.handleMentionTap { mention in
+            self.delegate?.didActiveLabel(self, username: mention)
+        }
     }
     
 }

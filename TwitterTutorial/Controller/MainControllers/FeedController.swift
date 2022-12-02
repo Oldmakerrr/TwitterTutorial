@@ -157,6 +157,13 @@ extension FeedController: ProfileImageViewDelegate {
 //MARK: - TweetCellDelegate
 
 extension FeedController: TweetCellDelegate {
+    
+    func didActiveLabel(_ cell: TweetCell, username: String) {
+        UserService.shared.fetchUser(withUsername: username) { user in
+            let controller = ProfileController(user: user)
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
+    }
 
     func didTapCommentButton(_ cell: TweetCell) {
         guard let tweet = cell.tweet else { return }

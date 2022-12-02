@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ActiveLabel
 
 protocol ReusableView {
     static var identifier: String { get }
@@ -17,6 +18,7 @@ protocol TweetHeaderDelegate: AnyObject {
     func didTapRetweetButton(_ view: TweetHeader)
     func didTapLikeButton(_ view: TweetHeader)
     func didTapShareButton(_ view: TweetHeader)
+    func didActiveLabel(_ cell: TweetHeader, username: String)
 }
 
 class TweetHeader: UICollectionReusableView, ReusableView {
@@ -44,8 +46,10 @@ class TweetHeader: UICollectionReusableView, ReusableView {
 
     private let fullnameLabel = UILabel()
 
-    private let captionLabel: UILabel = {
-        let label = UILabel()
+    private let captionLabel: ActiveLabel = {
+        let label = ActiveLabel()
+        label.mentionColor = .twitterBlue
+        label.hashtagColor = .twitterBlue
         label.font = UIFont.systemFont(ofSize: 20)
         label.numberOfLines = 0
         return label
@@ -54,7 +58,6 @@ class TweetHeader: UICollectionReusableView, ReusableView {
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.text = "Date"
         label.textColor = .lightGray
         label.textAlignment = .left
         return label
@@ -68,8 +71,9 @@ class TweetHeader: UICollectionReusableView, ReusableView {
         return button
     }()
 
-    private let replyLabel: UILabel = {
-        let label = UILabel()
+    private let replyLabel: ActiveLabel = {
+        let label = ActiveLabel()
+        label.mentionColor = .twitterBlue
         label.textColor = .lightGray
         label.font = UIFont.systemFont(ofSize: 12)
         return label
@@ -105,6 +109,7 @@ class TweetHeader: UICollectionReusableView, ReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
+        configureMentionHendle()
     }
     
     required init?(coder: NSCoder) {
@@ -174,6 +179,15 @@ class TweetHeader: UICollectionReusableView, ReusableView {
 
     func setDelegateImageProfile(_ delegate: ProfileImageViewDelegate) {
         profileImageView.delegate = delegate
+    }
+
+    private func configureMentionHendle() {
+        replyLabel.handleMentionTap { mention in
+            self.delegate?.didActiveLabel(self, username: mention)
+        }
+        captionLabel.handleMentionTap { mention in
+            self.delegate?.didActiveLabel(self, username: mention)
+        }
     }
 
 }

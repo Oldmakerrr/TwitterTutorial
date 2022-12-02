@@ -84,6 +84,9 @@ class FeedController: UICollectionViewController {
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.sd_setImage(with: user.profileImageUrl)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileImageView)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTap))
+        profileImageView.addGestureRecognizer(tap)
+        profileImageView.isUserInteractionEnabled = true
     }
     
     private func goToProfileController(user: User) {
@@ -103,7 +106,12 @@ class FeedController: UICollectionViewController {
     @objc private func handleRefresh() {
         fetchTweets()
     }
-    
+
+    @objc private func handleProfileImageTap() {
+        guard let user = user else { return }
+        let controller = ProfileController(user: user)
+        navigationController?.pushViewController(controller, animated: true)
+    }
 }
 
 //MARK: - UICollectionViewDataSource/Delegate

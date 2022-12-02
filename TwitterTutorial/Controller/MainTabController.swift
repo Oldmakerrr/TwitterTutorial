@@ -8,9 +8,16 @@
 import UIKit
 import FirebaseAuth
 
+enum ActionButtonConfiguration {
+    case tweet
+    case message
+}
+
 class MainTabController: UITabBarController {
     
     //MARK: - Properties
+
+    private var buttonConfig: ActionButtonConfiguration = .tweet
     
     private var user: User? {
         didSet {
@@ -62,9 +69,15 @@ class MainTabController: UITabBarController {
     //MARK: - Selectors
     
     @objc private func actionButtonTapped() {
-        guard let user = user else { return }
-        let uploadController = UploadTweetController(user: user, config: .tweet)
-        let navigation = UINavigationController(rootViewController: uploadController)
+        let contrller: UIViewController
+        switch buttonConfig {
+        case .tweet:
+            guard let user = user else { return }
+            contrller = UploadTweetController(user: user, config: .tweet)
+        case .message:
+            contrller = SearchController(config: .messages)
+        }
+        let navigation = UINavigationController(rootViewController: contrller)
         navigation.modalPresentationStyle = .fullScreen
         present(navigation, animated: true)
     }
@@ -81,13 +94,13 @@ class MainTabController: UITabBarController {
     }
     
     private func configureViewControllers() {
-        
+        delegate = self
         let layout = UICollectionViewFlowLayout()
         let feed = FeedController(collectionViewLayout: layout)
         let feedNavigationController = templateNavigationController(image: UIImage(named: "home_unselected"),
                                                                     rootViewController: feed)
         
-        let explore = ExploreController()
+        let explore = SearchController(config: .userSearch)
         let exploreNavigationController = templateNavigationController(image: UIImage(named: "search_unselected"),
                                                                        rootViewController: explore)
         
@@ -112,4 +125,15 @@ class MainTabController: UITabBarController {
         return navigationController
     }
 
+}
+
+//MARK: - UITabBarControllerDelegate
+
+extension MainTabController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        let index = viewControllers?.firstIndex(of: viewController)
+        buttonConfig = index == 3 ? .message : .tweet
+        let imageName = index == 3 ? "mail" : "new_tweet"
+        actionButton.setImage(UIImage(named: imageName), for: .normal)
+    }
 }

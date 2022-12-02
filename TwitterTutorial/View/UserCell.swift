@@ -7,9 +7,13 @@
 
 import UIKit
 
-class UserCell: UITableViewCell {
+class UserCell: UITableViewCell, ReusableView {
     
     //MARK: - Properties
+
+    static var identifier: String {
+        String(describing: self)
+    }
     
     private var user: User? {
         didSet { fillCell() }

@@ -1,5 +1,12 @@
 # TwitterTutorial
 
+Training project based on Twitter 
+
+almost like real.. 😆
+
+After registration, you can subscribe to other users, share posts, like them, reply to them, and so on..
+
+The application uses frameworks such as Firebase and SDWebImage
 
 <p float="left">
 
